@@ -14,6 +14,11 @@ pipeline/measured/*.jsonl
 pipeline/measured/*.csv
 pipeline/measured/*.log
 
+# MLflow local tracking store -- machine-specific run history/artifacts,
+# not source. See tracking/mlflow_setup.py.
+mlflow.db
+mlartifacts/
+
 # Python
 __pycache__/
 *.pyc

@@ -55,12 +55,14 @@ fallback for anything unmatched.
 import os
 import sys
 
+import mlflow.pyfunc
 import numpy as np
 import pandas as pd
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, REPO_ROOT)
 sys.path.insert(0, os.path.join(REPO_ROOT, "pipeline"))
-from aggregate import EMOTION_CLASSES, GESTURE_CLASSES, MOTION_CLASSES, CONTEXT_CLASSES  # noqa: E402
+from aggregate import EMOTION_CLASSES, GESTURE_CLASSES, MOTION_CLASSES, CONTEXT_CLASSES, FEATURE_NAMES  # noqa: E402
 
 DEFAULT_FALLBACK_INTENT = "F05"  # overridden by fit_fallback() with the training corpus's mode
 
@@ -134,30 +136,92 @@ def predict_all(df, fallback_intent=DEFAULT_FALLBACK_INTENT):
     return df.apply(lambda row: predict_intent(row, fallback_intent), axis=1)
 
 
+class RuleBasedFusionModel(mlflow.pyfunc.PythonModel):
+    """Wraps predict_intent() as a loadable pyfunc model so the rule-based
+    baseline has the same predict(model_input) interface as fusion/gbt.py's
+    logged model, enabling direct comparison/serving via the Model Registry.
+
+    model_input must contain aggregate.FEATURE_NAMES columns (the same
+    clip_features.parquet schema _dominant() reads from).
+    """
+
+    def __init__(self, fallback_intent):
+        self.fallback_intent = fallback_intent
+
+    def predict(self, context, model_input, params=None):
+        return model_input[FEATURE_NAMES].apply(
+            lambda row: predict_intent(row, self.fallback_intent), axis=1
+        )
+
+
 if __name__ == "__main__":
-    FEATURES_PATH = os.path.join(REPO_ROOT, "data", "features", "clip_features.parquet")
-    df = pd.read_parquet(FEATURES_PATH)
-    train_df = df[df["split_scenario"] == "train"]
-    fallback = fit_fallback(train_df)
-    print(f"[rule_based] fallback intent (train-set mode): {fallback}")
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from mlflow.models import infer_signature
 
-    preds = predict_all(df, fallback_intent=fallback)
-    df["rule_pred"] = preds
-    overall_acc = (df["rule_pred"] == df["intent"]).mean()
-    print(f"[rule_based] overall accuracy (all {len(df)} clips, includes train -- not a test number): {overall_acc:.3f}")
+    from tracking.dataset_logging import log_dataset
+    from tracking.hashing import sha256_file
+    from tracking.mlflow_setup import init_tracking
 
-    for split_name in ["train", "val", "test"]:
-        sub = df[df["split_scenario"] == split_name]
-        if len(sub) == 0:
-            continue
-        acc = (sub["rule_pred"] == sub["intent"]).mean()
-        print(f"[rule_based] split_scenario={split_name}: n={len(sub)}, accuracy={acc:.3f}")
+    init_tracking()
+    with mlflow.start_run(run_name="rule_based"):
+        mlflow.set_tag("model_type", "rule_based")
+        mlflow.set_tag("code_file", os.path.relpath(__file__, REPO_ROOT))
+        mlflow.set_tag("code_version_sha256", sha256_file(__file__))
 
-    print("\n[rule_based] per-class recall (split_scenario=test):")
-    test_df = df[df["split_scenario"] == "test"]
-    for cls in sorted(df["intent"].unique()):
-        sub = test_df[test_df["intent"] == cls]
-        if len(sub) == 0:
-            continue
-        recall = (sub["rule_pred"] == cls).mean()
-        print(f"  {cls}: n={len(sub)}, recall={recall:.3f}")
+        df = log_dataset(context="training")
+
+        train_df = df[df["split_scenario"] == "train"]
+        fallback = fit_fallback(train_df)
+        mlflow.log_param("fallback_intent", fallback)
+        mlflow.log_param("default_fallback_intent_constant", DEFAULT_FALLBACK_INTENT)
+        print(f"[rule_based] fallback intent (train-set mode): {fallback}")
+
+        preds = predict_all(df, fallback_intent=fallback)
+        df["rule_pred"] = preds
+        overall_acc = (df["rule_pred"] == df["intent"]).mean()
+        mlflow.log_metric("overall_accuracy_all_clips", overall_acc)
+        print(f"[rule_based] overall accuracy (all {len(df)} clips, includes train -- not a test number): {overall_acc:.3f}")
+
+        for split_name in ["train", "val", "test"]:
+            sub = df[df["split_scenario"] == split_name]
+            if len(sub) == 0:
+                continue
+            acc = (sub["rule_pred"] == sub["intent"]).mean()
+            mlflow.log_metric(f"{split_name}_accuracy", acc)
+            mlflow.log_param(f"n_{split_name}", len(sub))
+            print(f"[rule_based] split_scenario={split_name}: n={len(sub)}, accuracy={acc:.3f}")
+
+        print("\n[rule_based] per-class recall (split_scenario=test):")
+        test_df = df[df["split_scenario"] == "test"]
+        recall_rows = []
+        for cls in sorted(df["intent"].unique()):
+            sub = test_df[test_df["intent"] == cls]
+            if len(sub) == 0:
+                continue
+            recall = (sub["rule_pred"] == cls).mean()
+            mlflow.log_metric(f"test_recall_{cls}", recall)
+            recall_rows.append({"intent": cls, "n": len(sub), "recall": recall})
+            print(f"  {cls}: n={len(sub)}, recall={recall:.3f}")
+
+        recall_df = pd.DataFrame(recall_rows)
+        mlflow.log_table(data=recall_df, artifact_file="reports/test_per_class_recall.json")
+
+        fig, ax = plt.subplots(figsize=(8, 4))
+        ax.bar(recall_df["intent"], recall_df["recall"])
+        ax.set_ylim(0, 1)
+        ax.set_ylabel("recall")
+        ax.set_title("rule_based -- per-class test recall")
+        mlflow.log_figure(fig, "reports/test_per_class_recall.png")
+        plt.close(fig)
+
+        signature_input = train_df[FEATURE_NAMES]
+        signature = infer_signature(signature_input, predict_all(train_df, fallback_intent=fallback))
+        mlflow.pyfunc.log_model(
+            name="model",
+            python_model=RuleBasedFusionModel(fallback_intent=fallback),
+            signature=signature,
+            input_example=signature_input.head(5),
+            registered_model_name="fusion-rule-based",
+        )
