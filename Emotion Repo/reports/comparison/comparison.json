@@ -1,0 +1,54 @@
+[
+  {
+    "model": "MobileNetV2",
+    "params_m": 2.23,
+    "size_mb": 8.65,
+    "within_budget": true,
+    "accuracy": 69.56,
+    "balanced_acc": 70.02,
+    "f1_weighted": 71.94,
+    "macro_f1": 61.34,
+    "gpu_ms": 1.09,
+    "cpu_ms": 11.47,
+    "train_time_s": 292.6
+  },
+  {
+    "model": "MobileNetV3-Large",
+    "params_m": 4.21,
+    "size_mb": 16.16,
+    "within_budget": true,
+    "accuracy": 71.97,
+    "balanced_acc": 71.36,
+    "f1_weighted": 73.88,
+    "macro_f1": 63.75,
+    "gpu_ms": 1.33,
+    "cpu_ms": 4.39,
+    "train_time_s": 295.5
+  },
+  {
+    "model": "EfficientNet-B0",
+    "params_m": 4.02,
+    "size_mb": 15.48,
+    "within_budget": true,
+    "accuracy": 77.05,
+    "balanced_acc": 75.61,
+    "f1_weighted": 78.13,
+    "macro_f1": 69.76,
+    "gpu_ms": 1.75,
+    "cpu_ms": 9.59,
+    "train_time_s": 298.3
+  },
+  {
+    "model": "MNASNet1_0",
+    "params_m": 3.11,
+    "size_mb": 12.01,
+    "within_budget": true,
+    "accuracy": 66.98,
+    "balanced_acc": 65.55,
+    "f1_weighted": 69.5,
+    "macro_f1": 58.28,
+    "gpu_ms": 1.03,
+    "cpu_ms": 91.19,
+    "train_time_s": 288.4
+  }
+]

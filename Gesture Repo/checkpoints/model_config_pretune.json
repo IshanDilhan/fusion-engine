@@ -1,0 +1,45 @@
+{
+  "model": "TCN",
+  "model_kwargs": {
+    "hidden_size": 128,
+    "dropout": 0.3
+  },
+  "labels": [
+    "idle",
+    "wave",
+    "point",
+    "thumbs_up",
+    "thumbs_down",
+    "beckoning",
+    "raise_hand",
+    "both_hands_up"
+  ],
+  "window": 32,
+  "feature_dim": 185,
+  "conf_threshold": 0.6,
+  "params": 683272,
+  "checkpoint": "best_TCN.pth",
+  "trained": "2026-07-15",
+  "best_val": {
+    "accuracy": 0.9361,
+    "balanced_accuracy": 0.9435,
+    "f1_weighted": 0.9362,
+    "f1_macro": 0.9365,
+    "epoch": 73,
+    "loss": 1.0689,
+    "train_acc": 0.974
+  },
+  "train_config": {
+    "model": "TCN",
+    "epochs": 100,
+    "patience": 15,
+    "batch_size": 256,
+    "num_workers": 16,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "dropout": 0.3,
+    "hidden_size": 128,
+    "label_smoothing": 0.1,
+    "use_tuned": false
+  }
+}

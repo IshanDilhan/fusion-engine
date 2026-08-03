@@ -1,34 +1,11 @@
-# Environments
-env/
-venv/
-ENV/
-.env
+# raw datasets, extracted landmarks, split indexes are regenerated per machine
+data/*
+!data/index/
+!data/index/*.csv
 
-# Pycache and compiled files
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
+# weights are published as GitHub Releases (gesture-vX.Y), not committed
+checkpoints/*.pth
+checkpoints/history_*.json
 
-# IDEs and Workspace Settings
-.vscode/
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.swp
-# Ignore test videos and output folders completely
-testVideo/
-testVideo2/
-testvideo2/
-textvideo2/
-output/
-outputVideo/
-
-# Ignore compiled video assets
-*.mp4
-*.avi
-*.mov
-*.mkv
-*.webm
+# inference video outputs
+outputs/

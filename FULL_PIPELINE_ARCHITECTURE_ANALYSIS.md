@@ -1,1385 +1,956 @@
 # Full Pipeline Architecture Analysis
 
 > Forensic reconstruction of the HRI Fusion Engine from the actual
-> implementation. Every claim below was traced through source code and,
-> where possible, verified against the real data artifacts
-> (`pipeline/measured/*.jsonl`, `data/features/clip_features.parquet`,
-> `Motion Repo/checkpoints/best_model_finetuned.pt`) and by executing
-> `fusion/rule_based.py` and `fusion/gbt.py`.
+> implementation, **as of 2026-08-03**. Every claim below was traced through
+> source code and, where possible, verified against real data artifacts
+> (`pipeline/measured/*.jsonl`, `Data/Dataset/hri-multimodal-intent-v2.0.0/`,
+> `tracking/*`) and by attempting to execute `fusion/rule_based.py`.
 >
-> Convention used throughout:
-> **[VERIFIED]** = read directly from code or confirmed by running it /
-> inspecting the artifact. **[INTERPRETATION]** = reasonable inference from
-> verified facts. **[CONCEPTUAL]** = generic ML explanation, not this repo's
-> literal object. **NOT VERIFIABLE** = could not be confirmed from the
-> present codebase.
+> This supersedes the prior version of this document, which described the
+> repo before its 2026-07/08 restructure (dataset v1.0.0, an EfficientNet-B0
+> context model, a heuristic TFLite gesture FSM, no MLflow). That version of
+> the system no longer exists on disk — the old code paths were deleted, not
+> kept side by side. This rewrite describes only the current system.
+>
+> Convention: **[VERIFIED]** = read directly from code or confirmed by
+> running it / inspecting the artifact. **[INTERPRETATION]** = reasonable
+> inference from verified facts. **NOT VERIFIABLE** = could not be confirmed
+> from the present codebase.
 
 ---
 
 ## 0. The single most important structural fact
 
-**This system is NOT an online, frame-streaming fusion engine. It is a
-batch, file-staged pipeline with four completely independent processes and a
-hard serialization boundary (JSONL on disk) between the cue models and
-fusion.** [VERIFIED]
+**This is still a batch, file-staged pipeline, not an online fusion engine —
+and right now it does not run end-to-end.** [VERIFIED]
 
-The four cue models never call each other and never call fusion. They run in
-four separate Python virtual environments (`.venvs/emotion`, `.venvs/gesture`,
-`.venvs/motion`, `.venvs/context`), each producing one append-only JSONL file
-of per-frame records. A separate pipeline stage collapses those per-frame
-records into **one 33-dimensional feature vector per clip** and writes a
-Parquet file. Only then do the two fusion approaches read that Parquet.
+The architecture shape from before is unchanged: four independent cue-model
+processes write per-frame JSONL, a feature builder aggregates per clip into a
+Parquet file, and two fusion approaches (rule-based, LightGBM) read that
+Parquet. What changed is that **all four cue models were substantially
+reworked, the dataset moved from v1.0.0 to v2.0.0, and the fusion layer now
+guards itself with MLflow dataset-consistency checks** — and the pipeline is
+currently caught mid-transition:
 
 ```
-video clips (.mp4)
-   │
-   ├── runners/emotion_runner.py   (.venvs/emotion)  ─► pipeline/measured/emotion_frame_cues.jsonl
-   ├── runners/gesture_runner.py   (.venvs/gesture)  ─► pipeline/measured/gesture_frame_cues.jsonl
-   ├── runners/motion_runner.py    (.venvs/motion)   ─► pipeline/measured/motion_frame_cues.jsonl
-   └── runners/context_runner.py   (.venvs/context)  ─► pipeline/measured/context_frame_cues.jsonl
-                                                              │ (4 files, one JSON object per frame per clip)
-                                                              ▼
-                              pipeline/build_features.py  +  pipeline/aggregate.py
-                                                              │ (per-clip aggregation → 33 features)
-                                                              ▼
-                                          data/features/clip_features.parquet   (1270 rows × 40 cols)
-                                                              │
-                              ┌───────────────────────────────┴───────────────────────────────┐
-                              ▼                                                                 ▼
-                     fusion/rule_based.py                                              fusion/gbt.py
-                     (priority IF-THEN over                                            (LightGBM over the
-                      argmax'd cue blocks)                                              33-col feature vector)
-                              │                                                                 │
-                              ▼                                                                 ▼
-                      predicted intent code                                            predicted intent code
-                      (F01..F10) per clip                                              (F01..F10) per clip
+pipeline/measured/*_frame_cues.jsonl   ← regenerated 2026-08-03, against
+                                           dataset v2.0.0 and the new cue models
+data/features/clip_features.parquet    ← still dated 2026-07-13, built from
+                                           the OLD dataset v1.0.0 run
 ```
 
-There is **no `main.py`, no `FusionEngine` class, no `run_cue_models.py`**
-(the last is referenced in `runners/emotion_runner.py`'s and
-`runners/motion_runner.py`'s docstrings but does **not exist** in the repo —
-see §17). The pipeline is run by executing individual scripts by hand in the
-documented order. Fusion consumes a **precomputed file**, not live cue
-objects.
+Running `fusion/rule_based.py` today raises `DatasetVersionMismatchError`
+(§17) — MLflow's own lineage guard, added this session, is correctly
+detecting that the Parquet fusion would read is stale relative to the
+dataset version currently on disk. **No current accuracy numbers exist for
+this system.** Regenerating the Parquet (`pipeline/build_features.py` against
+the fresh JSONLs) is the next required step before fusion can run at all.
 
 ---
 
-## 1. Executive Pipeline Summary
+## 1. Executive Summary
 
-**Raw input.** Video clips (`.mp4`, e.g. `640×480`, 15 or 30 fps, ~4–5 s,
-68–150 frames each), enumerated by
-`Data/Dataset/hri-multimodal-intent-v1.0.0/annotations/clips.csv`. 1270 clips
-across 22 base scenarios (S01…S29 with gaps), each scenario authored to map to
-one of 10 intent codes F01…F10 (`annotations/scenarios.csv`). [VERIFIED]
+**Dataset.** `Data/Dataset/hri-multimodal-intent-v2.0.0/`: 2,904 clips
+(2,869 `usable`, 2,670 `scoreable`), 62 scenarios (`S01`…`S63`, gap at S30),
+10 subjects (`P01`…`P10`), 2 contexts (classroom/kitchen), **9** intent codes
+(`F01`–`F08`, `F10` — **F09 no longer exists**). This replaces v1.0.0 (1,270
+clips, 22 scenarios, 23 subjects, 10 intents `F01`–`F10`), which has been
+deleted from disk. Unlike v1, every scenario in v2 has multiple subjects
+(2–10), so the old subject/scenario 1:1 confound is structurally resolved.
+[VERIFIED, §5]
 
-**Where processing begins.** Each of the four `runners/*_runner.py` scripts is
-an independent entry point. In batch mode a runner loads its model **once**,
-then loops every clip in `clips.csv`, decoding frames with OpenCV and running
-its model per frame. [VERIFIED, `run_batch()` in every runner]
+**The four cue models, current state:**
 
-**How the four cue models are invoked.** Independently and offline — one
-process per cue, one venv per cue, no cross-talk. They are *not* orchestrated
-by a shared driver in the committed code. Each writes a combined JSONL
-(`append_batch()` adds a `clip_id` envelope to each `NormalisedFrameCue`).
-[VERIFIED]
-
-**What each model returns (per frame).** All four emit the same dataclass,
-`runners/common/schema.py::NormalisedFrameCue`:
-`{cue, frame_idx, label, confidence, probs, valid, extra}`. The *contents*
-differ sharply per cue (emotion/motion/context populate `probs`; gesture
-leaves `probs` empty; see §8). [VERIFIED]
-
-**Where outputs are collected.** On disk, as four JSONL files under
-`pipeline/measured/`. Each currently holds **141,721 lines** (= total frames
-across all clips), and all four line counts are identical. [VERIFIED by
-`wc -l`]
-
-**Temporal aggregation.** Yes — this is the crux. `pipeline/aggregate.py`
-collapses each clip's per-frame records for each cue into a fixed block:
-- **Emotion, Motion, Context** → **mean of per-frame probability vectors over
-  valid frames** + a confidence scalar + `valid_fraction`.
-- **Gesture** → **majority-vote one-hot** over valid frames + mean confidence
-  of the winning label + `valid_fraction`.
-A cue whose `valid_fraction < 0.40` gets a `missing_<cue> = 1.0` bit. [VERIFIED]
-
-**How cue outputs become fusion input.** `pipeline/build_features.py` joins
-each clip's four aggregated blocks into one row, appends the target `intent`
-and the train/val/test split assignment, and writes
-`data/features/clip_features.parquet` (1270 × 40: `clip_id` + **33 features** +
-6 metadata columns). This Parquet **is the fusion input for both approaches**.
-[VERIFIED]
-
-**How rule-based fusion works.** `fusion/rule_based.py` reads each clip's
-feature row, reconstructs a single dominant label per cue by `argmax` over
-that cue's block (`_dominant()`), then runs a fixed, **priority-ordered**
-IF-THEN cascade (emergency F02 first, then most-to-least specific patterns,
-then a train-set-mode fallback). First matching rule returns immediately.
-[VERIFIED]
-
-**How GBT fusion works.** `fusion/gbt.py` feeds the **raw 33-dim feature
-vector** (no argmax, no re-encoding) into a `lightgbm.LGBMClassifier`
-(multiclass, 300 trees, depth 5, lr 0.05, `class_weight="balanced"`). Training
-adds per-cue "modality dropout" augmentation; inference adds an F02 safety
-override (if `P(F02) ≥ 0.15`, force F02). [VERIFIED]
-
-**Final system output.** A predicted intent **string** (`"F01"`…`"F10"`) per
-clip. Neither fusion script serializes a model or writes a prediction file —
-both **print accuracy metrics to stdout** and exit. There is no deployed
-inference endpoint in the committed code. [VERIFIED]
-
-Measured accuracies (executed 2026-07, `split_scenario` grouped split):
-
-| Model | train | val | test |
+| Cue | Old (deleted) | Current | Status |
 |---|---|---|---|
-| rule_based | 0.335 | 0.255 | **0.179** |
-| GBT | (n/a printed) | 0.216 | **0.237** |
+| Emotion | MobileNetV2 (RAF-DB only) | Same MobileNetV2 architecture, now loading the **fine-tuned** checkpoint (`finetuned_MobileNetV2.pth`, 92.5% real-test acc vs baseline's 58.8%) | Reworked (checkpoint swap + relocation), same model family |
+| Gesture | Heuristic FSM over 2 TFLite classifiers, always empty `probs` | MediaPipe **Holistic** → 185-dim features → 32-frame window → learned **TCN** classifier (683K params), 8 classes incl. `idle` | Fully replaced |
+| Motion | LSTM+attention, 4 classes | **Unchanged** — same checkpoint, same code | Stable (confirmed no diff since last commit) |
+| Context | EfficientNet-B0 CNN, 2 classes | Zero-shot **CLIP** (ViT-B-32-quickgelu) via cosine similarity to text prompts, 2 classes in use | Fully replaced (a SmolVLM2 VLM also exists in the repo but is **not** used by this pipeline) |
 
-Both are low; §17 explains why (the grouped test split contains only 4 of the
-10 intent classes, and the label ceiling documented in
-`fusion/rule_based.py`). [VERIFIED by running the scripts]
+**Fusion.** Both `fusion/rule_based.py` and `fusion/gbt.py` were rewritten:
+the rule-based IF-THEN cascade was fully re-derived from v2.0.0's 62-row
+`scenarios.csv` (mechanically, via a new `pipeline/derive_rule_table.py`,
+not hand-transcribed), and `fusion/gbt.py`'s modality-dropout augmentation
+now caps at 2 dropped cues per row and relabels heavily-degraded rows to
+`F05`. Both scripts now log every run to a local **MLflow** tracking store
+(`tracking/`, new this session) — params, metrics, per-class recall
+figures, and a registered `pyfunc` model — and both refuse to run against a
+Parquet whose content hash doesn't match the currently-active dataset
+version. That guard is what's currently blocking them (§17, §0).
+
+**Net effect for this document:** every per-cue trace below (§6–§9) is
+independently verified against real, freshly-regenerated per-frame JSONL
+output. The aggregation/fusion machinery (§11–§15) is verified by reading
+the code, but **has not been exercised against current data yet** — no
+"worked example, verified end to end" section exists in this version of the
+document for that reason (contrast with the old doc's §14/§15).
 
 ---
 
-## 2. Verified Runtime Entry Points
+## 2. What Changed Since the Last Snapshot (orientation)
 
-There are **six** real entry points, in three tiers. None of them is a unified
-"process a video end-to-end" driver — that does not exist.
+For readers who saw the previous version of this document:
+
+1. **Dataset v1.0.0 → v2.0.0.** New clip/scenario/subject counts, F09
+   dropped, per-clip QA columns added (`usable`, `scoreable`,
+   `exclude_kind`, `<cue>_masked`, `..._v3` relabeled ground truth). §5.
+2. **Emotion Repo, Gesture Repo, Context Repo all restructured** into a
+   uniform `config.py` / `src/` / `scripts/` / `inference/` / `checkpoints/`
+   / `reports/` layout (mirroring each other). The old flat-file layouts
+   (`video.py`, `app.py`, `realtime_realsense.py`, `Gesture Repo/model/*`,
+   etc.) are deleted from git.
+3. **Gesture model fully replaced**: heuristic FSM + 2 TFLite classifiers →
+   learned TCN over MediaPipe Holistic features. §7.
+4. **Context model backend switched**: trained EfficientNet-B0 CNN →
+   zero-shot CLIP. A new SmolVLM2-based VLM situation-analysis path was also
+   added to Context Repo but is not wired into the batch pipeline. §9.
+5. **Emotion model unchanged architecturally**, but the batch runner now
+   loads the fine-tuned checkpoint instead of the RAF-DB-only baseline. §6.
+6. **Motion model untouched** — confirmed identical to the prior commit. §8.
+7. **`pipeline/build_features.py` rewritten** for v2.0.0's schema: real
+   per-clip cue masking from annotated ground truth, a leakage-checked dev
+   split carved out of train. §12.
+8. **`fusion/rule_based.py`'s rule cascade rewritten** end-to-end against
+   the new, larger, machine-derived scenario table; both v1.0.0's documented
+   "irreducible" ambiguities are reported resolved. §14.
+9. **`fusion/gbt.py`'s modality-dropout logic reworked** with a capped
+   per-row cue-drop count and a relabel-to-`F05` step. §15.
+10. **MLflow tracking added** (`tracking/`) — the whole system, entirely new
+    this session. §16.
+11. `pipeline/aggregate.py` (the cue→feature-vector aggregation code) was
+    **not touched** in any of this — it still encodes the old 33-dimension,
+    8-class-gesture-one-hot schema from before. This mostly still applies
+    cleanly (§11), but it's worth knowing this file is the one piece of the
+    chain that wasn't revisited alongside everything around it.
+
+---
+
+## 3. Verified Runtime Entry Points
+
+Still no unified "video → intent" driver. Six real entry points plus one new
+supporting tool:
 
 ### Tier 1 — Cue runners (raw video → per-frame JSONL)
 
-| # | File | Entry | Input | Output | Why it's a real entry point |
-|---|---|---|---|---|---|
-| 1 | `runners/emotion_runner.py` | `__main__` → `run_batch()`/`run_single()` | `--manifest clips.csv --clips-root … --out …jsonl` (or `--clip`) | `emotion_frame_cues.jsonl` | Has `argparse` `__main__`; loads MobileNetV2, loops frames, writes JSONL. [VERIFIED] |
-| 2 | `runners/gesture_runner.py` | same shape | same | `gesture_frame_cues.jsonl` | Same; loads two TFLite classifiers. [VERIFIED] |
-| 3 | `runners/motion_runner.py` | same shape | same | `motion_frame_cues.jsonl` | Same; loads `MotionInference` LSTM. [VERIFIED] |
-| 4 | `runners/context_runner.py` | same shape | same | `context_frame_cues.jsonl` | Same; loads EfficientNet-B0. [VERIFIED] |
+| # | File | Model it drives | Output |
+|---|---|---|---|
+| 1 | `runners/emotion_runner.py` | MobileNetV2 (fine-tuned ckpt), from `Emotion Repo/inference/video.py` | `emotion_frame_cues.jsonl` |
+| 2 | `runners/gesture_runner.py` | `GestureEngine` (TCN), from `Gesture Repo/src/engine.py` | `gesture_frame_cues.jsonl` |
+| 3 | `runners/motion_runner.py` | `MotionInference` (LSTM+attention), from `Motion Repo/inference.py` — **unchanged** | `motion_frame_cues.jsonl` |
+| 4 | `runners/context_runner.py` | `create_scene_classifier(backend="clip")`, zero-shot CLIP | `context_frame_cues.jsonl` |
 
-Each runner is called by a human/shell (documented in its own docstring
-Usage). Return value: none (side effect = JSONL file). These are real because
-they contain `if __name__ == "__main__":` + `argparse` and do the actual model
-loading and frame loop.
+### Tier 2 — Feature builder
 
-### Tier 2 — Feature builder (JSONL → Parquet)
+| # | File | Input | Output |
+|---|---|---|---|
+| 5 | `pipeline/build_features.py` | 4× `*_frame_cues.jsonl` + v2.0.0's `clips.csv`/`splits.csv` | `data/features/clip_features.parquet` |
 
-| # | File | Entry | Input | Output |
-|---|---|---|---|---|
-| 5 | `pipeline/build_features.py` | `__main__` → `main()` | 4× `*_frame_cues.jsonl` + `clips.csv`, `scenarios.csv`, `splits.csv` | `data/features/clip_features.parquet` |
+`pipeline/build_splits.py` (previously a prerequisite) is now **largely
+inert**: v2.0.0 ships its own pre-curated `splits.csv`, and the script's own
+docstring says so (`pipeline/build_splits.py:4-8`). It's kept only for a
+future dataset version that, like v1, ships with no split assignment.
 
-Real because it imports `aggregate.build_clip_feature_row` /
-`load_frame_cues_by_clip`, iterates every clip, and writes the Parquet that
-both fusion scripts open. [VERIFIED]
+New supporting tool: **`pipeline/derive_rule_table.py`** — not a pipeline
+stage, an audit tool. Mechanically derives the `(context, emotion, gesture,
+motion) → intent` table from `scenarios.csv` and asserts it's unambiguous;
+run before hand-editing `fusion/rule_based.py`'s cascade. §13.
 
-Prerequisite entry point (run once before build_features to create splits.csv):
-`pipeline/build_splits.py::main()`.
+### Tier 3 — Fusion (Parquet → intent predictions + MLflow run)
 
-### Tier 3 — Fusion (Parquet → intent predictions + metrics)
+| # | File | Entry | Currently runs? |
+|---|---|---|---|
+| 6a | `fusion/rule_based.py` | `__main__`, wrapped in `mlflow.start_run()` | **No** — `DatasetVersionMismatchError` (§17) |
+| 6b | `fusion/gbt.py` | `main()`, wrapped in `mlflow.start_run()` | **No** — same guard, not independently confirmed but same code path |
 
-| # | File | Entry | Input | Output |
-|---|---|---|---|---|
-| 6a | `fusion/rule_based.py` | `__main__` → `predict_all()` | `clip_features.parquet` | stdout accuracy; `df["rule_pred"]` in-memory |
-| 6b | `fusion/gbt.py` | `__main__` → `main()` | `clip_features.parquet` | stdout accuracy; trained model in-memory (never saved) |
+Both still import each other (`gbt.py` imports `predict_all`/`fit_fallback`/
+`predict_intent` from `rule_based.py`) so a GBT run also re-runs the rule
+baseline for direct comparison — unchanged behavior from before. Both now
+also log an `mlflow.pyfunc` model (`RuleBasedFusionModel`, `GBTFusionModel`)
+to the local Model Registry on every successful run.
 
-Both are real terminal entry points. Note `fusion/gbt.py` **imports**
-`fusion/rule_based.py` (`from rule_based import predict_all, fit_fallback`) and
-runs the rule baseline alongside GBT for direct comparison — so running
-`gbt.py` exercises *both* fusion paths. [VERIFIED]
+### Not entry points (diagnostic side-branch, unchanged in role)
 
-### Not entry points (diagnostic side-branch)
-
-`pipeline/aggregate_clip_cues.py` → `pipeline/agreement_report.py` form a
-**Phase-0 diagnostic** path (majority-vote dominant label per clip, compared
-against the authored `scenarios.csv` intent). Their output
-(`pipeline/measured/clip_cues.csv`, `reports/phase0_agreement.*`) **does not
-feed fusion**. This is a parallel QA branch, easy to mistake for the feature
-pipeline (it is *not* — see §9 and §17). [VERIFIED]
+`pipeline/aggregate_clip_cues.py` → `pipeline/agreement_report.py` remain a
+Phase-0 diagnostic path (majority-vote label vs. authored scenario intent),
+now repointed at v2.0.0 via `pipeline/dataset_config.py` but otherwise
+untouched. Still does not feed fusion.
 
 ---
 
-## 3. Complete End-to-End Call Graph
+## 4. Complete End-to-End Call Graph
 
 ```text
 # ── STAGE 1: four independent runner processes (one per venv) ──────────────
 
 runners/emotion_runner.py  __main__
-└── run_batch(manifest, clips_root, out)
-    ├── read_manifest(clips.csv)                       # common/schema.py
-    ├── load_model()                                   # → build_model()+load_state_dict (Emotion Repo/video.py)
-    │   └── emotion_video.build_model()                # torchvision MobileNetV2, head→Linear(1280,7)
-    └── for each clip:  process_clip(clip, model, transform, device, mp_face)
-        ├── cv2.VideoCapture(clip).read()  (per frame)
-        ├── mp_face.process(rgb_small)                 # MediaPipe FaceDetection(model_selection=1)
-        ├── pick_face(detections)                      # largest bbox by area
-        ├── transform(pil).unsqueeze(0)                # → (1,3,224,224)
-        ├── F.softmax(model(tensor))[0]                # → (7,) probs
-        └── NormalisedFrameCue(label, confidence, probs, valid=conf>=0.50, extra={bbox})
-    → append_batch(f, clip_id, records)                # writes JSONL lines
+└── run_batch → process_clip(clip, model, transform, device, mp_face)
+    ├── emotion_video.resolve_weights(DEFAULT_WEIGHTS="finetuned_MobileNetV2.pth")
+    ├── MediaPipe FaceDetection(model_selection=1) — single pass, no CLAHE/tiling
+    ├── pick_face (largest bbox) → crop full-res frame → PIL → transform(224×224)
+    └── softmax(MobileNetV2(x)) → 7-way probs → NormalisedFrameCue
 
 runners/gesture_runner.py  __main__
-└── run_batch → process_clip(clip, keypoint_classifier, point_history_classifier, ...)
-    ├── hands.process(rgb)                             # MediaPipe Hands(max_num_hands=2)
-    ├── calc_landmark_list / pre_process_landmark      # 21 landmarks → 42-vec normalised
-    ├── keypoint_classifier(vec)  → (sign_id, conf)    # TFLite KeyPointClassifier (6 signs)
-    ├── point_history_classifier(hist) → (act_id,conf) # TFLite PointHistoryClassifier (6 actions)
-    ├── detect_wave / detect_come_here / check_hand_raised   # heuristic geometry
-    ├── <Global Scenario Resolution>                   # 1-hand / 2-hand IF-THEN → scenario text
-    └── GESTURE_SCENARIO_TO_CANONICAL[text] → label    # constants.py; probs={} always
-    → NormalisedFrameCue(label, confidence, probs={}, valid=(label!=Unknown and conf>=0.80))
+└── process_clip(clip, engine)                    # engine loaded once, reset() per clip
+    ├── mp.solutions.holistic.Holistic (recreated per clip)
+    ├── engine.process_holistic(res) → GestureEngine (Gesture Repo/src/engine.py)
+    │   ├── landmarks_to_arrays → build_features() → 185-dim vector       (src/features.py)
+    │   ├── deque(maxlen=64); once ≥32 buffered, resample to 32, run TCN
+    │   ├── softmax → EMA(α=0.25) smooth → argmax → 0.60 conf-floor → idle
+    │   └── 0.30s debounce before switching self.current
+    │   returns (native_label, confidence) ONLY — smoothed probs computed but discarded
+    ├── NATIVE_TO_CANONICAL = {"idle": "Unknown"}  (other 7 labels pass through)
+    └── NormalisedFrameCue(label, confidence, probs={}, valid=conf≥0.80)
 
-runners/motion_runner.py  __main__
-└── run_batch → process_clip(clip, engine)             # engine loaded once, engine.reset() per clip
-    ├── mp_pose.Pose.process(rgb)  → pose_world_landmarks   # MediaPipe Pose (33 world lm)
-    ├── mediapipe_to_ntu25(world_landmarks.landmark)   # skeleton_utils.py → (25,3)
-    └── engine.update(joints_25)                       # inference.py MotionInference
-        ├── joints_25[JOINT_SUBSET] → (14,3)
-        ├── normalize_skeleton → flatten → pos(42); vel = pos - prev_pos(42)
-        ├── frame_feat = concat(pos,vel) (84,); push to 30-frame deque
-        └── if len(deque)==30: _predict() → MotionLSTM.forward → softmax → MotionResult(label,probs(4,))
-    → NormalisedFrameCue(label, confidence, probs{4 classes}, valid=…, extra={buffering,has_landmarks})
+runners/motion_runner.py  __main__                # UNCHANGED — see §8
+└── process_clip(clip, engine) → mediapipe_to_ntu25 → MotionInference.update
+    → 30-frame window → MotionLSTM → softmax(4) → NormalisedFrameCue
 
 runners/context_runner.py  __main__
-└── run_batch → process_clip(clip, model, transform, device)
-    ├── transform(rgb).unsqueeze(0)                    # → (1,3,224,224)
-    ├── torch.softmax(model(tensor))[0]                # EfficientNet-B0 → (2,) probs
-    ├── prob_history(deque maxlen=15); avg = mean(history)   # temporal smoothing
-    └── NormalisedFrameCue(label, confidence=avg_conf, probs{classroom,kitchen}, valid=…)
+└── process_clip(clip, model, transform, device)
+    ├── create_scene_classifier(backend="clip", classes=["classroom","kitchen"])
+    │   → ZeroShotSceneClassifier (CLIP ViT-B-32-quickgelu)
+    ├── BGR→RGB → CLIP encode_image → cosine-sim ×100 vs. text-prompt embeddings
+    ├── softmax over 2 active classes; internal deque(maxlen=15) smoothing
+    └── NormalisedFrameCue(label, confidence=avg_conf, probs{classroom,kitchen})
 
 # ── STAGE 2: feature builder (single process, .venvs/pipeline) ─────────────
 
 pipeline/build_features.py  main()
-├── read_csv(clips.csv / scenarios.csv / splits.csv)
-├── load_frame_cues_by_clip(cue) for cue in [emotion,gesture,motion,context]   # aggregate.py
-│   └── {clip_id: [frame_record,…]}                    # groups JSONL by clip_id
-└── for each clip:  build_clip_feature_row(clip_id, e_recs, g_recs, m_recs, c_recs)   # aggregate.py
-    ├── _prob_mean_features(emotion_records, EMOTION_CLASSES)   # mean probs + max_conf + valid_frac
-    ├── _majority_onehot_features(gesture_records, GESTURE_CLASSES)  # one-hot + mean_conf + valid_frac
-    ├── _prob_mean_features(motion_records, MOTION_CLASSES)
-    ├── _prob_mean_features(context_records, CONTEXT_CLASSES)   # + separate mean-confidence calc
-    └── missing_<cue> = float(valid_fraction < 0.40)
-    → row dict (33 features) + intent + split cols
-→ df.to_parquet(clip_features.parquet)
+├── clips_by_id = {clip_id: row} from v2.0.0 clips.csv
+├── split_rows  = v2.0.0 splits.csv (already usable==TRUE-filtered, 2,869 rows)
+├── dev_assignment = assign_dev_split(split_rows, clips_by_id)   # ~20% of train, grouped
+│                                                                  by (scenario_dir, person_id, take_index)
+├── frames_by_cue = {cue: load_frame_cues_by_clip(cue) for 4 cues}   # aggregate.py, UNCHANGED
+└── for each split_row:
+    ├── feat_row = build_clip_feature_row(...)      # aggregate.py, UNCHANGED — 33 dims
+    ├── apply_cue_mask(feat_row, clip_row)           # zero+missing-bit per real *_masked flag
+    ├── feat_row["scenario_dir"/"person_id"/"intent"/"split_design"/"split_design_v2"/"scoreable"] = ...
+    └── rows.append(feat_row)
+→ df.to_parquet(clip_features.parquet)     # NOT YET RUN against current JSONLs — see §17
 
-# ── STAGE 3: fusion (single process, .venvs/pipeline) ──────────────────────
+# ── STAGE 3: fusion (single process, .venvs/pipeline, wrapped in mlflow run) ─
 
 fusion/rule_based.py  __main__
-├── df = read_parquet(clip_features.parquet)
-├── fallback = fit_fallback(train_df)                  # train intent mode = "F04"
-└── predict_all(df, fallback) → df.apply(predict_intent, axis=1)
-    └── predict_intent(row):
-        ├── emotion = _dominant(row,"emotion",EMOTION_CLASSES)   # argmax of block, None if missing
-        ├── gesture = _dominant(row,"gesture",GESTURE_CLASSES)
-        ├── motion  = _dominant(row,"motion",MOTION_CLASSES)
-        ├── context = _dominant(row,"context",CONTEXT_CLASSES)
-        └── priority IF-THEN cascade → intent string
+├── init_tracking() → mlflow SQLite store + "fusion-engine-intent-classification" experiment
+├── df = log_dataset(context="training")     # tracking/dataset_logging.py
+│   └── check_dataset_consistency(...)       # RAISES DatasetVersionMismatchError today
+├── fallback = fit_fallback(train_df)        # train-split intent mode
+├── preds = predict_all(df, fallback)        # rewritten 8-branch cascade, §14
+└── logs overall/scoreable/per-split/per-class-recall metrics + a pyfunc model
 
 fusion/gbt.py  main()
-├── df = read_parquet(clip_features.parquet)
-├── X_train = apply_modality_dropout(train_df[FEATURE_NAMES], rng)   # per-cue zeroing + missing bit
-├── model = LGBMClassifier(multiclass, n_estimators=300, max_depth=5, lr=0.05, class_weight="balanced")
-├── model.fit(X_train, train_df["intent"])
-├── (also) predict_all(df, fallback)  ← imports rule_based, runs it for comparison
-└── predict_with_safety_override(model, split_df[FEATURE_NAMES], f02_idx)
-    ├── proba = model.predict_proba(X)                 # (n, 10)
-    ├── preds = model.classes_[proba.argmax(1)]
-    └── preds = where(proba[:,f02_idx] >= 0.15, "F02", preds)   # safety override
+├── same init_tracking()/log_dataset() gate
+├── X_train, y_train = apply_modality_dropout(...)   # capped at 2 cues, relabels to F05
+├── LGBMClassifier(...).fit(X_train, y_train)         # same hyperparams as before
+├── rule_preds_all = predict_all(df, fallback)         # runs rule_based for comparison
+├── predict_with_safety_override(...)                  # F02 ≥ 0.15 → force F02, unchanged
+└── logs metrics/figures + a pyfunc model
 ```
 
 ---
 
-## 4. Emotion Cue — Full Data Trace
+## 5. Dataset — `hri-multimodal-intent-v2.0.0`
 
-Files: `runners/emotion_runner.py` (loop), `Emotion Repo/video.py` (model,
-preprocess, labels). Model weights: `Emotion Repo/best_MobileNetV2.pth`.
+`Data/Dataset/hri-multimodal-intent-v1.0.0/` has been deleted from disk
+(`git status` shows its 3 annotation CSVs as `deleted`; `raw/` was already
+gitignored). It is replaced by `Data/Dataset/hri-multimodal-intent-v2.0.0/`
+(untracked — this dataset version has not been committed yet). [VERIFIED]
 
-### 4.1 Input
+| | v1.0.0 (deleted) | v2.0.0 (current) |
+|---|---|---|
+| Clips | 1,270 | 2,904 total (2,869 `usable`, 2,670 `scoreable`) |
+| Scenarios | 22 (`S01`…`S29`, gaps) | 62 (`S01`…`S63`, gap at S30) |
+| Subjects | 23 | 10 (`P01`…`P10`) |
+| Intents | 10 (`F01`–`F10`) | **9** (`F01`–`F08`, `F10` — **F09 removed**) |
+| Subject:scenario | 1:1 (confounded) | Many:many — every scenario has 2–10 subjects |
+| Splits | none shipped (`build_splits.py` derives them) | `splits.csv` ships `split_design` (train/test: 1,866/1,003) pre-curated |
 
-- **Source:** one decoded video frame from `cv2.VideoCapture(clip).read()`.
-- **Type / shape / dtype:** `numpy.ndarray`, `(H, W, 3)`, `uint8`, **BGR**
-  channel order (OpenCV default). For this dataset typically `(480, 640, 3)`.
-- **Value range:** 0–255. Example: a `(480,640,3)` uint8 array. [VERIFIED,
-  `emotion_runner.py:81-85`]
+**`clips.csv` (39 columns)** adds real provenance/QA fields absent from v1:
+`usable`, `exclude_kind`, `exclude_reason`, `scoreable`, `caveat`,
+`derived_from_row`, `derived_from_clip_id`, `dup_of`, and per-cue relabeled
+ground truth (`emotion_v3`, `gesture_v3`, `motion_v3`, `missing_v3`,
+`gt_emotion`) plus real masking flags (`context_masked`, `emotion_masked`,
+`gesture_masked`, `motion_masked` — motion is verified never masked in this
+dataset). These indicate v2 is a **relabeled/reconciled merge** of prior
+recordings ("v3 row"), not a fresh capture — `old_clip_id`/`old_filepath`/
+`old_scenario_id` columns point back at the source rows. [VERIFIED]
 
-### 4.2 Preprocessing
+**`scenarios.csv` (62 rows, 21 columns)** now carries the
+`(context, emotion_v3, gesture_v3, motion_v3) → intent` mapping directly,
+machine-readable, which is what makes `pipeline/derive_rule_table.py` (§13)
+possible — v1's ~22-row table had to be read by eye.
 
-| Step | Function | Input | Operation | Output type | Output shape |
-|---|---|---|---|---|---|
-| 1 | `emotion_runner.process_clip` | `(480,640,3)` uint8 BGR | downscale if `w>640` (`MAX_FRAME_WIDTH`) | ndarray uint8 BGR | ≤`(…,640,3)` |
-| 2 | `cv2.cvtColor(...BGR2RGB)` | small BGR | BGR→RGB for detector | ndarray uint8 RGB | same |
-| 3 | `mp_face.process` | RGB frame | MediaPipe FaceDetection (`model_selection=1`, full-range) | detections list | — |
-| 4 | `pick_face` | detections | choose largest bbox by `w*h` | one detection | — |
-| 5 | bbox → pixel crop | full-res **BGR** frame | `face = frame[y:y+bh, x:x+bw]` (crop on original, not the downscaled copy) | ndarray uint8 BGR | `(bh,bw,3)` |
-| 6 | `cv2.cvtColor(...BGR2RGB)` + `Image.fromarray` | face BGR | → PIL RGB image | `PIL.Image` | `(bw,bh)` |
-| 7 | `transform(pil)` = `Resize((224,224))`+`ToTensor`+`Normalize(ImageNet)` | PIL RGB | resize, /255, standardize | `torch.float32` | `(3,224,224)` |
-| 8 | `.unsqueeze(0).to(device)` | tensor | add batch dim | `torch.float32` | `(1,3,224,224)` |
-
-Normalize constants: mean `[0.485,0.456,0.406]`, std `[0.229,0.224,0.225]`.
-[VERIFIED, `video.py:45-50`]
-
-### 4.3 Model Architecture
-
-`build_model()` (`video.py:38-42`): **torchvision `mobilenet_v2(weights=None)`**
-with `model.classifier[1] = nn.Linear(1280, 7)` (`last_channel=1280`, 7 emotion
-classes). Weights loaded from `best_MobileNetV2.pth` via
-`load_state_dict(..., weights_only=True)`. [VERIFIED] Data flow: `(1,3,224,224)`
-→ MobileNetV2 feature extractor → global pool → `(1,1280)` → Linear → `(1,7)`
-logits. The `.pth` is a raw `state_dict` (no config); architecture is fully
-specified by `build_model()`, so it **is** verifiable (not an opaque blob).
-
-### 4.4 Prediction Generation
-
-`emotion_runner.py:112-117`:
+`pipeline/dataset_config.py` is the new single source of truth for which
+version folder the batch scripts target:
 ```python
-probs_vec = F.softmax(model(tensor), dim=1)[0].cpu().numpy()   # (7,) float
-idx  = int(probs_vec.argmax())
-conf = float(probs_vec[idx])
-label = emotion_video.EMOTION_LABELS[idx]
-probs = {lbl: float(p) for lbl,p in zip(EMOTION_LABELS, probs_vec)}
+ACTIVE_DATASET_VERSION = "hri-multimodal-intent-v2.0.0"
+DATASET_ROOT = REPO_ROOT/Data/Dataset/{ACTIVE_DATASET_VERSION}
 ```
-- `EMOTION_LABELS = ["Surprise","Fear","Disgust","Happy","Sad","Anger","Neutral"]`
-  (index 0→6). [VERIFIED, `video.py:30`]
-- Softmax over logits → `argmax` → class index → `conf` = that probability.
-- **valid gate:** `valid = (conf >= 0.50)` (`CONFIDENCE_FLOOR["emotion"]`).
-- If **no face** detected or crop is empty → emits
-  `label="Unknown", confidence=0.0, probs={}, valid=False`. [VERIFIED]
-
-### 4.5 Exact Returned Output (per frame)
-
-`NormalisedFrameCue` serialized as one JSON line. Real record from
-`emotion_frame_cues.jsonl` [VERIFIED]:
-```json
-{"cue":"emotion","frame_idx":0,"label":"Neutral","confidence":0.99996,
- "probs":{"Surprise":4.5e-06,"Fear":4.6e-10,"Disgust":3.9e-07,"Happy":3.3e-05,
-          "Sad":2.8e-07,"Anger":3.0e-10,"Neutral":0.99996},
- "valid":true,"extra":{"bbox":[256,140,56,56]},"clip_id":"S01_F04_c001"}
-```
-Fields: `probs` has all 7 class keys; `confidence` == `probs[label]`;
-`extra.bbox` = `[x,y,bw,bh]` pixel box (or `null`).
-
-### 4.6 Downstream Data Trace
-
-`emotion_frame_cues.jsonl` → `aggregate.load_frame_cues_by_clip("emotion")`
-→ list per `clip_id` → `_prob_mean_features(records, EMOTION_CLASSES)`:
-- `valid = [r for r in records if r["valid"]]`
-- `mat = [[r["probs"].get(c,0.0) for c in EMOTION_CLASSES] for r in valid]`
-  → `mat.mean(axis=0)` = **7 mean probabilities**
-- `max_confidence = max(r["confidence"] for r in valid)`
-- `valid_fraction = len(valid)/len(records)`
-→ becomes columns `emotion_Surprise…emotion_Neutral`,
-`emotion_max_confidence`, `emotion_valid_fraction`, plus
-`missing_emotion = float(valid_fraction < 0.40)`. Then straight into the
-Parquet, then into both fusion approaches. **No emotion value is dropped;
-every one reaches fusion.** [VERIFIED]
+`pipeline/build_features.py`, `pipeline/build_splits.py`, and
+`pipeline/agreement_report.py` were all repointed at this constant (each a
+small, mechanical diff — no logic changes beyond the path source).
+[VERIFIED]
 
 ---
 
-## 5. Motion Cue — Full Data Trace
+## 6. Emotion Cue — Full Trace
+
+Files: `runners/emotion_runner.py`, `Emotion Repo/inference/video.py`.
+Checkpoint: `Emotion Repo/checkpoints/finetuned_MobileNetV2.pth`.
+
+### 6.1 What changed vs. before
+
+Architecturally, **nothing** — same MobileNetV2 backbone, same 7-class head,
+same preprocessing shape. What changed: (a) the file moved from
+`Emotion Repo/video.py` to `Emotion Repo/inference/video.py` as part of the
+repo-wide restructure, and (b) **the runner now resolves and loads the
+fine-tuned checkpoint by default**, not the RAF-DB-only baseline.
+`emotion_video.DEFAULT_WEIGHTS = "finetuned_MobileNetV2.pth"`
+(`video.py:36`); `resolve_weights()` (`video.py:59-72`) searches cwd →
+script-dir → script-dir/checkpoints → script-dir/../checkpoints, resolving
+to `Emotion Repo/checkpoints/finetuned_MobileNetV2.pth` (confirmed present,
+9.18 MB). Per `Emotion Repo/README.md`, this checkpoint scores **92.5% acc /
+90.1% macro-F1** on the true held-out test subjects, vs. 58.8%/38.9% for the
+old baseline checkpoint the previous version of this pipeline effectively
+used. [VERIFIED]
+
+> **Footgun already documented in the repo, worth repeating here:**
+> `Emotion Repo/config.py` also defines a `DEFAULT_CHECKPOINT` constant that
+> currently agrees with `video.py`'s default — but it is a second,
+> independent hardcoded value that `emotion_runner.py` never reads. The two
+> "defaults" are only coincidentally in sync. `Emotion Repo/README.md`
+> documents a real past incident where they drifted and produced a silent
+> false "this model is bad" regression.
+
+### 6.2 Preprocessing (as actually run by the batch runner)
+
+Downscale to `MAX_FRAME_WIDTH=640` → BGR→RGB → single-pass MediaPipe
+`FaceDetection(model_selection=1, min_detection_confidence=0.5)` → largest
+bbox by area (`pick_face`) → crop from the **full-resolution** frame → PIL →
+`Resize(224,224)` + `ToTensor` + ImageNet normalize.
+
+`video.py` also defines a more robust `detect_face_box()` (plain pass + CLAHE
+pass + 4 tiled quadrants, claimed ~100% vs. ~68% face-detection recall on
+far-field footage) — but this is used only by `video.py`'s own interactive
+demo loop, **not** by `emotion_runner.py`, which reimplements a plain
+single-pass detector. The batch pipeline does not currently benefit from
+that robustness improvement. [VERIFIED — flagged as a gap in §17]
+
+### 6.3 Model, labels, confidence
+
+MobileNetV2 (`weights=None`) with `classifier[1] = nn.Linear(1280, 7)`.
+Labels: `["Surprise","Fear","Disgust","Happy","Sad","Anger","Neutral"]`.
+`CONFIDENCE_FLOOR["emotion"] = 0.50` (`runners/common/constants.py:8`).
+
+### 6.4 Real output (`pipeline/measured/emotion_frame_cues.jsonl`, line 1)
+
+```json
+{"cue":"emotion","frame_idx":0,"label":"Happy","confidence":0.598,
+ "probs":{"Surprise":...,"Fear":...,"Disgust":...,"Happy":0.598,"Sad":...,"Anger":...,"Neutral":...},
+ "valid":true,"extra":{"bbox":[345,131,30,30]},"clip_id":"S01_F01_c001"}
+```
+Schema is byte-for-byte the same `NormalisedFrameCue` shape as before —
+`aggregate.py`'s emotion aggregation code needs no changes for this cue.
+
+---
+
+## 7. Gesture Cue — Full Trace
+
+Files: `runners/gesture_runner.py`, `Gesture Repo/src/engine.py`,
+`Gesture Repo/src/features.py`, `Gesture Repo/src/models.py`. Checkpoint:
+`Gesture Repo/checkpoints/best_TCN.pth`. **Fully replaced this session.**
+
+### 7.1 Input and feature construction
+
+Per frame: MediaPipe **Holistic** (`model_complexity=1`, recreated fresh per
+clip, `gesture_runner.py:91-92`) → pose (33 landmarks) + both hands (21
+landmarks each) → `build_features()` (`Gesture Repo/src/features.py`)
+produces a **185-dim** vector: pose ×(x,y,visibility)=99, dims,
+mid-shoulder-origin / shoulder-width-scaled; left hand 21×(x,y)=42 + 1
+presence flag = 43; right hand same = 43. `99+43+43=185`, wrist-relative /
+wrist↔middle-MCP-scaled for each hand. [VERIFIED]
+
+### 7.2 Temporal model — TCN, confirmed deployed
+
+`Gesture Repo/config.py`: `DEFAULT_MODEL="TCN"`,
+`DEFAULT_CHECKPOINT=checkpoints/best_TCN.pth`; confirmed by
+`checkpoints/model_config.json` (`"model":"TCN"`, `hidden_size=128`,
+`dropout=0.3`, `683,272` params). `TCNClassifier`
+(`Gesture Repo/src/models.py`): `Conv1d` input projection (185→128) → 4
+residual dilated blocks (kernel=5, dilations 1/2/4/8, each `Conv1d+BatchNorm
++ReLU+Dropout` ×2 with residual add) → global mean-pool over time →
+`Dropout→Linear(128→8)`. Other checkpoints on disk
+(`best_TCN_prev/pretune/pre_bhu.pth`) are superseded TCN variants of the
+same architecture — no BiGRU/TinyTransformer checkpoint exists despite those
+being mentioned as design alternatives in the README. [VERIFIED]
+
+### 7.3 Windowing, smoothing, and the "idle" class
+
+A `deque(maxlen=64)` buffers raw per-frame features (`engine.py`,
+`ENGINE_BUFFER_FRAMES=64`). While fewer than 32 frames are buffered — the
+first 31 frames of every clip — `process()` returns confidence `0.0`
+verbatim (a buffering/warm-up state directly analogous to the Motion
+model's own 29-frame warm-up, §8). Once ≥32 frames are available, the
+buffer is uniformly resampled to exactly 32 frames and run through the TCN
+in one forward pass. Output: softmax(8) → EMA smoothing (`α=0.25`) → argmax
+→ if confidence `< 0.60` the candidate is forced to `"idle"` → a new label
+must hold for `≥0.30s` (debounce) before it becomes the reported label.
+`"idle"` is a genuine trained class (person/hand present, not gesturing) —
+not a stand-in for "nothing detected"; no person at all (`pose_landmarks is
+None`) also reports `("idle", 0.0)`, but is distinguished downstream purely
+by the confidence-floor gate (§7.4), same mechanism as before. [VERIFIED]
+
+### 7.4 Label mapping and confidence floor
+
+`NATIVE_TO_CANONICAL = {"idle": "Unknown"}` (`gesture_runner.py:75`); the
+other 7 native labels (`wave, point, thumbs_up, thumbs_down, beckoning,
+raise_hand, both_hands_up`) already match `pipeline/aggregate.py`'s
+`GESTURE_CLASSES` vocabulary exactly, so no other remapping happens.
+`CONFIDENCE_FLOOR["gesture"] = 0.80` — **unchanged** from the old system's
+strict floor. Empirically confirmed: a `"wave"` at confidence 0.746 is
+`valid:false`; the same clip's frame at confidence 0.801 is `valid:true`.
+Across the full 359,363-line file, ~27.3% of rows are `valid:true`.
+[VERIFIED]
+
+> **Note:** `runners/common/constants.py`'s `GESTURE_SCENARIO_TO_CANONICAL`
+> table and its `"Idle"`/`"Wave"`/`"Brief wave"` string keys are **leftovers
+> from the deleted heuristic FSM**. The current runner does not import or
+> use it — it defines its own two-entry `NATIVE_TO_CANONICAL` inline. The
+> old table is now consumed only by `pipeline/experiments/
+> gesture_no_gate_experiment.py`, an ablation script, not the production
+> path. `pipeline/canonical_map.py`'s comments referencing "gesture_runner.py's
+> keypoint_classifier" are similarly stale prose, though the map itself
+> (`GESTURE_MAP`) is current and includes `"idle": "Unknown"`.
+
+### 7.5 The probs gap — a real, reportable finding
+
+The TCN **does** compute a full 8-class softmax internally
+(`engine.py`'s `smooth_probs`) — architecturally, this cue is now capable of
+emitting a real probability distribution, unlike the old FSM which had no
+distribution to emit at all. **However**, `GestureEngine.process()` /
+`process_holistic()` only ever return `(label, confidence)` — the
+probability vector is computed and then discarded, never exposed through the
+public API. `gesture_runner.py:110` correspondingly hardcodes `probs={}` on
+every record. Verified directly against the regenerated JSONL: every one of
+359,363 lines has `"probs": {}`. **So despite the model upgrade, the pipeline
+still cannot use gesture's probability distribution for anything** — the
+plumbing to carry it through from `engine.py` to the JSONL was never built.
+This has no effect on current aggregation (`_majority_onehot_features` only
+reads `label`/`confidence`, never `probs`), but it blocks any future switch
+of gesture's aggregation from majority-vote-one-hot to mean-probability. §17.
+
+### 7.6 Real output (`pipeline/measured/gesture_frame_cues.jsonl`)
+
+```json
+{"cue":"gesture","frame_idx":0,"label":"Unknown","confidence":0.0,"probs":{},"valid":false,"extra":{"has_person":true},"clip_id":"S01_F01_c001"}
+{"cue":"gesture","frame_idx":39,"label":"wave","confidence":0.7226,"probs":{},"valid":false,"extra":{"has_person":true},"clip_id":"S01_F01_c001"}
+{"cue":"gesture","frame_idx":47,"label":"wave","confidence":0.8011,"probs":{},"valid":true,"extra":{"has_person":true},"clip_id":"S01_F01_c001"}
+```
+
+### 7.7 Old system fully removed
+
+`git status` confirms `Gesture Repo/model/{keypoint_classifier,
+point_history_classifier}/*` (`.tflite`, `.hdf5`, label CSVs), `app.py`,
+`train/*.ipynb`, `utils/cvfpscalc.py` are all deleted. No `.tflite` or
+`KeyPointClassifier`/`PointHistoryClassifier` reference remains anywhere in
+`Gesture Repo/src/` or `runners/gesture_runner.py` outside one historical
+mention in the runner's own docstring. [VERIFIED]
+
+---
+
+## 8. Motion Cue — Full Trace (unchanged)
 
 Files: `runners/motion_runner.py`, `Motion Repo/inference.py`,
-`Motion Repo/model.py`, `Motion Repo/skeleton_utils.py`. Weights:
+`Motion Repo/model.py`, `Motion Repo/skeleton_utils.py`. Checkpoint:
 `Motion Repo/checkpoints/best_model_finetuned.pt`.
 
-### 5.1 Input
+**Confirmed identical to the prior commit** — `git status`/`git diff` show
+zero changes to `Motion Repo/` or `runners/motion_runner.py` beyond a
+4-line path tweak. This section is carried forward unchanged.
 
-- **Source:** decoded frame → MediaPipe Pose. The model does **not** consume
-  pixels; it consumes **3D world landmarks**.
-- After `mp_pose.Pose.process(rgb)`: `results.pose_world_landmarks.landmark` =
-  **33 metric 3D landmarks** (metres), or `None` if no person.
-- `mediapipe_to_ntu25()` converts to `numpy (25,3) float32` in NTU layout
-  (X,Y negated = 180° about Z; 3 spine joints approximated). If no landmarks,
-  `joints_25 = np.zeros((25,3), float32)`. [VERIFIED, `motion_runner.py:140-152`]
+MediaPipe `Pose` → 33 world landmarks → `mediapipe_to_ntu25()` → 25-joint
+NTU layout → subset to 14 joints → hip-center/shoulder-width normalize →
+flatten to a 42-dim position vector, paired with a 42-dim frame-to-frame
+velocity vector → 84-dim frame feature → 30-frame sliding window →
+`MotionLSTM`: `LayerNorm(84)` → `LSTM(84→256, 3 layers, dropout 0.35)` →
+temporal attention over the 30 timesteps → `Linear(256,64)→ReLU→Dropout→
+Linear(64,4)`. **Confirmed 4 classes** (`sitting, standing, walking,
+stepping_back`) via checkpoint's classifier weight shape `(4,64)` and
+`Motion Repo/model.py`'s `num_classes=4` / `inference.py`'s `NUM_CLASSES=4`
+— stale "(6,)"/"shape (6,)" comments remain in `inference.py:59,203`
+(cosmetic only, no runtime effect). The first 29 frames of every clip are a
+`"buffering"` state (`valid=False`). `CONFIDENCE_FLOOR["motion"] = 0.50`.
+[VERIFIED]
 
-### 5.2 Preprocessing (inside `MotionInference.update`, `inference.py:145-184`)
+Output schema unchanged: `{"cue":"motion","label":"sitting"|...,"confidence":
+float,"probs":{4 keys},"valid":bool,"extra":{"buffering","has_landmarks"}}`.
 
-| Step | Function | Input | Operation | Output type | Output shape |
-|---|---|---|---|---|---|
-| 1 | frame rotate/resize | `(H,W,3)` uint8 | orientation fix, `resize_with_aspect_ratio(max 960)` | uint8 | ≤`(960,…)` |
-| 2 | `pose.process` | RGB | MediaPipe Pose world landmarks | 33 lm or None | — |
-| 3 | `mediapipe_to_ntu25` | 33 lm | remap+negate → NTU | `(25,3)` float32 | `(25,3)` |
-| 4 | `joints_25[JOINT_SUBSET]` | `(25,3)` | select 14 joints | `(14,3)` | `(14,3)` |
-| 5 | `normalize_skeleton` | `(14,3)` | hip-center, /shoulder-width (if >0.05) | `(14,3)` float32 | `(14,3)` |
-| 6 | `.flatten()` | `(14,3)` | → position vector | `(42,)` | `(42,)` |
-| 7 | `vel = pos - prev_pos` | `(42,)` | per-frame velocity (0 on first frame) | `(42,)` | `(42,)` |
-| 8 | `concatenate([pos,vel])` | two `(42,)` | frame feature | `(84,)` | `(84,)` |
-| 9 | `deque(maxlen=30).append` | `(84,)` | sliding window | deque | up to 30×84 |
-| 10 | `np.stack(...).unsqueeze(0)` | 30×`(84,)` | window tensor | `torch.float32` | `(1,30,84)` |
+---
 
-`FEATURE_DIM=84`, `WINDOW_SIZE=30`, `NUM_CLASSES=4`. [VERIFIED]
+## 9. Context Cue — Full Trace
 
-### 5.3 Model Architecture
+Files: `runners/context_runner.py`, `Context Repo/scene_classification/
+src/classifier.py`, `.../src/zero_shot.py`. **Backend fully replaced this
+session** (EfficientNet-B0 CNN → zero-shot CLIP).
 
-`model.py::MotionLSTM` [VERIFIED, and checkpoint config confirmed]:
-`LayerNorm(84)` → `LSTM(input=84, hidden=256, num_layers=3, batch_first,
-dropout=0.35)` → temporal attention `Linear(256,1)`+softmax over 30 timesteps
-→ weighted-sum context `(1,256)` → classifier `Linear(256,64)→ReLU→Dropout→
-Linear(64,4)` → `(1,4)` logits.
+### 9.1 Backend selection
 
-Checkpoint `best_model_finetuned.pt` is a **dict**
-`{epoch, model_state_dict, val_acc, config, warm_started_from}`. Verified:
-`config = {hidden_size:256, num_layers:3, dropout:0.35, …}`, `epoch=20`,
-`val_acc≈0.5416`, final classifier weight shape **`(4,64)`** → genuinely
-4 classes. [VERIFIED by loading the checkpoint]
+`context_runner.py` calls `create_scene_classifier(backend="clip",
+classes=["classroom","kitchen"])`. `create_scene_classifier()`
+(`classifier.py`) defaults to `SCENE_BACKEND="clip"`
+(`scene_classification/config.py`), and the runner also hardcodes
+`backend="clip"` explicitly — the CNN path (`SceneClassifier`) exists in the
+same module but is never instantiated by the production runner. This
+always builds a `ZeroShotSceneClassifier`. [VERIFIED]
 
-> **Note — stale "6-class" comments.** `inference.py` docstrings/comments say
-> `probs shape (6,)` and `logits (1,6)`; `model.py::forward` docstring says
-> `returns (B,6)`. These are **wrong/stale**; the real head is 4-class and the
-> real `probs` vector is length 4. Behaviour is correct; the comments lie.
-> See §17.
+> **Sys.path oddity worth flagging:** `context_runner.py` inserts a path
+> under `/media/.../KINGSTON_KG/hri-jetson/modalities/context/
+> scene_classification` — an **externally mounted drive**, not the in-repo
+> `Context Repo/scene_classification/`. The two copies were byte-diffed and
+> are currently identical, so behavior matches what's described here, but
+> the production runner does not actually import from this repo's own
+> tracked source tree. If the two copies ever drift, or the drive isn't
+> mounted, the runner will either silently run stale code or fail to import.
 
-### 5.4 Prediction Generation
+### 9.2 Preprocessing and prediction
 
-`inference.py:194-213`: `logits = model(window)` → `F.softmax(dim=-1)` →
-`probs_np (4,)` → `argmax` → `label_idx` → `MOTION_LABELS[idx]`
-(`{0:"sitting",1:"standing",2:"walking",3:"stepping_back"}`). While the window
-is filling (frames 0–28), `update()` returns `MotionResult(label="buffering",
-confidence=0.0, probs=zeros(4))`. In the runner, buffering →
-`label="Unknown", probs={}`. `valid = (not buffering) and (conf>=0.50) and
-has_landmarks`. [VERIFIED, `motion_runner.py:154-168`]
+BGR→RGB → PIL → CLIP `ViT-B-32-quickgelu` (openai pretrained weights)
+`preprocess`/`encode_image`, L2-normalized → cosine similarity ×100 against
+pre-embedded text prompts (6 prompts/class, averaged) → softmax over the 2
+active classes. An `ABSTAIN_PROMPTS` probe can flag "uncertain" if abstain
+probability crosses a threshold. `config.py` actually defines 5 scene
+classes (`+hospital, cloth_store, museum`) for broader deployment, but this
+pipeline restricts to the 2 it needs. [VERIFIED]
 
-### 5.5 Exact Returned Output (per frame)
+### 9.3 Temporal smoothing moved into the classifier
 
-Real record (buffering frame 0) [VERIFIED]:
+The 15-frame rolling-mean smoothing that previously lived in the runner now
+lives **inside** `ZeroShotSceneClassifier` (`deque(maxlen=15)`,
+`smooth_window` param). The runner's role is reduced to calling
+`classifier.reset()` once per clip. Net behavior is unchanged from before —
+context's per-frame `confidence`/`probs` are still temporally smoothed,
+unlike emotion/motion. [VERIFIED]
+
+### 9.4 The VLM path exists but is not used here
+
+`Context Repo/README.md` describes a second component — SmolVLM2-500M-based
+"VLM situation analysis" producing people-count/activity/attention/objects/
+summary — as part of a combined `ContextState`. Grepping
+`runners/context_runner.py` and the entire `scene_classification/src/` tree
+for any reference to the VLM or `Context Repo/src/vlm.py`/`pipeline.py`
+returns nothing. **The fusion-facing batch pipeline uses only the CLIP scene
+classifier; the VLM is real, working code elsewhere in the repo, but dead
+code from this pipeline's perspective.** [VERIFIED]
+
+### 9.5 Confidence floor and real output
+
+`CONFIDENCE_FLOOR["context"] = 0.50`, combined with `label != "Unknown"`.
+
 ```json
-{"cue":"motion","frame_idx":0,"label":"Unknown","confidence":0.0,"probs":{},
- "valid":false,"extra":{"buffering":true,"has_landmarks":true},"clip_id":"S01_F04_c001"}
+{"cue":"context","frame_idx":0,"label":"classroom","confidence":0.9995,
+ "probs":{"classroom":0.9995,"kitchen":0.0005},"valid":true,
+ "extra":{"activity":null,"engaged":null,"n_objects":0},"clip_id":"S01_F01_c001"}
 ```
-A settled frame instead carries `label∈{sitting,standing,walking,stepping_back}`,
-`confidence∈[0,1]`, `probs={"sitting":…,"standing":…,"walking":…,"stepping_back":…}`.
-
-### 5.6 Downstream Data Trace
-
-Identical mechanism to emotion: `_prob_mean_features(motion_records,
-MOTION_CLASSES)` → `motion_sitting…motion_stepping_back` (4 mean probs),
-`motion_max_confidence`, `motion_valid_fraction`, `missing_motion`. Reaches
-both fusion approaches. The first 29 buffering frames of every clip are
-`valid=False`, so they are excluded from the mean (but counted in the
-denominator of `valid_fraction`). [VERIFIED] In the built Parquet, only **6**
-of 1270 clips are `missing_motion=1`. [VERIFIED]
+Schema unchanged from before — still a 2-key `probs` dict, still constant
+`extra` placeholders that carry no signal.
 
 ---
 
-## 6. Gesture Cue — Full Data Trace
+## 10. Cue Output Comparison (current)
 
-Files: `runners/gesture_runner.py`, `Gesture Repo/model/keypoint_classifier/*`,
-`Gesture Repo/model/point_history_classifier/*` (+ `.tflite` weights and label
-CSVs).
-
-### 6.1 Input
-
-- Decoded frame `(H,W,3)` uint8 BGR → rotate → `resize_with_aspect_ratio(960)`
-  → **`cv.flip(image,1)` horizontal mirror** → RGB → `hands.process`.
-- MediaPipe Hands (`max_num_hands=2`, det/track conf 0.45) returns up to 2 hands
-  of 21 landmarks each. [VERIFIED, `gesture_runner.py:202-220`]
-
-> The mirror flip matters: it swaps left/right handedness and X geometry
-> before all downstream keypoint classification and wave/beckon detection.
-
-### 6.2 Preprocessing (per detected hand)
-
-| Step | Function | Input | Operation | Output | Shape |
+| Cue | Model | `label` vocab | `probs` | `valid` gate | Changed this session? |
 |---|---|---|---|---|---|
-| 1 | `calc_landmark_list` | 21 lm | → pixel `[x,y]` list | list | `21×2` |
-| 2 | EMA smoothing (`alpha=0.45`) | raw list | temporal smoothing vs previous frame | list | `21×2` |
-| 3 | `pre_process_landmark` | smoothed | subtract wrist origin, flatten, /max\|v\| (÷0 guarded) | list[float] | `42` |
-| 4 | `keypoint_classifier(vec)` | `42` | TFLite → `(sign_id, sign_conf)` | (int, float) | — |
-| 5 | `pre_process_point_history` | 16-pt history | normalise by image dims, flatten | list[float] | `32` |
-| 6 | `point_history_classifier(hist)` | `32` | TFLite → `(action_id, action_conf)` (if `sign==2`) | (int, float) | — |
+| Emotion | MobileNetV2 (fine-tuned) | 7 emotions or `Unknown` | 7-key dict, real | `conf≥0.50` | Checkpoint swap only |
+| Gesture | TCN (185-dim in, 32-frame window) | 8-way canonical incl. `Unknown`(idle) | **always `{}`** despite a real distribution existing internally | `label≠Unknown ∧ conf≥0.80` | Fully replaced |
+| Motion | LSTM+attention (unchanged) | 4 motions or `Unknown` | 4-key dict, real | `conf≥0.50 ∧ has_landmarks` | Unchanged |
+| Context | Zero-shot CLIP | `classroom`/`kitchen`/`Unknown` | 2-key dict, **smoothed inside classifier** | `conf≥0.50 ∧ label≠Unknown` | Backend fully replaced |
 
-`KeyPointClassifier` inputs `np.array([landmark_list], float32)` shape
-`(1,42)`; `PointHistoryClassifier` inputs `(1,32)`; both `argmax` the output
-and return `(index, confidence)`. [VERIFIED, classifier `__call__`]
-
-Label vocabularies [VERIFIED from label CSVs]:
-- keypoint signs: `0 Open Palm, 1 Close, 2 Pointer, 3 Thumbs Up, 4 Thumbs Down, 5 Beckoning`
-- point-history actions: `0 Stop, 1 Clockwise, 2 Counter Clockwise, 3 Move, 4 Wave, 5 Come Here`
-
-### 6.3 Decision logic (this is where the gesture "class" is actually formed)
-
-Gesture does **not** output the raw classifier label. It runs a hand-crafted
-**Global Scenario Resolution** (copied verbatim from `test_video.py`) over 1 or
-2 hands, combining sign IDs, action IDs, `check_hand_raised`, `detect_wave`,
-`detect_come_here` into a scenario **text** (`"Wave"`, `"Arms up"`,
-`"Pointing"`, `"Thumbs up"`, `"One hand raised"`, `"Beckoning"`, …), then maps
-via `GESTURE_SCENARIO_TO_CANONICAL` (`constants.py`) to the canonical label.
-Key confidence gate: sign IDs 2–5 with `conf<0.80` are demoted to `-1`
-(unknown). [VERIFIED, `gesture_runner.py:253-354`]
-
-`GESTURE_SCENARIO_TO_CANONICAL`: `Wave/Brief wave/Arms waving→wave`,
-`Pointing→point`, `Thumbs up→thumbs_up`, `Thumbs down→thumbs_down`,
-`One hand raised→raise_hand`, `Arms up→both_hands_up`, `Beckoning→beckoning`,
-`None→Unknown`. [VERIFIED]
-
-### 6.4 Prediction Generation
-
-```python
-label = GESTURE_SCENARIO_TO_CANONICAL.get(global_scenario_text, "Unknown")
-confidence = float(global_conf) if global_scenario_text != "None" else 0.0
-valid = (label != "Unknown" and confidence >= 0.80)   # CONFIDENCE_FLOOR["gesture"]=0.80
-```
-**`probs` is always `{}` for gesture** — it emits only a discrete label +
-scalar confidence, never a distribution. [VERIFIED]
-
-### 6.5 Exact Returned Output (per frame)
-
-Real record (no gesture) [VERIFIED]:
-```json
-{"cue":"gesture","frame_idx":0,"label":"Unknown","confidence":0.0,"probs":{},
- "valid":false,
- "extra":{"point_direction":null,"motion_direction":"none","point_target":"unknown"},
- "clip_id":"S01_F04_c001"}
-```
-`extra.motion_direction` and `extra.point_target` are **hardcoded constants**
-for every frame of every clip (`"none"`/`"unknown"`) — no logic populates them.
-They are never read downstream (§17). A detected frame carries e.g.
-`label="raise_hand", confidence=0.96`.
-
-### 6.6 Downstream Data Trace
-
-Gesture is the **only** cue aggregated by
-`_majority_onehot_features(gesture_records, GESTURE_CLASSES)`:
-- majority-vote label among valid frames (`Counter(...).most_common(1)`)
-- one-hot into `GESTURE_CLASSES = [wave,point,thumbs_up,thumbs_down,raise_hand,
-  both_hands_up,beckoning,Unknown]` (8 dims)
-- `mean_confidence` = mean confidence **of the winning label's frames only**
-- `valid_fraction`
-→ `gesture_wave…gesture_Unknown`, `gesture_mean_confidence`,
-`gesture_valid_fraction`, `missing_gesture`. [VERIFIED] Confirmed against the
-Parquet: gesture block row-sums are exactly `{0, 1}` (true one-hot / all-zero),
-unlike the mean-prob cues. Gesture is the most-often-missing cue: **457/1270**
-clips have `missing_gesture=1`. [VERIFIED]
+The structural asymmetry noted in the prior version of this document still
+holds and is, if anything, sharper now: gesture is the only cue whose model
+*could* emit a real distribution but doesn't, because the plumbing (§7.5)
+was never finished.
 
 ---
 
-## 7. Context Cue — Full Data Trace
+## 11. Aggregation Layer — `pipeline/aggregate.py` (unchanged)
 
-Files: `runners/context_runner.py`, `Context Repo/scene classification/video.py`.
-Weights: `Context Repo/scene classification/best_EfficientNet_B0.pth`.
+**Not touched in this restructure.** `git diff`/`git log` confirm no changes
+since the "Implement Rule-based & LightGBM models" commit. It still assumes
+exactly the schema every cue runner still produces (§6–§9 confirm this holds
+today), so it did not need to change — but it also means this file has not
+been revisited to account for anything new (e.g. it has no awareness that
+gesture *could* now supply real probs, §7.5).
 
-### 7.1 Input
+`FEATURE_NAMES` — **33 columns, unchanged**:
 
-Decoded frame `(H,W,3)` uint8 BGR → `cv2.cvtColor(BGR2RGB)`. No detection /
-crop — the **whole frame** is classified. [VERIFIED, `context_runner.py:74`]
-
-### 7.2 Preprocessing
-
-| Step | Function | Input | Operation | Output | Shape |
-|---|---|---|---|---|---|
-| 1 | `cv2.cvtColor(BGR2RGB)` | `(H,W,3)` uint8 BGR | → RGB | ndarray | same |
-| 2 | `transform` = `ToPILImage`+`Resize((224,224))`+`ToTensor`+`Normalize(ImageNet)` | RGB ndarray | → tensor | `torch.float32` | `(3,224,224)` |
-| 3 | `.unsqueeze(0)` | tensor | batch dim | `torch.float32` | `(1,3,224,224)` |
-
-Note context's transform starts with `ToPILImage` (takes an ndarray), whereas
-emotion's takes a PIL image directly — different first step, same end result.
-[VERIFIED, `video.py:49-55`]
-
-### 7.3 Model Architecture
-
-`build_model()`: torchvision **`efficientnet_b0(weights=None)`** with
-`classifier[1] = nn.Linear(in_features, 2)`. `SCENE_LABELS=["classroom","kitchen"]`.
-Weights from `best_EfficientNet_B0.pth` (raw `state_dict`). Flow:
-`(1,3,224,224)` → EfficientNet-B0 → `(1,2)` logits. [VERIFIED]
-
-### 7.4 Prediction Generation — with temporal smoothing inside the runner
-
-`context_runner.py:66-89`:
-```python
-probs_vec = torch.softmax(model(tensor), dim=1)[0].cpu().numpy()   # (2,)
-prob_history.append(probs_vec)          # deque(maxlen=SMOOTH_WINDOW=15)
-avg  = np.mean(prob_history, axis=0)    # rolling-mean over ≤15 frames
-idx  = int(avg.argmax()); conf = float(avg[idx])
-native = SCENE_LABELS[idx] if conf >= CONF_THRESHOLD(0.5) else "uncertain"
-label  = "Unknown" if native == "uncertain" else native
-probs  = {lbl: float(p) for lbl,p in zip(SCENE_LABELS, avg)}   # the SMOOTHED avg
-valid  = (conf >= 0.50 and label != "Unknown")
 ```
-So context's per-frame `confidence`/`probs` are already **temporally
-smoothed** (unlike emotion/motion, which are raw per-frame). [VERIFIED]
-
-### 7.5 Exact Returned Output (per frame)
-
-Real record [VERIFIED]:
-```json
-{"cue":"context","frame_idx":0,"label":"classroom","confidence":0.99823,
- "probs":{"classroom":0.99823,"kitchen":0.00177},"valid":true,
- "extra":{"activity":null,"engaged":null,"n_objects":0},"clip_id":"S01_F04_c001"}
+emotion (9):  7 mean-probs + max_confidence + valid_fraction
+gesture (10): 8 one-hot majority label + mean_confidence + valid_fraction
+motion  (6):  4 mean-probs + max_confidence + valid_fraction
+context (4):  2 mean-probs + mean_confidence + valid_fraction   [see doc-bug note below]
+missing (4):  missing_emotion, missing_gesture, missing_motion, missing_context
 ```
-`extra.activity/engaged/n_objects` are **structural placeholders**
-(`NOT_MEASURED_EXTRA`) — the model has no object/activity/engagement head;
-these never vary and are never read downstream. [VERIFIED]
 
-### 7.6 Downstream Data Trace
+`GESTURE_CLASSES = ["wave","point","thumbs_up","thumbs_down","raise_hand",
+"both_hands_up","beckoning","Unknown"]` — this still matches what
+`gesture_runner.py` actually emits after the `idle→Unknown` remap (§7.4), so
+there is **no live schema mismatch** despite the model swap.
 
-Aggregated by `_prob_mean_features(context_records, CONTEXT_CLASSES)` giving 2
-**mean probabilities** `context_classroom, context_kitchen`; but the confidence
-column is computed **separately** as `context_mean_confidence` = mean of
-per-frame `confidence` over valid frames (not `max`, unlike emotion/motion).
-Plus `context_valid_fraction`, `missing_context`. [VERIFIED, `aggregate.py:145-153`]
-In the Parquet, **0/1270** clips are `missing_context` (context is essentially
-always available). [VERIFIED]
+Two aggregation algorithms, unchanged: **mean-probability** for
+emotion/motion/context (`_prob_mean_features`), **majority-vote one-hot**
+for gesture only (`_majority_onehot_features`, reads `label`/`confidence`,
+never `probs` — which is exactly why §7.5's gap hasn't broken anything yet).
+`missing_<cue> = valid_fraction < 0.40`.
 
-> **Documentation bug:** `aggregate.py`'s header docstring (line 39) calls
-> the context block "2 one-hot scene". It is **not** one-hot — it is the mean
-> probability vector. Verified: all 1270 rows have `context_classroom` /
-> `context_kitchen` values strictly inside (0,1), never a clean `{0,1}`. See §17.
+> **Documentation bug, still present, unchanged from the prior version of
+> this doc:** the module header (line ~39) describes context as "2 one-hot
+> scene." It is the mean-probability vector, same as emotion/motion/context's
+> other three blocks — only gesture is truly one-hot. Cosmetic, no runtime
+> effect (rule-based fusion's `argmax` works on mean-probs identically).
 
 ---
 
-## 8. Cue Output Comparison
+## 12. Feature Builder — `pipeline/build_features.py` (rewritten)
 
-Per-frame `NormalisedFrameCue` contract (all four share the schema; contents
-diverge):
+Rewritten (~160-line diff) for v2.0.0's schema. Key differences from the
+version this file replaces:
 
-| Cue | `label` vocabulary | `confidence` | `probs` | `valid` gate | `extra` |
-|---|---|---|---|---|---|
-| Emotion | 7 emotions or `Unknown` | raw per-frame softmax max | **7-key dict** | `conf≥0.50` | `{bbox}` |
-| Motion | 4 motions or `Unknown`(buffering) | raw per-frame softmax max | **4-key dict** (empty while buffering) | `not buffering ∧ conf≥0.50 ∧ has_landmarks` | `{buffering,has_landmarks}` |
-| Gesture | 8-way canonical or `Unknown` | heuristic scenario conf | **always `{}`** | `label≠Unknown ∧ conf≥0.80` | `{point_direction,motion_direction,point_target}` (constant) |
-| Context | `classroom`/`kitchen`/`Unknown` | **smoothed** mean over ≤15 frames | **2-key dict** (smoothed) | `conf≥0.50 ∧ label≠Unknown` | `{activity,engaged,n_objects}` (constant) |
+- **`intent` is a direct column** on `clips.csv`/`splits.csv` now — no more
+  join through `scenarios.csv` via a `scenario_id.split("_")[0]` hack.
+- **`splits.csv` is the authoritative clip list to iterate**, already
+  filtered to `usable==TRUE` (verified: exact set match against
+  `clips.csv`), not `clips.csv` itself.
+- **Real per-clip cue masking** (`apply_cue_mask()`): `clips.csv`'s
+  `context_masked`/`emotion_masked`/`gesture_masked` flags (motion is never
+  masked, verified) mark clips where the *authored* ground truth assumed the
+  fusion model couldn't see that cue — even though the raw video still shows
+  a real face/background/gesture and the runner would otherwise emit a real
+  (leaky) measurement. This function zeroes that cue's block and sets its
+  missing bit, deterministically, from real annotation — the same shape as
+  `fusion/gbt.py`'s *simulated* dropout (§15), but grounded in fact rather
+  than a random draw.
+- **A dev split is carved from train** (`assign_dev_split()`): `splits.csv`
+  only ships a 2-way `split_design` (train/test). ~20% of each scenario's
+  *video groups* — grouped by `(scenario_dir, person_id, take_index)`, since
+  one video can yield up to 3 clips — become `dev`, via a seeded RNG, with
+  an explicit leakage assertion that no group straddles train/dev.
+- **New output columns**: `scenario_dir`, `person_id`, `intent`,
+  `split_design` (as shipped), `split_design_v2` (train/dev/test, with the
+  carved-out dev), `scoreable`.
+- Reads `DATASET_ROOT` from `pipeline/dataset_config.py` (§5) instead of a
+  hardcoded path.
 
-**Aggregated (per-clip) contract that fusion actually sees:**
-
-| Cue | Aggregation | Block in feature vector | Example (real, `S01_F04_c001`) | Fusion usage |
-|---|---|---|---|---|
-| Emotion | **mean probs** over valid frames | 7 probs + `max_confidence` + `valid_fraction` | `Neutral≈0.993`, `Happy≈0.0065`, max_conf≈1.0, valid_frac=1.0 | rule: argmax→label; GBT: raw 7 probs + 2 scalars |
-| Gesture | **majority one-hot** | 8 one-hot + `mean_confidence` + `valid_fraction` | `raise_hand=1.0`, mean_conf≈0.958, valid_frac≈0.635 | rule: argmax→label; GBT: raw one-hot + 2 scalars |
-| Motion | **mean probs** | 4 probs + `max_confidence` + `valid_fraction` | `sitting≈1.0`, max_conf=1.0, valid_frac≈0.608 | rule: argmax→label; GBT: raw 4 probs + 2 scalars |
-| Context | **mean probs** | 2 probs + `mean_confidence` + `valid_fraction` | `classroom≈0.996`, mean_conf≈0.996, valid_frac=1.0 | rule: argmax→label; GBT: raw 2 probs + 2 scalars |
-
-**Key incompatibility, made obvious:** at the per-frame level the four cues are
-**not** structurally uniform — gesture carries no probability distribution at
-all, and context is pre-smoothed while emotion/motion are not. The aggregation
-layer is what forces them into one flat numeric vector, and even there gesture
-is one-hot while the other three are mean-prob. [VERIFIED]
-
----
-
-## 9. Cue Output Collection and Aggregation
-
-### Granularity
-
-- **One JSONL line per frame per clip per cue** (Stage 1 output).
-  [VERIFIED: 141,721 lines each = total frames]
-- **One feature row per clip** after aggregation (Stage 2).
-  [VERIFIED: Parquet is 1270 rows]
-- There is **no per-window or per-second** intermediate; the temporal window
-  exists only *inside* motion's LSTM (30 frames) and context's smoothing
-  deque (15 frames), not in the fusion-facing aggregation.
-
-### Collection structure
-
-`build_features.py` builds, per cue, a dict `{clip_id: [frame_record,…]}` via
-`load_frame_cues_by_clip`, then calls `build_clip_feature_row(clip_id,
-e_records, g_records, m_records, c_records)`. The collected object is
-effectively:
-```python
-frames_by_cue = {
-  "emotion": {clip_id: [rec, rec, …], …},
-  "gesture": {clip_id: [...]},
-  "motion":  {clip_id: [...]},
-  "context": {clip_id: [...]},
-}
-```
-[VERIFIED, `build_features.py:46,64-70`]
-
-### The actual aggregation algorithms
-
-There are **two different** algorithms — not one shared voting scheme:
-
-**A. Mean-probability (emotion, motion, context)** — `_prob_mean_features`:
-1. keep only `valid` frames;
-2. `valid_fraction = n_valid / n_total`;
-3. if no valid frames → zeros block, `max_confidence=0`, and caller sets
-   `missing_<cue>=1`;
-4. else stack each valid frame's `probs` (missing keys→0.0) → mean over axis 0
-   → per-class mean probability;
-5. `max_confidence = max(confidence over valid frames)` (context overrides
-   this with **mean** confidence).
-
-**B. Majority-vote one-hot (gesture only)** — `_majority_onehot_features`:
-1. keep only `valid` frames;
-2. `Counter(label).most_common(1)` → winner;
-3. one-hot the winner into `GESTURE_CLASSES`;
-4. `mean_confidence` = mean confidence of winner-labelled valid frames.
-
-`missing_<cue> = float(valid_fraction < 0.40)` (`CLIP_MISSING_THRESHOLD`).
-No weighting, no last-frame selection, no smoothing at this stage, no
-cross-cue temporal alignment. [VERIFIED]
-
-### Numerical walkthrough — gesture majority vote (algorithm B)
-
-Suppose a clip's gesture frames (valid only): `raise_hand, raise_hand, Unknown*
-(invalid, dropped), raise_hand, wave`. After dropping invalid:
-```
-Counter: raise_hand=3, wave=1  →  winner = raise_hand
-one-hot: gesture_raise_hand=1.0, all others 0.0
-gesture_mean_confidence = mean(conf of the 3 raise_hand frames)
-gesture_valid_fraction  = 4 valid / N_total
-```
-[matches `_majority_onehot_features`]
-
-### Numerical walkthrough — motion mean-prob (algorithm A)
-
-Two valid frames with `probs`:
-```
-frame A: sitting 0.90 standing 0.08 walking 0.01 stepping_back 0.01
-frame B: sitting 0.80 standing 0.15 walking 0.03 stepping_back 0.02
-mean   : sitting 0.85 standing 0.115 walking 0.02 stepping_back 0.015
-motion_max_confidence = max(0.90, 0.80) = 0.90
-```
-[matches `_prob_mean_features`]
-
-> Note: `pipeline/aggregate_clip_cues.py` implements a **third** aggregation
-> (majority-vote dominant label for **all** cues) — but that output feeds only
-> the Phase-0 agreement report, **never fusion**. Do not conflate it with the
-> Stage-2 aggregation above. [VERIFIED]
+This script has **not been rerun** against the freshly-regenerated JSONLs
+yet (§0, §17) — everything above describes what it will do the next time it
+runs, not what's currently in `data/features/clip_features.parquet`.
 
 ---
 
-## 10. Exact Fusion Boundary
+## 13. Rule Table Derivation — `pipeline/derive_rule_table.py` (new)
 
-The boundary is the Parquet file. Everything left of it is cue-side;
-everything right is fusion-side. The 33 feature columns (index within
-`FEATURE_NAMES`) are:
+Not part of the runtime pipeline — an **audit tool**. Reads v2.0.0's
+`scenarios.csv` (62 rows), normalizes each row's `(context, emotion_v3,
+gesture_v3, motion_v3)` via `pipeline/canonical_map.py`'s `map_intended()`
+(the same normalization `agreement_report.py` already used), groups by that
+4-tuple, and **asserts** every group maps to exactly one `intent` — raising
+loudly if the dataset is ever revised into genuine ambiguity, rather than
+letting `fusion/rule_based.py`'s hand-maintained cascade go silently stale.
+`main()` prints the table grouped by gesture as a human-readable reference
+for updating `rule_based.py` by hand. This is the tool that produced the
+rewritten cascade in §14. [VERIFIED]
 
-```
-idx  column                      source / meaning
-0    emotion_Surprise            mean prob
-1    emotion_Fear                mean prob
-2    emotion_Disgust             mean prob
-3    emotion_Happy               mean prob
-4    emotion_Sad                 mean prob
-5    emotion_Anger               mean prob
-6    emotion_Neutral             mean prob
-7    emotion_max_confidence      max conf over valid frames
-8    emotion_valid_fraction      valid/total
-9    gesture_wave                one-hot
-10   gesture_point               one-hot
-11   gesture_thumbs_up           one-hot
-12   gesture_thumbs_down         one-hot
-13   gesture_raise_hand          one-hot
-14   gesture_both_hands_up       one-hot
-15   gesture_beckoning           one-hot
-16   gesture_Unknown             one-hot
-17   gesture_mean_confidence     mean conf of winning label
-18   gesture_valid_fraction      valid/total
-19   motion_sitting              mean prob
-20   motion_standing             mean prob
-21   motion_walking              mean prob
-22   motion_stepping_back        mean prob
-23   motion_max_confidence       max conf over valid frames
-24   motion_valid_fraction       valid/total
-25   context_classroom           mean prob
-26   context_kitchen             mean prob
-27   context_mean_confidence     mean conf over valid frames
-28   context_valid_fraction      valid/total
-29   missing_emotion             1.0 if emotion_valid_fraction < 0.40
-30   missing_gesture             1.0 if gesture_valid_fraction < 0.40
-31   missing_motion              1.0 if motion_valid_fraction < 0.40
-32   missing_context             1.0 if context_valid_fraction < 0.40
-```
-[VERIFIED against Parquet column order and `aggregate.FEATURE_NAMES`.]
+---
+
+## 14. Rule-Based Fusion — `fusion/rule_based.py` (rewritten)
+
+The IF-THEN cascade itself was rewritten, not just its surrounding
+plumbing — re-derived from v2.0.0's 62-row table via §13's tool. Per the
+module's own docstring, **both of v1's documented "irreducible" label
+ambiguities are now reported resolved**:
+
+- **F02 vs. F07** (`both_hands_up`) is now emotion-dependent, not
+  scene-dependent: Anger → F07 (frustration, not danger), Neutral → F05,
+  everything else (Fear/Surprise/unobserved) → F02 (emergency, asymmetric
+  cost).
+- **F04 vs. F10** is resolved by idle vs. active gesture: Sad + `idle`
+  (`gesture=="Unknown"`, a person present but not gesturing) → F10
+  (discouraged, no directed signal); Sad + an active gesture
+  (`thumbs_down`/`beckoning`) → F04.
+- **F09 no longer exists** as an intent class in v2 — folded into F01;
+  `wave` is now purely emotion-dispatched (`Anger`→F06, else→F01).
+
+The cascade (`predict_intent()`, verbatim, `fusion/rule_based.py:62-148`) is
+grouped by gesture, most-emergency-relevant first:
 
 ```text
-CUE SIDE (per-clip aggregated blocks)
--------------------------------------
-emotion → 7 mean probs + max_conf + valid_frac (+ missing bit)
-gesture → 8 one-hot     + mean_conf + valid_frac (+ missing bit)
-motion  → 4 mean probs  + max_conf + valid_frac (+ missing bit)
-context → 2 mean probs  + mean_conf + valid_frac (+ missing bit)
-
-        ↓ (this is the ONLY transformation at the boundary)
-
-RULE-BASED path: _dominant(row, prefix, classes)
-   → if missing_<cue> ≥ 1.0: label = None
-   → elif max(block values) ≤ 0: label = None
-   → else: label = classes[argmax(block values)]
-   i.e. each cue block is collapsed back to ONE categorical label (or None).
-
-GBT path: NO transformation.
-   → X = df[FEATURE_NAMES]  (all 33 raw floats, in the order above)
-   → straight into LGBMClassifier. No argmax, no re-encoding, no scaling.
+1. gesture == both_hands_up:
+     Anger→F07, Neutral→F05, else→F02
+2. gesture == Unknown (idle):
+     Sad→F10, Fear→F02, Neutral→F05
+3. gesture in {thumbs_down, thumbs_up}:
+     Sad→F04, Anger→F07, Disgust→F08, Happy→F01
+4. gesture == raise_hand:
+     Happy→(F01 if context==kitchen else F05); Neutral/missing→F04
+5. gesture == beckoning:
+     Neutral→F03, Sad→F04
+6. gesture == point:
+     Anger→(F06 if walking else F07 if standing); Disgust→F06; Happy/Neutral→F03
+7. gesture == wave:
+     Anger→F06, else→F01
+8. gesture is None (genuinely missing, not idle):
+     Fear→F02; Sad+sitting→F04; Neutral/missing+walking→F06
+→ else: fallback_intent (train-split intent mode)
 ```
+First match wins per branch group; anything the 62-row table never showed
+falls through to the fallback, unchanged in spirit from before.
 
-**Label→number mappings at the boundary:**
-- Rule-based converts a numeric block back to a label via `argmax`; the class
-  order is `EMOTION_CLASSES / GESTURE_CLASSES / MOTION_CLASSES /
-  CONTEXT_CLASSES` from `aggregate.py`. No numeric encoding of the *output* —
-  the rule output is already an intent **string**.
-- GBT does **not** encode cue labels at all (it never sees labels; it sees the
-  numeric blocks). Its **target** `y = df["intent"]` is left as strings;
-  LightGBM handles the string classes internally (`model.classes_`). [VERIFIED]
-- **Missing-cue defaults:** an absent cue is represented as an **all-zero
-  block + `missing_<cue>=1.0`**. Rule-based reads that as `label=None`
-  (via the `missing_` guard); GBT reads the literal zeros + the missing bit as
-  features. [VERIFIED]
+**Other changes**: split-column references renamed `split_scenario`→
+`split_design_v2`, `val`→`dev` throughout; new `scoreable`-only accuracy
+metrics logged alongside all-clips/per-split accuracy; a new
+`RuleBasedFusionModel(mlflow.pyfunc.PythonModel)` wraps `predict_intent()`
+so the rule baseline is directly comparable/servable via the same interface
+as the GBT model. Everything is now logged to MLflow (§16) rather than just
+printed to stdout — params, per-split/per-class-recall metrics, a bar-chart
+figure, and a registered model (`fusion-rule-based`).
 
 ---
 
-## 11. Rule-Based Fusion — Full Internal Trace
+## 15. GBT Fusion — `fusion/gbt.py` (reworked dropout + mlflow)
 
-File: `fusion/rule_based.py`.
+Feature input, encoding, and core hyperparameters are **unchanged**:
+`FEATURE_NAMES` (33-dim, §11) straight into `LGBMClassifier(objective=
+"multiclass", class_weight="balanced", n_estimators=300, max_depth=5,
+learning_rate=0.05, random_state=42)`, with the same inference-only F02
+safety override (`P(F02)≥0.15 → force F02`).
 
-### 11.1 Exact Input
+**What changed is `apply_modality_dropout()`:**
 
-- `df` = `read_parquet(clip_features.parquet)`; one `row` = a pandas Series
-  with the 33 feature columns above (+ metadata).
-- `predict_intent(row, fallback_intent)` first computes four labels via
-  `_dominant`:
-  `emotion∈EMOTION_CLASSES∪{None}`, `gesture∈GESTURE_CLASSES∪{None}`,
-  `motion∈MOTION_CLASSES∪{None}`, `context∈{classroom,kitchen,None}`.
-  [VERIFIED, `rule_based.py:68-83`]
+- Previously: independent, vectorized per-cue Bernoulli(0.15) drop across
+  the whole training matrix.
+- Now: **per-row loop**, drawing each of the 4 cues independently at
+  `DROPOUT_P=0.15`, but **capped at `MAX_DROPPED_CUES=2`** per row (matching
+  the dataset's own design doc: "mask each cue with p~0.15, max 1–2 cues per
+  sample"). When ≥2 cues are dropped from a row **and** running
+  `rule_based.predict_intent()` on the now-degraded row no longer recovers
+  the row's true label, the row is **relabeled** to `RELABEL_INTENT="F05"` —
+  teaching the model to fall back safely rather than confidently guess wrong
+  on heavily-degraded input, instead of preserving a label that isn't
+  actually recoverable from what remains. A sentinel fallback string
+  (`"__NO_RULE_MATCH__"`) is used during this check so "no rule matched"
+  can't spuriously register as a correct match.
+- Explicitly **not** implemented: the dataset docx's carve-out that
+  direction/point_target cues could sometimes still identify F02/F06 even
+  under dropout — `pipeline/aggregate.py` never included those as features
+  in the first place (they're hardcoded constants upstream, §11's
+  inheritance from the prior schema), so there's no such signal to exempt.
+  Documented as a known simplification in the code, not a silent omission.
 
-### 11.2 Rule Evaluation Order (verbatim execution order)
-
-```text
-R1  if gesture == "both_hands_up":
-        if context=="kitchen" and emotion=="Anger" and motion=="standing":  return "F07"
-        else:                                                                return "F02"
-R2  if gesture=="thumbs_down" and motion=="stepping_back" and emotion=="Disgust":  return "F08"
-R3  if gesture in ("raise_hand","thumbs_down") and motion=="sitting":  return "F04"
-R4  if gesture in ("point","raise_hand") and motion in ("sitting","standing"):  return "F05"
-R5  if gesture=="beckoning":  return "F03"
-    if gesture=="point" and motion=="walking":  return "F03"
-R6  if emotion=="Happy" and gesture in ("wave","thumbs_up"):
-        if context=="kitchen" and motion=="walking":  return "F09"
-        else:                                          return "F01"
-R7  if gesture=="point" and motion=="stepping_back":  return "F06"
-R8  return fallback_intent           # = train-set intent mode = "F04"
-```
-[VERIFIED, `rule_based.py:85-125`]
-
-### 11.3 Priority and Conflict Resolution
-
-- **First match wins, function returns immediately** (no score accumulation).
-- Priority is strictly top-to-bottom: emergency **F02/F07** (`both_hands_up`)
-  is checked before everything, matching the doc's "any meaningful evidence of
-  F02 escalates" asymmetric-cost stance.
-- **Fallback** for anything unmatched: `fit_fallback(train_df)` =
-  `train_df["intent"].mode().iloc[0]` = **"F04"** (verified at runtime). The
-  module constant `DEFAULT_FALLBACK_INTENT="F05"` is overridden by the fitted
-  value when driven through `predict_all(..., fallback_intent=fallback)`.
-  [VERIFIED]
-- The author flags two **irreducible** ambiguities in the source scenario
-  table (F02-vs-F07 and F04-vs-F10) that cap achievable accuracy; R3's
-  `→F04` tie-break will misclassify every true F10 clip by construction.
-  [VERIFIED, docstring + `scenarios.csv` S21/S28]
-
-### 11.4 Manual Example
-
-Real clip `S01_F04_c001` (dominant labels from its feature row: emotion
-`Neutral`, gesture `raise_hand`, motion `sitting`, context `classroom`;
-intent truth `F04`):
-```text
-R1 both_hands_up?              gesture=raise_hand → False
-R2 thumbs_down∧stepping_back∧Disgust? → False
-R3 gesture∈{raise_hand,thumbs_down} ∧ motion==sitting?
-     raise_hand ∧ sitting → TRUE → return "F04"
-R4..R8 not evaluated (already returned)
-Final = "F04"   ✓ (matches truth)
-```
-[VERIFIED — labels read from the actual Parquet row.]
-
-### 11.5 Exact Output
-
-- Return type: **`str`**, one of `F01…F10` (`predict_intent`).
-- `predict_all(df, ...)` → `df.apply(...)` → a **pandas Series of strings**,
-  one per clip; assigned to `df["rule_pred"]`.
-- Accuracy is then `(df["rule_pred"] == df["intent"]).mean()`. Not serialized.
-  [VERIFIED]
+Everything else — `GBTFusionModel` pyfunc wrapper, per-split/per-class-recall
+MLflow logging, feature-importance bar charts, comparison against
+`rule_based`'s predictions on the same clips — is new plumbing around the
+same modeling core.
 
 ---
 
-## 12. GBT Fusion — Full Internal Trace
+## 16. MLflow Tracking Layer — `tracking/` (new)
 
-File: `fusion/gbt.py`.
+Entirely new this session; not present in the prior version of this repo.
 
-### 12.1 Raw Cue Inputs
-
-The **same 33-column Parquet**. GBT uses `df[FEATURE_NAMES]` directly — the raw
-mean-prob/one-hot/confidence/valid/missing floats. No argmax, no label
-reconstruction. [VERIFIED]
-
-### 12.2 Feature Construction
-
-There is essentially **no separate feature-construction step** for GBT — the
-Stage-2 aggregation already produced the model-ready vector. The only
-train-time manipulation is **modality dropout** (`apply_modality_dropout`,
-train split only):
-```python
-for cue in {emotion,gesture,motion,context}:
-    drop_mask = rng.random(n) < 0.15          # DROPOUT_P
-    value_cols = [cols of that cue except *_valid_fraction]
-    X.loc[drop_mask, value_cols] = 0.0
-    X.loc[drop_mask, f"{cue}_valid_fraction"] = 0.0
-    X.loc[drop_mask, f"missing_{cue}"] = 1.0
-```
-i.e. it randomly simulates a missing cue by zeroing its block + valid_fraction
-and setting its missing bit — exactly mirroring how real missingness is
-encoded. **Inference applies no dropout.** [VERIFIED]
-
-The exact feature **order** is `aggregate.FEATURE_NAMES` (the 34-item list),
-enforced because both `fit` and `predict` index `df[FEATURE_NAMES]`. This order
-is provable and equals the index table in §10. [VERIFIED]
-
-### 12.3 Encoding
-
-- **Cue features:** none — already numeric. Gesture is pre-one-hot from
-  aggregation; the other three are mean probabilities. No label/one-hot
-  encoding happens in `gbt.py`.
-- **Target:** `y = df["intent"]` kept as **strings**; LightGBM builds its own
-  internal class list `model.classes_` (sorted intent codes). Predictions map
-  back via `model.classes_[argmax]`. [VERIFIED]
-- No category mapping dict, no missing-value imputation beyond the modality
-  dropout described above (real missing cues arrive as zeros+bit from Stage 2).
-
-### 12.4 Example Feature Vector
-
-For real clip `S01_F04_c001`, the 33-float vector (order of §10) is:
-```python
-[0.00063, 4.8e-07, 5.1e-05, 0.00653, 1.7e-05, 6.2e-07, 0.99277,   # emotion 7 probs
- 0.999999, 1.0,                                                    # emotion max_conf, valid_frac
- 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,                           # gesture one-hot (raise_hand=1)
- 0.95761, 0.63514,                                                 # gesture mean_conf, valid_frac
- 0.99999992, 8.0e-08, 1.6e-09, 1.1e-09,                            # motion 4 probs (sitting≈1)
- 1.0, 0.60811,                                                     # motion max_conf, valid_frac
- 0.99645, 0.00355,                                                 # context probs (classroom)
- 0.99645, 1.0,                                                     # context mean_conf, valid_frac
- 0.0, 0.0, 0.0, 0.0]                                               # missing bits (none)
-```
-[VERIFIED — copied from the real Parquet row.] Every value is either a mean
-probability, a one-hot flag, a confidence scalar, a valid-fraction, or a
-missing bit — per §10.
-
-### 12.5 GBT Model Architecture
-
-- Library: **LightGBM** (`from lightgbm import LGBMClassifier`).
-- Params (`gbt.py:87-95`): `objective="multiclass"`,
-  `class_weight="balanced"`, `n_estimators=300` (trees), `max_depth=5`,
-  `learning_rate=0.05`, `random_state=42`, `verbosity=-1`. [VERIFIED]
-- Trained on `train_df` (872 clips) with modality dropout; targets = 10 intent
-  classes. No calibration (isotonic/Platt) — explicitly deferred per docstring.
-
-**[CONCEPTUAL] What GBT does:** gradient boosting fits an additive ensemble of
-shallow decision trees; each new tree is trained to correct the residual error
-(gradient of the multiclass log-loss) of the running ensemble, scaled by the
-learning rate. For multiclass, LightGBM effectively grows one set of trees per
-class and softmaxes their summed leaf scores into class probabilities.
-**In this project:** 300 depth-≤5 trees split on the 33 numeric cue features
-(e.g. "is `motion_sitting` ≥ 0.5?", "is `gesture_mean_confidence` ≥ 0.8?");
-`class_weight="balanced"` up-weights rarer intent classes.
-
-### 12.6 Prediction Trace
-
-```text
-X = split_df[FEATURE_NAMES]            # (n, 33) float
-   ↓ predict_with_safety_override
-proba = model.predict_proba(X)         # (n, 10) softmaxed class probs
-argmax_idx = proba.argmax(axis=1)      # (n,)
-preds = model.classes_[argmax_idx]     # (n,) intent strings
-escalate = proba[:, f02_idx] >= 0.15   # F02_SAFETY_THRESHOLD
-preds = np.where(escalate, "F02", preds)   # force F02 whenever its prob ≥ 0.15
-return preds, proba
-```
-[VERIFIED, `gbt.py:68-74`] `f02_idx = list(model.classes_).index("F02")`.
-
-### 12.7 Conceptual Tree Walkthrough
-
-The 300 fitted trees are held only in memory (the model is never saved), so I
-did **not** dump literal split thresholds. **[CONCEPTUAL, clearly labelled]** a
-representative tree in this model would look like:
-```text
-if motion_sitting >= 0.5:
-    if gesture_raise_hand >= 0.5:  leaf → boosts F04
-    else:                          leaf → boosts F05
-else:
-    if gesture_both_hands_up >= 0.5: leaf → boosts F02
-    else:                            leaf → boosts F01
-```
-This is illustrative only — not the project's real tree. What **is** verified
-is the ranked feature importance (gain) the trained model reports:
-`gesture_mean_confidence` (2494) > `motion_sitting` (2282) >
-`motion_valid_fraction` (2274) > `context_classroom` (2151) >
-`motion_standing` (2124) > `gesture_valid_fraction` (2081) >
-`emotion_Surprise` (2059) > `emotion_Neutral` (1903) > `context_kitchen` (1828)
-> `motion_stepping_back` (1748). [VERIFIED by running `gbt.py`]
-
-### 12.8 Exact GBT Output
-
-- `predict_with_safety_override` returns `(preds, proba)`:
-  `preds` = `numpy.ndarray` of dtype `<U3` strings shape `(n,)`
-  (values `F01…F10`); `proba` = `numpy.ndarray` `(n,10)` float.
-- Accuracy = `(preds == split_df["intent"].values).mean()`. Printed, not saved.
-- Measured (test, 190 clips): **GBT acc 0.237**; F02 recall 0.700 (15 FN / 50).
-  [VERIFIED by running]
+- **`tracking/mlflow_setup.py`**: `init_tracking()` points every training/
+  eval script at one shared local store: `TRACKING_URI =
+  sqlite:///{REPO_ROOT}/mlflow.db`, `ARTIFACT_ROOT = {REPO_ROOT}/mlartifacts`,
+  experiment `"fusion-engine-intent-classification"`. Both files/dirs exist
+  on disk (`mlflow.db` 884 KB; `mlartifacts/` has 2 run-artifact dirs + a
+  `models/` registry with 2 registered model versions) — confirming this has
+  already been exercised, not just wired up (from an earlier pass, before
+  the dataset-version guard below existed).
+- **`tracking/hashing.py`**: one helper, `sha256_file()`.
+- **`tracking/dataset_logging.py`** — the interesting one:
+  - `dataset_version_tag()` auto-discovers the single folder under
+    `Data/Dataset/*` (raises if 0 or >1 — now safe now that v1.0.0 is
+    deleted, would have raised otherwise).
+  - `log_dataset(context="training")` reads `clip_features.parquet`, logs it
+    as an `mlflow.data` Dataset input, and tags the run with dataset
+    version, a content sha256 of the Parquet, sha256s of the 3 annotation
+    CSVs, and the git commit/dirty-state of the annotations directory.
+  - `check_dataset_consistency()` — the guard — compares the current
+    Parquet's content hash against **every prior run's tags** in this
+    experiment and raises `DatasetVersionMismatchError` if either: (1) the
+    same hash was previously logged under a *different* `dataset_version`
+    tag (a **stale rebuild** — the dataset folder was swapped but
+    `build_features.py` was never rerun), or (2) the same version label was
+    previously logged with a *different* hash (**version reuse** — the
+    label no longer maps to one fixed dataset). This is exactly the
+    situation described in §0/§17. An `allow_stale_override=True` escape
+    hatch exists (warns instead of raising) but neither fusion script
+    currently uses it.
 
 ---
 
-## 13. Training-Time vs Inference-Time Pipeline
+## 17. Current Pipeline Status — Why It Doesn't Run Right Now
 
-There is only ONE trained fusion model with a train/infer split — **GBT**
-(rule-based has no learned parameters, only the `fit_fallback` mode). The cue
-models are pre-trained upstream; the runners are inference-only. The important
-comparison is therefore *within the fusion stage*.
+This is the most important "current status" fact in this document.
 
-| Stage | Training | Inference | Same? |
-|---|---|---|---|
-| Emotion preprocessing | (upstream, frozen) | identical runner | ✅ same runner code |
-| Motion preprocessing | (upstream, frozen) | identical runner | ✅ |
-| Gesture preprocessing | (upstream, frozen) | identical runner | ✅ |
-| Context preprocessing | (upstream, frozen) | identical runner | ✅ |
-| Cue aggregation | `aggregate.py` (same code) | `aggregate.py` (same code) | ✅ single implementation |
-| GBT feature creation | `df[FEATURE_NAMES]` **+ modality dropout (p=0.15)** | `df[FEATURE_NAMES]` **no dropout** | ⚠️ **different** (intentional augmentation) |
-| Encoding | none (numeric) / target strings | none / `classes_[argmax]` | ✅ |
-| Safety override | not applied during `fit` | `P(F02)≥0.15 → F02` at predict | ⚠️ **inference-only** |
-| Fallback (rule) | `fit_fallback` = train mode "F04" | same value reused | ✅ |
+**Running `.venvs/pipeline/bin/python fusion/rule_based.py` today fails**,
+by design:
 
-**Train/inference deltas that matter:**
-1. **Modality dropout** is train-only by design — makes GBT robust to missing
-   cues it rarely saw in this near-complete dataset. Not a bug. [VERIFIED]
-2. **F02 safety override** is inference-only — so the model's *reported*
-   `predict_proba` argmax and its *final* prediction can differ, and training
-   never optimizes against the override. This is a genuine train/serve
-   asymmetry to keep in mind when reading metrics. [VERIFIED]
-3. GBT train accuracy is evaluated on **un-augmented** `train_df[FEATURE_NAMES]`
-   (not the dropout-augmented `X_train`), so the printed train number is
-   optimistic relative to what the model was actually fit on. [VERIFIED,
-   `gbt.py:84 vs 109`]
-
-There is **no** classic feature-scaling / normalization mismatch, because the
-same `aggregate.py` produces the vector for both, and LightGBM needs no scaling.
-
----
-
-## 14. Full Worked Example — Rule-Based Pipeline
-
-Real clip `S01_F04_c001` (classroom, subject P01, truth **F04**):
-
-```text
-RAW INPUT
-↓  raw/clips/classroom/S01_F04/S01_F04_c001.mp4  (640×480, 15fps, 74 frames)
-
-EMOTION MODEL (per frame → jsonl)
-↓  frame0: {"label":"Neutral","confidence":0.99996,"probs":{...Neutral:0.99996},"valid":true}
-   … 74 frames, essentially all Neutral, all valid
-
-GESTURE MODEL
-↓  frame0: {"label":"Unknown","confidence":0.0,"probs":{},"valid":false}
-   … valid frames vote raise_hand (winner), valid_fraction≈0.635
-
-MOTION MODEL
-↓  frame0..28: {"label":"Unknown","buffering":true,"valid":false}
-   frame29+: {"label":"sitting","probs":{sitting≈1.0,...},"valid":true}
-
-CONTEXT MODEL
-↓  frame0: {"label":"classroom","confidence":0.998,"probs":{classroom:0.998,kitchen:0.002}}
-
-CUE COLLECTION (build_features.load_frame_cues_by_clip)
-↓  {emotion:[74 recs], gesture:[74], motion:[74], context:[74]} for this clip_id
-
-AGGREGATION (aggregate.build_clip_feature_row)
-↓  emotion_Neutral≈0.993 (mean prob), emotion_max_confidence≈1.0, emotion_valid_fraction=1.0
-   gesture_raise_hand=1.0 (majority one-hot), gesture_mean_confidence≈0.958, gesture_valid_fraction≈0.635
-   motion_sitting≈1.0 (mean prob), motion_max_confidence=1.0, motion_valid_fraction≈0.608
-   context_classroom≈0.996 (mean prob), context_mean_confidence≈0.996, context_valid_fraction=1.0
-   missing_* all 0.0
-
-RULE-BASED FUSION INPUT (_dominant argmax per block)
-↓  emotion="Neutral", gesture="raise_hand", motion="sitting", context="classroom"
-
-RULE EXECUTION
-↓  R1 both_hands_up? no
-   R2 thumbs_down∧stepping_back∧Disgust? no
-   R3 gesture∈{raise_hand,thumbs_down} ∧ motion==sitting?  YES → return "F04"
-
-FINAL OUTPUT
-↓  "F04"   (string; matches truth F04) ✓
 ```
-[VERIFIED end-to-end against the real JSONL + Parquet + rule code.]
-
----
-
-## 15. Full Worked Example — GBT Pipeline
-
-Same clip `S01_F04_c001`:
-
-```text
-Four cue outputs (aggregated blocks) — identical to §14 aggregation
-↓
-FEATURE EXTRACTION  (df[FEATURE_NAMES], no argmax)
-↓
-ENCODING  — none (already numeric); target intent kept as string
-↓
-EXACT ORDERED FEATURE VECTOR (33 floats, §10 order)
-   [0.00063,4.8e-07,5.1e-05,0.00653,1.7e-05,6.2e-07,0.99277,  1.0,1.0,     # emotion
-    0,0,0,0,1,0,0,0,  0.95761,0.63514,                                     # gesture (raise_hand=1)
-    1.0,8e-08,1.6e-09,1.1e-09,  1.0,0.60811,                               # motion (sitting≈1)
-    0.99645,0.00355,  0.99645,1.0,                                         # context (classroom)
-    0,0,0,0]                                                               # missing bits
-↓
-GBT INPUT: X = (1,33) → LGBMClassifier
-↓
-GBT PREDICTION: proba = predict_proba(X) → (1,10); preds = classes_[argmax]
-↓
-POST-PROCESSING: if proba[:,f02_idx] ≥ 0.15 → force "F02" (safety override)
-↓
-FINAL OUTPUT: one intent string (e.g. "F04")
-```
-[VERIFIED for the feature vector and the predict path; the exact per-clip GBT
-class output for this single clip was not individually printed by the script —
-the script reports split-level accuracy, not per-clip predictions — so the
-final string here is illustrative of the mechanism. The mechanism itself is
-VERIFIED.]
-
----
-
-## 16. Final Architecture Diagram
-
-```text
-                                  RAW VIDEO CLIPS (.mp4)
-                                  clips.csv enumerates 1270
-                                            │
-        ┌──────────────────┬────────────────┼────────────────┬──────────────────┐
-        │                  │                │                │                  │
-        ▼                  ▼                ▼                ▼                  │
-  emotion_runner     gesture_runner    motion_runner    context_runner        (4 separate
-  (.venvs/emotion)   (.venvs/gesture)  (.venvs/motion)  (.venvs/context)       processes,
-  MobileNetV2→7      MediaPipe Hands   MediaPipe Pose   EfficientNet-B0→2      no shared
-  softmax probs      +2 TFLite +       →MotionLSTM      softmax probs,          driver)
-                     heuristic FSM     (30-frame win)   15-frame smoothing
-        │                  │                │                │
-        ▼                  ▼                ▼                ▼
-  emotion_frame     gesture_frame     motion_frame     context_frame
-  _cues.jsonl       _cues.jsonl       _cues.jsonl      _cues.jsonl      ← DISK BOUNDARY (schema)
-        │                  │                │                │
-        └──────────────────┴───────┬────────┴────────────────┘
-                                    ▼
-                    build_features.py + aggregate.py
-                    per-clip aggregation:
-                      emotion/motion/context → MEAN PROBS
-                      gesture               → MAJORITY ONE-HOT
-                      + confidence + valid_fraction + missing bit
-                                    │
-                                    ▼
-                    data/features/clip_features.parquet
-                    1270 rows × (clip_id + 33 features + 6 meta)   ← FUSION BOUNDARY
-                                    │
-              ┌─────────────────────┴─────────────────────┐
-              ▼                                             ▼
-   fusion/rule_based.py                            fusion/gbt.py
-   _dominant() argmax per block                    df[FEATURE_NAMES] (raw 33)
-   → 8 priority IF-THEN rules                       → LGBMClassifier (300×depth5)
-   → fallback "F04"                                 → predict_proba → argmax
-   │                                                → F02 safety override (≥0.15)
-   ▼                                                        │
-   intent string F01..F10                                   ▼
-   (stdout accuracy)                              intent string F01..F10
-                                                  (stdout accuracy; model NOT saved)
+tracking.dataset_logging.DatasetVersionMismatchError: dataset_version is now 'hri-multimodal-intent-v2.0.0',
+but clip_features.parquet's content hash is IDENTICAL to run fecb7dc3222949908f064761a3052c34 logged under
+dataset_version='hri-multimodal-intent-v1.0.0'.
 ```
 
----
+This is exactly case (1) from §16: `Data/Dataset/` now points at v2.0.0, but
+`data/features/clip_features.parquet` (dated 2026-07-13) was never rebuilt
+from it — it's still the file produced against the old v1.0.0 run, and
+MLflow's own history proves it byte-for-byte. **Even bypassing this guard**
+would fail immediately after: the stale Parquet's actual schema (checked
+directly — 1,270 rows × 40 cols) has `split_scenario`, `split_subject`,
+`scenario_id`, `subject_id` and **no** `split_design_v2` or `scoreable`
+column, both of which `rule_based.py`/`gbt.py` now require unconditionally —
+a `KeyError` would follow.
 
-## 17. Critical Findings and Implementation Problems
+**What's needed to unblock the pipeline:**
+1. Confirm all four `pipeline/measured/*_frame_cues.jsonl` are complete for
+   the full 2,869-clip v2.0.0 manifest (they were last regenerated
+   2026-08-03; run logs are at `pipeline/measured/*_run.log`).
+2. Run `pipeline/build_features.py` to rebuild `clip_features.parquet`
+   against those JSONLs and v2.0.0's `clips.csv`/`splits.csv` (§12).
+3. Then `fusion/rule_based.py` and `fusion/gbt.py` can run — MLflow will log
+   the first post-v2.0.0 run for this experiment (no prior v2.0.0-tagged
+   run exists yet, so `check_dataset_consistency()` will pass cleanly).
 
-Ordered roughly by impact.
-
-### F-1  No runtime fusion / no persisted model — this is an offline eval harness
-```
-Problem:      There is no end-to-end "video → intent" runtime. Both fusion
-              scripts read a precomputed Parquet, print accuracy, and exit.
-              The GBT model is never serialized (no joblib/pickle anywhere).
-Evidence:     grep for joblib|pickle|dump|save_model → NONE FOUND. gbt.py.main()
-              trains + prints, returns nothing. No FusionEngine class exists.
-File/fn:      fusion/gbt.py::main, fusion/rule_based.py::__main__
-Why matters:  To deploy, someone must add serialization + an online path that
-              re-runs the 4 runners live and re-implements aggregate.py per
-              stream. None of that exists.
-Impact:       "Fusion" today = a batch benchmarking script, not a serving path.
-```
-
-### F-2  `run_cue_models.py` referenced but does not exist
-```
-Problem:      emotion_runner.py and motion_runner.py docstrings point users to
-              "run_cue_models.py" for batch orchestration. The file is absent.
-Evidence:     find . -name run_cue_models.py → not found (outside venvs).
-File/fn:      runners/emotion_runner.py docstring; runners/motion_runner.py
-Why matters:  There is no committed single command to regenerate all 4 JSONLs;
-              each runner must be launched by hand in its own venv.
-Impact:       Reproducibility gap; onboarding confusion.
-```
-
-### F-3  Stale "6-class" comments in the motion model (code is 4-class)
-```
-Problem:      inference.py (MotionResult.probs "shape (6,)", "(1,6)") and
-              model.py::forward docstring ("returns (B,6)") describe 6 classes.
-Evidence:     Checkpoint classifier weight shape = (4,64); MOTION_LABELS has 4
-              entries; NUM_CLASSES=4. Verified by loading the .pt.
-File/fn:      Motion Repo/inference.py:59,200-201 ; Motion Repo/model.py:66,83
-Why matters:  Misleads any reader about the motion output width; the aggregation
-              and rule/GBT feature layout correctly assume 4, so behaviour is OK.
-Impact:       Documentation-only, but actively misleading. No runtime effect.
-```
-
-### F-4  Context block documented as one-hot but is actually mean-prob
-```
-Problem:      aggregate.py header (line 39) says context = "2 one-hot scene".
-              It is the mean probability vector, not one-hot.
-Evidence:     All 1270 Parquet rows have context_classroom/context_kitchen
-              strictly in (0,1); build uses _prob_mean_features, not
-              _majority_onehot_features.
-File/fn:      pipeline/aggregate.py:39 vs :145-153
-Why matters:  A reader trusting the docstring would mis-model the feature; and
-              only gesture is truly one-hot despite the header grouping them.
-Impact:       Documentation inconsistency; no runtime bug (rule _dominant argmax
-              works on mean-probs too).
-```
-
-### F-5  Cue outputs computed but never used (dead payload)
-```
-Problem:      Several emitted fields never reach fusion:
-              - gesture extra.{point_direction, motion_direction, point_target}
-                are hardcoded constants for every frame.
-              - context extra.{activity, engaged, n_objects} are constant
-                placeholders (model has no such heads).
-              - motion extra.{buffering, has_landmarks}, emotion extra.bbox,
-                per-frame probs dicts — used only for aggregation/validity,
-                the raw label strings of emotion/motion/context are discarded
-                (only mean-probs survive).
-Evidence:     aggregate.py reads only probs/label/confidence/valid; nothing
-              reads any extra.* field. gesture_runner.py:360, context_runner.py:48.
-File/fn:      runners/*_runner.py extra dicts; pipeline/aggregate.py
-Why matters:  These are documented as "explicit, not fabricated" placeholders,
-              so it's intentional — but a naive integrator might wire them in
-              expecting signal. They carry zero information.
-Impact:       Vector size honestly excludes them; no leakage, just dead fields.
-```
-
-### F-6  Grouped test split contains only 4 of 10 intent classes
-```
-Problem:      split_scenario groups whole scenarios into train/val/test. With
-              only 22 base scenarios, the test split covers just a handful of
-              scenarios → only 4 intents appear (F01,F02,F08,F09).
-Evidence:     Running rule_based.py / gbt.py: per-class test recall printed for
-              exactly F01,F02,F08,F09. splits are scenario-grouped (build_splits.py).
-File/fn:      pipeline/build_splits.py ; observed in fusion run output
-Why matters:  Test accuracy (0.18 rule / 0.24 GBT) is over a tiny, non-
-              representative label subset; NOT a trustworthy overall metric.
-Impact:       Headline accuracy numbers are low-power and class-incomplete.
-```
-
-### F-7  subject/scenario splits are the SAME partition (confound)
-```
-Problem:      split_scenario and split_subject are identical partitions because
-              the dataset is 1:1 subject↔scenario (each subject did one scenario).
-Evidence:     build_splits.py explicitly detects and prints this (is_confounded,
-              identical_partition). 23 subjects, 23 scenarios.
-File/fn:      pipeline/build_splits.py:125-141
-Why matters:  "Unseen person" and "unseen scenario" generalization cannot be
-              measured independently on this dataset version.
-Impact:       Evaluation-scope limitation (the code flags it honestly).
-```
-
-### F-8  Two irreducible label ambiguities cap all 4-cue fusion accuracy
-```
-Problem:      F02 vs F07 (S05 vs S24) and F04 vs F10 (S21 vs S28) have identical
-              measured (emotion,gesture,motion,context) tuples mapping to
-              different intents. F04-vs-F10 has NO distinguishing measured signal.
-Evidence:     scenarios.csv rows; rule_based.py docstring ambiguities #1/#2.
-File/fn:      fusion/rule_based.py:11-33 ; scenarios.csv S21/S28, S05/S24
-Why matters:  Every true F10 clip is misclassified by R3 (→F04) by construction;
-              this is a real accuracy ceiling, not fixable with these 4 cues.
-Impact:       Upper bound on both fusion approaches. F10 recall ≈ 0 by design.
-```
-
-### F-9  GBT train accuracy evaluated on un-augmented data (mildly optimistic)
-```
-Problem:      Model is fit on X_train (with modality dropout) but the printed
-              train accuracy is computed on train_df[FEATURE_NAMES] (no dropout).
-Evidence:     gbt.py:84 (X_train dropout) vs :109 (X = split_df[FEATURE_NAMES]).
-File/fn:      fusion/gbt.py:84,106-111
-Why matters:  Train metric doesn't reflect the distribution the model trained on.
-Impact:       Minor; only the train diagnostic, not val/test.
-```
-
-### F-10  Inference-only F02 safety override creates train/serve asymmetry
-```
-Problem:      predict_with_safety_override forces F02 when P(F02)≥0.15, applied
-              only at inference; training never optimizes against it.
-Evidence:     gbt.py:68-74 vs fit at :96.
-File/fn:      fusion/gbt.py
-Why matters:  Reported predictions can diverge from the model's own argmax; a
-              threshold of 0.15 is aggressive (fires well below argmax), trading
-              precision on other classes for F02 recall. Intentional per doc,
-              but must be understood when reading confusion metrics.
-Impact:       Behavioural (raises F02 recall to 0.70, adds F02 false positives).
-```
-
-### F-11  Frame-rate mismatch feeds the motion model out-of-distribution
-```
-Problem:      MotionLSTM assumes ~30fps (30-frame window ≈ 1s). 827/1270 clips
-              are 15fps (window ≈ 2s), degrading accuracy per the model's README.
-              No resampling is done (deliberately, per instruction).
-Evidence:     motion_runner.py docstring; clips.csv fps column (many 15fps);
-              checkpoint val_acc≈0.54.
-File/fn:      runners/motion_runner.py:37-44
-Why matters:  Motion mean-probs (a large share of GBT importance) are computed
-              on out-of-distribution windows for most clips.
-Impact:       Systematically weakens the motion cue on 65% of clips.
-```
-
-### F-12  Gesture is the dominant missing cue (36% of clips)
-```
-Problem:      457/1270 clips have missing_gesture=1 (valid_fraction<0.40),
-              driven by the strict 0.80 gesture confidence floor + demotion of
-              low-confidence signs to Unknown.
-Evidence:     Parquet missing_gesture.sum()=457; CONFIDENCE_FLOOR["gesture"]=0.80.
-File/fn:      runners/common/constants.py ; pipeline/aggregate.py
-Why matters:  Gesture is the single most decisive cue in the rule cascade (most
-              rules key on it) and top GBT importance — yet it's absent for a
-              third of clips, forcing fallback/other-cue reliance.
-Impact:       Large real effect on both fusion approaches.
-```
-
-### F-13  Non-obvious: emotion/motion use MAX confidence, context uses MEAN
-```
-Problem:      emotion_max_confidence & motion_max_confidence are the max over
-              valid frames; context_mean_confidence is the mean. Inconsistent
-              semantics under the similar "*_confidence" naming.
-Evidence:     aggregate.py:102 (max) vs :149 (mean).
-File/fn:      pipeline/aggregate.py
-Why matters:  A GBT split on "confidence" means different things per cue; easy
-              to misread when interpreting feature importance.
-Impact:       Interpretability/consistency; intentional per handover spec.
-```
+No accuracy numbers exist for this system's current state, and none are
+reported in this document — reporting the stale v1.0.0-era numbers here
+would be actively misleading given the dataset, all three non-motion cue
+models, and the rule cascade have all changed since they were measured.
 
 ---
 
 ## 18. Final Data Contract Summary
 
-| Pipeline Boundary | Input Type | Input Shape | Output Type | Output Shape | Example |
-|---|---|---|---|---|---|
-| Raw → Emotion | ndarray uint8 BGR frame | (480,640,3) | NormalisedFrameCue (JSON line) | 7-key probs + scalars | `{"label":"Neutral","confidence":0.99996,...}` |
-| Raw → Gesture | ndarray uint8 BGR frame | (480,640,3) | NormalisedFrameCue | label + conf, `probs={}` | `{"label":"raise_hand","confidence":0.96,"probs":{}}` |
-| Raw → Motion | world landmarks → (25,3) → window | (1,30,84) tensor | NormalisedFrameCue | 4-key probs + scalars | `{"label":"sitting","probs":{sitting:1.0,...}}` |
-| Raw → Context | ndarray uint8 BGR frame | (H,W,3) | NormalisedFrameCue | 2-key probs (smoothed) | `{"label":"classroom","probs":{classroom:0.998,kitchen:0.002}}` |
-| Emotion → Aggregation | list of frame records | N frames | 9 floats | 7 probs + max_conf + valid_frac | `emotion_Neutral=0.993,...` |
-| Gesture → Aggregation | list of frame records | N frames | 10 floats | 8 one-hot + mean_conf + valid_frac | `gesture_raise_hand=1.0,...` |
-| Motion → Aggregation | list of frame records | N frames | 6 floats | 4 probs + max_conf + valid_frac | `motion_sitting=1.0,...` |
-| Context → Aggregation | list of frame records | N frames | 4 floats | 2 probs + mean_conf + valid_frac | `context_classroom=0.996,...` |
-| Aggregation → Parquet | 4 blocks + missing bits | 33 features | Parquet row | (clip_id + 33 + 6 meta) | 1270 rows total |
-| Aggregation → Rule Fusion | pandas row | 33 features | 4 labels (or None) via `_dominant` | 4 categoricals | `(Neutral, raise_hand, sitting, classroom)` |
-| Aggregation → GBT Builder | DataFrame slice | (n,33) | same floats (train: +modality dropout) | (n,33) | raw 33-vector |
-| GBT Builder → GBT | ndarray | (n,33) | proba then argmax+override | (n,10)→(n,) | `proba (1,10)` |
-| Rule Fusion → Final | 4 labels | — | intent string | scalar | `"F04"` |
-| GBT → Final | (n,33) | — | intent string(s) | (n,) | `"F04"` (or forced `"F02"`) |
+The 33 cue-derived feature columns (`pipeline/aggregate.py::FEATURE_NAMES`,
+unchanged, §11) plus the new join/metadata columns
+`pipeline/build_features.py` will attach once rerun (§12):
+
+```
+idx  column                      source / meaning
+0-6  emotion_{7 classes}         mean prob (unchanged)
+7    emotion_max_confidence      max conf over valid frames
+8    emotion_valid_fraction      valid/total
+9-16 gesture_{8 classes}         majority one-hot (unchanged; "idle"→"Unknown")
+17   gesture_mean_confidence     mean conf of winning label
+18   gesture_valid_fraction      valid/total
+19-22 motion_{4 classes}         mean prob (unchanged, model unchanged)
+23   motion_max_confidence       max conf over valid frames
+24   motion_valid_fraction       valid/total
+25-26 context_{classroom,kitchen} mean prob (now from CLIP, not CNN)
+27   context_mean_confidence     mean conf over valid frames
+28   context_valid_fraction      valid/total
+29-32 missing_{emotion,gesture,motion,context}   valid_fraction < 0.40
+
+—— join/metadata columns (build_features.py, v2.0.0 schema) ——
+scenario_dir       v2.0.0 scenario id, e.g. "S01_F01"
+person_id          P01…P10
+intent             target label, F01–F08/F10 (F09 no longer exists)
+split_design       as shipped by splits.csv: train/test
+split_design_v2    train/dev/test (dev carved from train, leakage-checked)
+scoreable          clips.csv's scoreable flag (whether this clip's ground
+                   truth is trustworthy enough to count toward eval metrics)
+```
+
+Rule-based fusion still collapses each cue block back to one categorical
+label via `argmax` (`_dominant()`, unchanged logic); GBT still consumes the
+33 raw floats with no re-encoding. Both mechanisms are unchanged from the
+prior version of this document — only the cascade evaluated on top of the
+rule-based labels changed (§14).
 
 ---
 
-### Appendix — files that DON'T touch the fusion data path (avoid confusion)
+## 19. Critical Findings and Known Gaps (current)
+
+Ordered roughly by impact.
+
+### G-1  Pipeline cannot currently run end-to-end
+Stale `clip_features.parquet` (v1.0.0-era) vs. fresh per-cue JSONLs and an
+active v2.0.0 dataset. MLflow's own consistency guard catches this and
+raises `DatasetVersionMismatchError`; bypassing it would then `KeyError` on
+missing `split_design_v2`/`scoreable` columns. See §17 for the fix. **This
+is not a bug — the guard is working as designed** — but it means no accuracy
+claim about this system is currently possible.
+
+### G-2  Gesture's TCN computes real probs; the pipeline still can't see them
+`GestureEngine` computes a full 8-class softmax internally but only returns
+`(label, confidence)`; `gesture_runner.py` hardcodes `probs={}`. Verified
+against all 359,363 lines of the regenerated JSONL. Blocks any future switch
+of gesture's clip-level aggregation from majority-vote-one-hot to
+mean-probability, and means GBT can never see gesture's actual confidence
+distribution, only its winning label + scalar confidence + one-hot. §7.5.
+
+### G-3  Context runner imports from an external mounted drive, not this repo
+`context_runner.py`'s `sys.path` points at `/media/.../KINGSTON_KG/hri-jetson/
+modalities/context/scene_classification`, not `Context Repo/
+scene_classification/` in this working tree. Currently byte-identical
+(verified), but this is a two-copies-can-drift risk, and the pipeline
+silently depends on that drive being mounted. §9.1.
+
+### G-4  Emotion's batch runner doesn't use the more robust face detector
+`video.py` defines a CLAHE+tiled-quadrant `detect_face_box()` claimed to
+substantially improve far-field detection recall, but only the interactive
+demo loop uses it — `emotion_runner.py` reimplements a plain single-pass
+detector. §6.2.
+
+### G-5  Context aggregation still documented as "one-hot" (cosmetic, unchanged)
+`pipeline/aggregate.py`'s header docstring still says context is "2 one-hot
+scene." It's the mean-probability vector, same as before this session — this
+bug predates the restructure and was never touched. §11.
+
+### G-6  SmolVLM2 VLM path is real but unused by this pipeline
+`Context Repo`'s `src/vlm.py`/`pipeline.py` implement a working VLM
+situation-analysis path (per its README) that the fusion-facing batch
+pipeline never calls. Not a bug, but worth knowing it exists separately from
+what actually feeds fusion. §9.4.
+
+### G-7  Top-level docs predate this restructure and should not be trusted for paths/numbers
+`HRI_Fusion_Engine_Handover.md`, `MODEL_ANALYSIS.md`, `Integration_API.md`,
+and `GPU_MACHINE_SETUP.md` were all last touched before the dataset-v2 /
+mlflow / cue-model rework. `GPU_MACHINE_SETUP.md` in particular hardcodes
+`Data/Dataset/hri-multimodal-intent-v1.0.0` paths that no longer exist on
+disk — its own verification steps would fail outright if followed today.
+`MODEL_ANALYSIS.md`/`Integration_API.md` describe the deleted flat-file repo
+layouts. Treat all four as historical background, not current reference.
+
+### G-8  F09 intent class removed between dataset versions
+v1.0.0 had 10 intents (`F01`–`F10`); v2.0.0 has 9 (`F09` absent, folded into
+`F01` per `rule_based.py`'s docstring). Anything downstream that assumes 10
+classes (dashboards, prior analysis, external docs) needs updating. §5, §14.
+
+---
+
+## Appendix — files that don't touch the fusion data path
+
 - `pipeline/aggregate_clip_cues.py`, `pipeline/agreement_report.py`,
   `pipeline/measured/clip_cues.csv`, `reports/phase0_agreement.*` — Phase-0
-  QA/agreement branch only.
+  QA/agreement branch only, now repointed at v2.0.0 but otherwise unchanged
+  in role.
 - `pipeline/experiments/*` — ablation experiments (no-gate gesture, fps
-  normalization); not in the production path.
-- `Gesture Repo/{app.py,play_video.py,test_video.py,extract_dataset.py,train/*}`,
-  `Emotion Repo/{video.py::main,realtime_realsense.py}`,
-  `Motion Repo/example_webcam.py`, `Context Repo/.../{realtime.py,video.py::main}`
-  — original per-repo GUI/demo/training scripts; the runners import only the
-  model-construction/preprocess helpers from them, never their loops.
+  normalization, MediaPipe version comparison); not in the production path.
+  `gesture_no_gate_experiment.py` is the only current consumer of the
+  now-otherwise-dead `GESTURE_SCENARIO_TO_CANONICAL` table (§7.4).
+- `Context Repo/src/vlm.py`, `Context Repo/src/pipeline.py`,
+  `Context Repo/inference/realtime.py` — the VLM (SmolVLM2) path and
+  interactive demo entry points; not called by `runners/context_runner.py`.
+- `Emotion Repo/scripts/*`, `Emotion Repo/src/models_lstm.py` — training/
+  eval scripts and an explicitly do-not-deploy LSTM variant (per
+  `Emotion Repo/README.md`); the batch runner imports only
+  `inference/video.py`.
+- `Gesture Repo/scripts/*`, `Gesture Repo/checkpoints/best_TCN_{prev,
+  pretune,pre_bhu}.pth` — training pipeline and superseded checkpoints.
+- `*/reports/*` (per-repo evaluation reports) — several are explicitly
+  flagged stale by their own repos' READMEs (e.g. `Gesture Repo/reports/
+  evaluation/TCN/EVALUATION_REPORT.md` predates the currently-deployed
+  checkpoint) — re-run each repo's own `scripts/evaluate.py` before trusting
+  numbers in these files rather than relying on what's already written.
+- `pipeline/measured/*.old_v1`, `*.old_8class` — prior runs' JSONL/log/CSV
+  output, kept for comparison, not read by any current script.

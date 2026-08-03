@@ -1,0 +1,19 @@
+# Datasets and large media
+/data
+/videos
+
+# Inference video outputs
+/outputs/*
+!/outputs/.gitkeep
+
+# Generated checkpoints: weights are NOT committed. The released model is
+# published as a versioned GitHub Release asset and fetched with
+# `python scripts/download_model.py`. See README "Pretrained model".
+/checkpoints/*
+!/checkpoints/.gitkeep
+# Keep the small training-history JSON as a lightweight record per version.
+!/checkpoints/history_EfficientNet_B0.json
+
+# Python caches
+__pycache__/
+*.pyc

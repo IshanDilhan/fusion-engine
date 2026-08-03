@@ -1,171 +1,179 @@
-# 🤖 High-Accuracy HRI Gesture Recognition Pipeline
+# Gesture Recognition (v2)
 
-An ultra-robust, real-time hand gesture recognition system designed for **Human-Robot Interaction (HRI)** scenarios, optimized for deployment on resource-constrained platforms like the **NVIDIA Jetson Orin Nano**.
+Real-time hand/body gesture recognition for the adaptive HRI system.
+MediaPipe Holistic landmarks (pose + both hands) are turned into 185-dim
+per-frame features, a 32-frame window feeds a small temporal network
+(BiGRU / TCN / TinyTransformer), and the engine emits one of **8 classes**:
 
-🔗 **GitHub Repository**: [https://github.com/IshanDilhan/hand-gesture-recognition-mediapipe](https://github.com/IshanDilhan/hand-gesture-recognition-mediapipe)
+`idle · wave · point · thumbs_up · thumbs_down · beckoning · raise_hand · both_hands_up`
 
----
+Unlike the removed v1 (static hand-pose MLP + hand-written motion rules),
+static and dynamic gestures are learned **uniformly** from keypoint sequences
+— no rules, real metrics for every class. Targeted at **Jetson Orin Nano**.
 
-## 🌟 Key Features
+**Design spec & HPC runbook (source of truth):
+[`docs/GESTURE_V2_DESIGN_AND_HPC_GUIDE.md`](../../docs/GESTURE_V2_DESIGN_AND_HPC_GUIDE.md)**
 
-*   **Jetson Orin Nano Ready**: Highly optimized, quantized TFLite inference takes <0.1 ms.
-*   **6 Static Hand Poses**: Model-based detection of Open Palm, Close, Pointer, Thumbs Up, Thumbs Down, and Beckoning.
-*   **Landmark Smoothing Filter**: Built-in Exponential Moving Average (EMA) filter ($\alpha = 0.45$) stops coordinates from jittering ("dancing points"), stabilizing both display skeletal lines and model inputs.
-*   **Rotation-Invariant Pointing**: Trained using 360-degree rotation data augmentation. Pointing works in all directions (sideways, downwards, diagonally).
-*   **EXIF Orientation Metadata Auto-Rotation**: Automatically rotates phone-recorded videos (90°, 180°, 270°) to an upright orientation before MediaPipe processing.
-*   **Aspect Ratio Resizing**: Scales high-resolution frames (e.g. 4K) to a maximum dimension of 960px to prevent window clipping and increase execution speed (FPS) significantly.
-*   **Flex-Pose Hand Raising**: Identifies "One Hand Raised" or "Arms Up" with open palms, fists, or unknown shapes using dynamic vertical coordinate history tracking (monitoring start and end positions).
-*   **Scale-Invariant Waving & Beckoning**: Normalizes coordinate excursions by the hand's own scale, enabling movement triggers (circular, waving, curling) at any distance from the camera.
-*   **Menu-Driven Video Playlist Player**: Automatically plays test videos sequentially, loops back, and runs HRI scenario checks.
+## Results (what to trust)
 
----
+Two very different benchmarks exist for this model — **do not compare them
+directly**:
 
-## 🛠️ How It Works & Techniques
+| Benchmark | What it measures | Current checkpoint (`best_TCN.pth`, trained 2026-07-15) |
+|---|---|---|
+| `checkpoints/model_config.json` `best_val` / `reports/evaluation/TCN/EVALUATION_REPORT.md` | Held-out split of the **training data itself** (Jester + NTU + custom landmark sequences) | 93.2% acc / 92.8% macro-F1 — but this is stale, see caveat below |
+| Real intent-dataset video, 205-clip mixed subset | Held-out subset + some train-subject "coverage" clips | 74.1% acc / 72.0% macro-F1 |
+| **Real intent-dataset video, all 1,061 clips, test-subjects only** | Cleanest generalization estimate — actors never in gesture's training data at all | **84.1% acc / 82.9% macro-F1** |
 
-The system utilizes a hybrid approach combining computer vision, deep learning, and temporal kinematics:
+The real-video number is the one that matters for fusion, and it depends a
+lot on which subjects you score: on the **strictly held-out test subjects**
+(P03/05/07/08/09 — actors never touching this model's training data at all,
+since gesture trains on Jester/NTU/custom landmark datasets fully disjoint
+from this project's video) it's actually **84.1% accuracy / 82.9% macro-F1**,
+better than the mixed 205-clip subset first suggested. Per-class on test
+subjects: `thumbs_down` 93% F1, `thumbs_up` 91%, `both_hands_up` 90% (82%
+recall), `point` 89% F1 (86% recall!), `idle` 77%, `wave` 57% (small n=3).
+`beckoning`/`raise_hand` have zero test-subject support — those two gestures
+were only recorded in scenarios that happened to fall entirely in
+train/val subjects, so their generalization is currently unverified.
 
-### 1. Preprocessing & Auto-Orientation
-*   **Exif orientation correction**: High-resolution videos filmed on mobile phones are often rotated. The pipeline checks the EXIF orientation tag (`cv.CAP_PROP_ORIENTATION_META` or index 48) and applies appropriate rotation matrices to orient frames vertically before processing.
-*   **Aspect-Ratio Scaling**: To ensure low-latency performance and prevent off-screen rendering on Jetson/PC screens, 4K frames are resized to a maximum dimension of 960px using area interpolation (`cv.INTER_AREA`).
+**`point` and `both_hands_up` used to be dead classes (0% recall each)** —
+the 2026-07-15 checkpoint fixed this by adding real training data for them
+(see the `*_pre_bhu`/`*_pretune`/`*_prev` checkpoint variants, milestones
+from that fix). Remaining known weak spots:
+- **`point` still fails when there's no motion in the gesture** — a
+  static/seated point (e.g. pointing while writing, scenario `S03_F05`)
+  reads as `idle` in aggregate, while a point made while walking or standing
+  generalizes fine (86% test-subject recall overall). It's specifically the
+  *stationary* variant that's weak, not point as a class.
+- **`wave` recall is weak everywhere** (both classroom and kitchen scenarios,
+  57% F1 on test subjects, small sample) — worth checking whether wave's
+  training-data share shrank in the pass that added both_hands_up/point.
+- **`both_hands_up` at one kitchen scenario (`S26_F02`) is subject-specific,
+  not universal**: train-subject clips there score 100% (25/25) while
+  test-subject clips score 29% (mostly falling to `idle`). This is a genuine
+  actor-generalization gap for gesture at that scenario — *not* the same
+  root cause as the motion model's failure on the same clips (motion fails
+  there for train and test subjects alike, i.e. it's an environment/recording
+  issue for motion, but an unseen-actor issue for gesture). Don't assume one
+  fix addresses both.
 
-### 2. Skeletal Joint Landmark Extraction (MediaPipe)
-*   **Joint Detection**: MediaPipe Hands extracts 21 skeletal joints in 3D coordinates.
-*   **Translation & Scale Normalization**:
-    *   To make the model translation-invariant, the wrist landmark is subtracted from all other coordinates: $\mathbf{P}'_i = \mathbf{P}_i - \mathbf{P}_{\text{wrist}}$
-    *   To make it scale-invariant, the landmarks are divided by the hand scale (e.g., wrist-to-middle finger MCP distance or bounding box diagonals), flattening coordinates into a normalized 1D vector of 42 spatial dimensions ($x, y$).
+> **`reports/evaluation/TCN/EVALUATION_REPORT.md` and `REALWORLD_REPORT.md`
+> are stale** — both still say "Generated: 2026-07-12" and describe the
+> *previous* checkpoint. The checkpoint on disk (`best_TCN.pth`) was replaced
+> 2026-07-15 without regenerating them. Re-run `scripts/evaluate.py` before
+> trusting anything in those files.
 
-### 3. Quantized MLP Neural Network Classifier
-*   **Architecture**: A lightweight multi-layer perceptron (MLP) trained on a custom mapped subset of the HaGRID dataset.
-*   **Rotation Augmentation**: The dataset is augmented by applying random rotation matrices ($0^{\circ}$ to $360^{\circ}$), making pointing gesture classification rotation-invariant.
-*   **FP16/INT8 TFLite Quantization**: The model weights are quantized down to a compact size of ~6-8 KB, allowing sub-millisecond inference speeds on edge platforms like the Jetson Orin Nano.
+## Data
 
-### 4. Exponential Moving Average (EMA) Smoothing
-*   To eliminate landmark jitter ("dancing points") caused by camera noise and lighting variations, an EMA filter is applied to the coordinates over time:
-    $$\mathbf{x}_{\text{smooth}, t} = \alpha \mathbf{x}_t + (1 - \alpha) \mathbf{x}_{\text{smooth}, t-1}$$
-    Where $\alpha = 0.45$. This creates a silky-smooth rendering overlay and improves classifier stability.
+Trained on public datasets + a small custom set (guide §4):
 
-### 5. Temporal Path History Tracking for Hand Raising
-*   **Flex-Pose detection**: Traditional palm-based checks fail when the user raises their hand as a fist or unknown gesture.
-*   **Trajectory analysis**: The pipeline records a rolling history buffer of vertical coordinates ($y\_hist$). It calculates the difference between the starting position and the ending position of the gesture trajectory to verify that a hand-raising motion occurred, supporting Open Palm, Fist, or Unknown shapes.
+| Source | Classes contributed |
+|---|---|
+| 20BN-Jester | thumbs_up/down, wave, beckoning (proxy), idle negatives |
+| NTU RGB+D 120 | wave, point, thumbs_up/down, both_hands_up, idle negatives |
+| Custom recordings | beckoning, raise_hand (+ live test set for ALL classes) |
 
-### 6. Scale-Invariant Motion Metrics (Waving & Beckoning)
-*   Dynamic gesture tracking calculates the bounding-box-normalized excursion of hand landmarks. Waving and beckoning are evaluated against this relative hand size metric rather than absolute pixel distances, ensuring stable detection regardless of how close or far the hand is from the camera.
+Raw datasets live outside the repo — set `GESTURE_DATA_ROOT` (defaults to
+`data/raw/`), laid out per guide §4.
 
----
+## Pretrained model (use without retraining)
 
-## 📊 Mapped HRI Gestures
+The deployed weights are published as a versioned [GitHub Release](https://github.com/KesharaGunathilaka/adaptive-multimodal-hri/releases)
+(kept out of git). Fetches both `best_TCN.pth` and `model_config.json` —
+they must ship together, the config pins the exact architecture/labels/window:
 
-The system classifies hand landmarks into 6 static categories:
-
-| ID | Pose Name | HaGRID Folders Mapped | HRI Scenario Intent |
-|---|---|---|---|
-| 0 | **Open Palm** | `train_val_palm`, `train_val_stop` | `raise hand`, `wave` (static), `both hands up` |
-| 1 | **Close (Fist)** | `train_val_fist` | Neutral resting hand state / raising |
-| 2 | **Pointer** | `train_val_one` | `point` (pointing in all directions) |
-| 3 | **Thumbs Up** | `train_val_like` | `thumbs up` (confirm, task success) |
-| 4 | **Thumbs Down** | `train_val_dislike` | `thumbs down` (help request, failure) |
-| 5 | **Beckoning** | `train_val_call` | `beckoning` (static pose shape) |
-
----
-
-## 👥 Message for my Friends (Setup & Installation)
-
-Hey there! If you are cloning this repository to run the project, welcome! This project contains a complete list of required packages in the [requirements.txt](file:///d:/FYP/FYP_Motion%20&%20Gesture/Gesture_final/requirements.txt) file. 
-
-Here is a breakdown of the dependencies we need, what each is used for, and how to set everything up.
-
-### 📦 Package-by-Package Breakdown
-
-1.  **`numpy` (v1.26.4)**
-    *   *What it does*: Used for matrix math operations.
-    *   *Why we need it*: Calculates coordinate distances, normalizes landmark skeletons, and stores movement history for waving and beckoning.
-    *   *Install individually*: `pip install numpy==1.26.4`
-2.  **`opencv-python` (v4.9.0.80)**
-    *   *What it does*: Main camera and video manipulation framework.
-    *   *Why we need it*: Captures webcams, reads video files, resizes 4K images to 960px, auto-rotates phone videos, and draws the visual skeleton overlay.
-    *   *Install individually*: `pip install opencv-python==4.9.0.80`
-3.  **`mediapipe` (v0.10.11)**
-    *   *What it does*: Google's real-time ML tracking library.
-    *   *Why we need it*: Finds the hand and returns the 21 3D coordinates of joints.
-    *   *Install individually*: `pip install mediapipe==0.10.11`
-4.  **`tensorflow` (v2.15.1)**
-    *   *What it does*: Machine learning framework.
-    *   *Why we need it*: Loads the lightweight quantized model (`keypoint_classifier.tflite`) and runs inference on our hand coordinates in under 1ms.
-    *   *Install individually*: `pip install tensorflow==2.15.1`
-5.  **`protobuf` (v3.20.3)**
-    *   *What it does*: Data serialization library.
-    *   *Why we need it*: Internally passes data structures back and forth between MediaPipe's C++ core and our Python code.
-    *   *Install individually*: `pip install protobuf==3.20.3`
-6.  **`matplotlib` (v3.10.9)**
-    *   *What it does*: Graph and visualization generator.
-    *   *Why we need it*: Used to plot validation curves and evaluation confusion matrices during the model retraining phase.
-    *   *Install individually*: `pip install matplotlib==3.10.9`
-
----
-
-### 🚀 Getting Started
-
-Follow these steps to clone, set up, and run the pipeline:
-
-#### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/IshanDilhan/hand-gesture-recognition-mediapipe.git
-cd hand-gesture-recognition-mediapipe
+python scripts/download_model.py                       # latest release
+python scripts/download_model.py --tag gesture-v2.1     # a specific version
 ```
 
-#### Step 2: Create a Virtual Environment
-It's recommended to use a clean Python environment (Python 3.10 or 3.11 is best):
-```bash
-python -m venv env
+### Publishing a new model version (maintainers)
+
+1. Tag the commit: `git tag gesture-vX.Y && git push origin gesture-vX.Y`.
+2. On GitHub: **Releases → Draft a new release →** choose that tag, add
+   notes (metrics from "Results" above), and **attach both `best_TCN.pth`
+   and `model_config.json`** as release assets → Publish.
+3. `download_model.py` then serves both automatically (it points at the latest release).
+
+## Folder structure
+
 ```
-Activate the environment:
-*   **Windows**:
-    ```powershell
-    .\env\Scripts\activate
-    ```
-*   **Linux/macOS**:
-    ```bash
-    source env/bin/activate
-    ```
-
-#### Step 3: Install the Packages
-You can install them **one-by-one** using the individual commands listed in the breakdown above, or install all at once using:
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## 🏃 Running the Application
-
-### 1. Test video sequences:
-We've included dynamic scenario testing. To play sample HRI videos:
-```bash
-python play_video.py
-```
-This script will sequentially load testing videos, perform auto-rotation, display the bounding boxes, and verify gesture categories like waving, beckoning, pointing, and hand raising.
-
-### 2. Live Webcam Demo:
-To run live classification using your PC's webcam:
-```bash
-python app.py
+gesture/
+├── config.py               # classes, paths, feature/window spec, engine params
+├── src/                    # importable library
+│   ├── features.py         # landmark -> 185-dim features, normalization, augmentation
+│   ├── data.py             # dataset mapping tables, sequence dataset, splits I/O
+│   ├── models.py           # BiGRU / TCN / TinyTransformer (< 1M params each)
+│   ├── training.py         # shared fit/eval recipe (early stop on macro-F1)
+│   └── engine.py           # GestureEngine: rolling window + EMA + debounce
+├── scripts/                # runnable pipeline stages
+│   ├── extract_landmarks.py  # Stage 0  MediaPipe over datasets -> .npz (CPU, shardable)
+│   ├── prepare_data.py       # Stage 0.5 split index CSVs + data report
+│   ├── compare_models.py     # Stage 1  compare architectures -> pick winner
+│   ├── train.py              # Stage 2  full training (+ model_config.json)
+│   ├── tune.py               # Stage 3  optuna hyper-parameter tuning
+│   ├── evaluate.py           # Stage 4  test + live-test + latency report
+│   └── download_model.py     # fetches best_TCN.pth + model_config.json from a GitHub Release
+├── inference/
+│   ├── realtime_realsense.py # live RealSense / webcam dashboard
+│   └── video.py              # video files -> annotated mp4
+├── data/index/             # split CSVs (committed); data/raw & landmarks git-ignored
+├── checkpoints/            # weights (git-ignored; published as GitHub Releases)
+└── reports/                # generated stage reports
 ```
 
-### 3. Extracting and Retraining (Optional):
-*   To extract landmarks from new HaGRID images: `python extract_dataset.py`
-*   To train the MLP model: `python train/train_keypoint.py`
+## Pipeline (run from this folder)
 
----
+```bash
+python scripts/extract_landmarks.py --dataset all      # shardable: --shard i/N
+python scripts/prepare_data.py
+python scripts/compare_models.py
+python scripts/train.py --model <winner>
+python scripts/tune.py --model <winner> --trials 40
+python scripts/train.py --model <winner> --use-tuned
+python scripts/evaluate.py
+```
 
-## 📂 Step-by-Step Documentation (A to Z)
+Heavy stages run on the HPC — SLURM templates and setup in the guide (§9).
 
-We have created individual guides detailing every step of the pipeline under the `doc/` directory:
+## Real-time inference
 
-1.  [doc/step_1_data_mapping.md](file:///d:/FYP/FYP_Motion%20&%20Gesture/Gesture_final/doc/step_1_data_mapping.md): Details the HaGRID folder-to-intent mappings.
-2.  [doc/step_2_extraction.md](file:///d:/FYP/FYP_Motion%20&%20Gesture/Gesture_final/doc/step_2_extraction.md): Explains raw landmark calculation, translation, and scale-normalization.
-3.  [doc/step_3_training.md](file:///d:/FYP/FYP_Motion%20&%20Gesture/Gesture_final/doc/step_3_training.md): Covers MLP model training, parameters, and rotation augmentation.
-4.  [doc/step_4_quantization.md](file:///d:/FYP/FYP_Motion%20&%20Gesture/Gesture_final/doc/step_4_quantization.md): Explains Keras weights-to-TFLite quantization and optimization benefits.
-5.  [doc/step_5_realtime_inference.md](file:///d:/FYP/FYP_Motion%20&%20Gesture/Gesture_final/doc/step_5_realtime_inference.md): Explains Exponential Moving Average (EMA) landmark smoothing and temporal resolutions.
-6.  [doc/step_6_jetson_deployment.md](file:///d:/FYP/FYP_Motion%20&%20Gesture/Gesture_final/doc/step_6_jetson_deployment.md): Contains instructions, python environment commands, and tips for Jetson Orin Nano deployment.
-7.  [doc/dependencies_guide.md](file:///d:/FYP/FYP_Motion%20&%20Gesture/Gesture_final/doc/dependencies_guide.md): Comprehensive package-by-package installation guide.
-8.  [doc/model_classifiers_guide.md](file:///d:/FYP/FYP_Motion%20&%20Gesture/Gesture_final/doc/model_classifiers_guide.md): Describes the Keypoint and Point History models and their files.
+```bash
+python inference/realtime_realsense.py                 # RealSense, webcam fallback
+python inference/video.py --input ../../videos --save
+```
+
+## Main script integration (how to call)
+
+```python
+import cv2 as cv
+import mediapipe as mp
+from modalities.gesture.src.engine import GestureEngine
+
+holistic = mp.solutions.holistic.Holistic(model_complexity=1)
+gesture_detector = GestureEngine()
+
+cap = cv.VideoCapture(0)
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break
+    res = holistic.process(cv.cvtColor(frame, cv.COLOR_BGR2RGB))
+
+    # (stable_label_str, confidence_float) — same call style as MotionEngine
+    gesture, confidence = gesture_detector.process_holistic(res)
+    print(f"Gesture: {gesture} ({confidence:.2f})")
+```
+
+`GestureEngine` buffers ~2 s of frames, resamples to the model window,
+smooths the softmax with EMA (α = 0.25) and only emits a non-idle label once
+it has won for 300 ms at ≥ 0.60 confidence — so the fusion layer sees stable
+intents, not per-frame flicker. Call `engine.reset()` when the tracked person
+changes.
+
+## Setup
+
+Use the repo `.venv` (PyTorch + mediapipe): `pip install -r requirements.txt`
+from the repo root. Trained weights ship as GitHub Releases (`gesture-v2.x`)
+— drop `best_*.pth` + `model_config.json` into `checkpoints/`.

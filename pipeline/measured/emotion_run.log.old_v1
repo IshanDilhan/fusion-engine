@@ -1,0 +1,62 @@
+2026-07-10 00:00:24.400501: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-07-10 00:00:24.422449: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-07-10 00:00:24.422482: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-07-10 00:00:24.423054: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-07-10 00:00:24.426239: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-10 00:00:24.800139: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783621826.591176  327456 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1783621826.641704  328086 gl_context.cc:357] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 570.211.01), renderer: NVIDIA GeForce RTX 5090/PCIe/SSE2
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[emotion_runner] 25/1270 clips (25 this run, 0.18 clips/s, ~114.3 min remaining)
+[emotion_runner] 50/1270 clips (50 this run, 0.18 clips/s, ~115.9 min remaining)
+[emotion_runner] 75/1270 clips (75 this run, 0.17 clips/s, ~117.7 min remaining)
+[emotion_runner] 100/1270 clips (100 this run, 0.18 clips/s, ~110.2 min remaining)
+[emotion_runner] 125/1270 clips (125 this run, 0.19 clips/s, ~102.1 min remaining)
+[emotion_runner] 150/1270 clips (150 this run, 0.20 clips/s, ~94.4 min remaining)
+[emotion_runner] 175/1270 clips (175 this run, 0.20 clips/s, ~93.3 min remaining)
+[emotion_runner] 200/1270 clips (200 this run, 0.20 clips/s, ~91.4 min remaining)
+[emotion_runner] 225/1270 clips (225 this run, 0.19 clips/s, ~90.1 min remaining)
+[emotion_runner] 250/1270 clips (250 this run, 0.19 clips/s, ~88.3 min remaining)
+[emotion_runner] 275/1270 clips (275 this run, 0.19 clips/s, ~85.4 min remaining)
+[emotion_runner] 300/1270 clips (300 this run, 0.20 clips/s, ~80.6 min remaining)
+[emotion_runner] 325/1270 clips (325 this run, 0.21 clips/s, ~76.0 min remaining)
+[emotion_runner] 350/1270 clips (350 this run, 0.21 clips/s, ~72.0 min remaining)
+[emotion_runner] 375/1270 clips (375 this run, 0.21 clips/s, ~70.9 min remaining)
+[emotion_runner] 400/1270 clips (400 this run, 0.21 clips/s, ~69.9 min remaining)
+[emotion_runner] 425/1270 clips (425 this run, 0.21 clips/s, ~68.1 min remaining)
+[emotion_runner] 450/1270 clips (450 this run, 0.21 clips/s, ~65.7 min remaining)
+[emotion_runner] 475/1270 clips (475 this run, 0.21 clips/s, ~63.6 min remaining)
+[emotion_runner] 500/1270 clips (500 this run, 0.21 clips/s, ~62.0 min remaining)
+[emotion_runner] 525/1270 clips (525 this run, 0.21 clips/s, ~60.2 min remaining)
+[emotion_runner] 550/1270 clips (550 this run, 0.21 clips/s, ~58.3 min remaining)
+[emotion_runner] 575/1270 clips (575 this run, 0.20 clips/s, ~56.8 min remaining)
+[emotion_runner] 600/1270 clips (600 this run, 0.20 clips/s, ~54.9 min remaining)
+[emotion_runner] 625/1270 clips (625 this run, 0.20 clips/s, ~53.0 min remaining)
+[emotion_runner] 650/1270 clips (650 this run, 0.20 clips/s, ~51.8 min remaining)
+[emotion_runner] 675/1270 clips (675 this run, 0.20 clips/s, ~50.3 min remaining)
+[emotion_runner] 700/1270 clips (700 this run, 0.19 clips/s, ~50.6 min remaining)
+[emotion_runner] 725/1270 clips (725 this run, 0.19 clips/s, ~48.9 min remaining)
+[emotion_runner] 750/1270 clips (750 this run, 0.19 clips/s, ~46.3 min remaining)
+[emotion_runner] 775/1270 clips (775 this run, 0.19 clips/s, ~44.4 min remaining)
+[emotion_runner] 800/1270 clips (800 this run, 0.18 clips/s, ~42.8 min remaining)
+[emotion_runner] 825/1270 clips (825 this run, 0.18 clips/s, ~40.7 min remaining)
+[emotion_runner] 850/1270 clips (850 this run, 0.18 clips/s, ~38.4 min remaining)
+[emotion_runner] 875/1270 clips (875 this run, 0.18 clips/s, ~36.4 min remaining)
+[emotion_runner] 900/1270 clips (900 this run, 0.18 clips/s, ~34.1 min remaining)
+[emotion_runner] 925/1270 clips (925 this run, 0.18 clips/s, ~31.7 min remaining)
+[emotion_runner] 950/1270 clips (950 this run, 0.18 clips/s, ~30.2 min remaining)
+[emotion_runner] 975/1270 clips (975 this run, 0.18 clips/s, ~27.6 min remaining)
+[emotion_runner] 1000/1270 clips (1000 this run, 0.18 clips/s, ~25.1 min remaining)
+[emotion_runner] 1025/1270 clips (1025 this run, 0.18 clips/s, ~23.2 min remaining)
+[emotion_runner] 1050/1270 clips (1050 this run, 0.18 clips/s, ~20.9 min remaining)
+[emotion_runner] 1075/1270 clips (1075 this run, 0.18 clips/s, ~18.5 min remaining)
+[emotion_runner] 1100/1270 clips (1100 this run, 0.18 clips/s, ~16.1 min remaining)
+[emotion_runner] 1125/1270 clips (1125 this run, 0.18 clips/s, ~13.8 min remaining)
+[emotion_runner] 1150/1270 clips (1150 this run, 0.18 clips/s, ~11.3 min remaining)
+[emotion_runner] 1175/1270 clips (1175 this run, 0.18 clips/s, ~8.9 min remaining)
+[emotion_runner] 1200/1270 clips (1200 this run, 0.18 clips/s, ~6.6 min remaining)
+[emotion_runner] 1225/1270 clips (1225 this run, 0.18 clips/s, ~4.2 min remaining)
+[emotion_runner] 1250/1270 clips (1250 this run, 0.18 clips/s, ~1.9 min remaining)
+[emotion_runner] batch done: 1270 clips processed -> pipeline/measured/emotion_frame_cues.jsonl

@@ -1,0 +1,44 @@
+{
+  "MobileNetV3Small": {
+    "model_params": 1520931,
+    "trainable_params": 1520931,
+    "model_size_mb": "5.85",
+    "best_acc": "90.67%",
+    "best_epoch": 5,
+    "training_time_sec": "1455.38",
+    "accuracy": "89.67%",
+    "precision": "89.64%",
+    "recall": "89.67%",
+    "f1_score": "89.65%",
+    "inference_mean_ms": "10.37",
+    "inference_std_ms": "8.55"
+  },
+  "ResNet18": {
+    "model_params": 11178051,
+    "trainable_params": 11178051,
+    "model_size_mb": "42.68",
+    "best_acc": "91.67%",
+    "best_epoch": 3,
+    "training_time_sec": "1945.13",
+    "accuracy": "88.00%",
+    "precision": "88.03%",
+    "recall": "88.00%",
+    "f1_score": "87.92%",
+    "inference_mean_ms": "7.33",
+    "inference_std_ms": "4.23"
+  },
+  "EfficientNet-B0": {
+    "model_params": 4011391,
+    "trainable_params": 4011391,
+    "model_size_mb": "15.46",
+    "best_acc": "91.67%",
+    "best_epoch": 4,
+    "training_time_sec": "2576.08",
+    "accuracy": "91.00%",
+    "precision": "91.05%",
+    "recall": "91.00%",
+    "f1_score": "90.96%",
+    "inference_mean_ms": "39.25",
+    "inference_std_ms": "181.67"
+  }
+}

@@ -1,0 +1,5 @@
+model,params_m,size_mb,within_budget,accuracy,balanced_acc,f1_weighted,macro_f1,gpu_ms,cpu_ms,train_time_s
+MobileNetV2,2.23,8.65,True,69.56,70.02,71.94,61.34,1.09,11.47,292.6
+MobileNetV3-Large,4.21,16.16,True,71.97,71.36,73.88,63.75,1.33,4.39,295.5
+EfficientNet-B0,4.02,15.48,True,77.05,75.61,78.13,69.76,1.75,9.59,298.3
+MNASNet1_0,3.11,12.01,True,66.98,65.55,69.5,58.28,1.03,91.19,288.4

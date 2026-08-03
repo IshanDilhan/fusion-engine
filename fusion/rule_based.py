@@ -4,53 +4,34 @@ expected to be replaced, same as motion already was; this baseline and its
 accuracy number are a moving target, not a final result).
 
 Encodes scenarios.csv's own authoring logic as explicit priority-ordered
-IF-THEN rules, derived by inspecting all 22 base scenarios' (Intended
-Emotion, Intended Gesture, Intended Motion, Context) -> Intent mapping
-directly (see table below). This is what fusion/gbt.py must beat.
+IF-THEN rules. As of dataset v2.0.0, this table is DERIVED, not hand-
+transcribed: run pipeline/derive_rule_table.py against the current
+scenarios.csv (62 rows, machine-readable emotion_v3/gesture_v3/motion_v3/
+context -> intent columns) to reproduce the table below and check it hasn't
+gone stale. This is what fusion/gbt.py must beat.
 
-Two IRREDUCIBLE ambiguities were found in the authored table itself while
-deriving these rules -- flagged here, not hidden, because they cap this
-baseline's (and arguably any 4-cue fusion model's) achievable accuracy:
-
-  1. F02 vs F07: S05 (classroom, Anger, both_hands_up, standing) = F02, but
-     S24 (kitchen, Anger, both_hands_up, standing) = F07 -- the IDENTICAL
-     emotion/gesture/motion combination maps to two different intents,
-     distinguished ONLY by scene. Handled below with a narrow kitchen+Anger
-     carve-out checked before the general F02 (emergency) catch-all -- per
-     the handover doc's "asymmetric cost: any meaningful evidence of F02
-     escalates" instruction, the carve-out is intentionally narrow so most
-     both_hands_up detections still escalate to F02.
-  2. F04 vs F10: S21 (kitchen, Sad, thumbs_down, sitting) = F04, but S28
-     (kitchen, Sad, thumbs_down, sitting) = F10 -- SAME combination, scene
-     included, maps to two different intents with NO distinguishing signal
-     anywhere in the 4 measured cues. This one is not resolvable by any
-     rule over this feature set; the tie-break below (-> F04, the
-     majority of the two) is arbitrary and will misclassify every true F10
-     case. This is a genuine ceiling on rule-based (and cue-fusion)
-     accuracy, not a bug to fix here -- see MODEL_ANALYSIS.md /
-     HRI_Fusion_Engine_Handover.md's own note that activity/engagement/
-     object-target are permanently unmeasured and might be what actually
-     disambiguates this pair.
-
-Source mapping (base scenario -> Intent, from scenarios.csv):
-  F01: S02(happy,wave,walk toward,classroom) S12(happy,thumbs_up,sitting,classroom) S18(happy,thumbs_up,standing,kitchen)
-  F02: S05(angry,both_hands_up,standing,classroom) S09(surprise,both_hands_up,standing,classroom)
-       S19(fear,both_hands_up,stepping_back*,kitchen) S26(surprise,both_hands_up,stepping_back,kitchen)
-       (*S19's "Move backward (run)" has no equivalent in the new 4-class motion taxonomy -- see
-       pipeline/canonical_map.py's note; not motion-gated here, gesture alone is enough for F02)
-  F03: S07(neutral,beckoning,sitting,classroom) S20(neutral,beckoning,walking,kitchen) S29(neutral,point,walking,kitchen)
-  F04: S01(neutral,raise_hand,sitting,classroom) S04(sad,thumbs_down,sitting,classroom) S21(sad,thumbs_down,sitting,kitchen)
-  F05: S03(neutral,point,sitting,classroom) S11(happy,raise_hand,sitting,classroom) S22(neutral,point,standing,kitchen)
-  F06: S08(neutral,[MISSING],walking,classroom) S27(disgust,point,stepping_back,kitchen)
-  F07: S24(angry,both_hands_up,standing,kitchen) -- see ambiguity #1 above
-  F08: S06(disgust,thumbs_down,stepping_back,classroom) S23(disgust,thumbs_down,stepping_back,kitchen)
-  F09: S25(happy,wave,walking,kitchen)
-  F10: S28(sad,thumbs_down,sitting,kitchen) -- see ambiguity #2 above
+v1.0.0's two documented irreducible ambiguities (F02/F07 distinguished only
+by scene; F04/F10 an unresolvable tie) are BOTH RESOLVED in v2's richer,
+62-scenario table (derive_rule_table.py reports 0 ambiguous combinations):
+  - F02 vs F07 is now emotion-dependent, not scene-dependent: both_hands_up
+    + (Fear/Surprise) -> F02, both_hands_up + Anger -> F07, identically in
+    both contexts.
+  - F04 vs F10 is now resolved by idle vs. active gesture: Sad + idle -> F10,
+    Sad + thumbs_down/beckoning -> F04. ("idle" is gesture_runner.py's
+    Unknown-but-valid state -- a hand/person present but not gesturing --
+    distinct from gesture genuinely missing; see gesture_runner.py's own
+    docstring on this distinction, and note this branch is unreachable if
+    that distinction isn't measured correctly.)
+  - F09 no longer exists as an intent class (v2's scenario table folded the
+    old "farewell" pattern into F01 -- confirmed absent from clips.csv/
+    scenarios.csv's intent values). wave is now purely emotion-dispatched.
 
 Reads a clip's Phase 2 feature row (pipeline/aggregate.py's FEATURE_NAMES)
-and returns a predicted intent code. Priority order below is emergency
-(F02) first, then most-to-least specific pattern, ending in a corpus-mode
-fallback for anything unmatched.
+and returns a predicted intent code. Branches are grouped by gesture (the
+table's natural partition), most emergency-relevant first; anything not
+covered below (combinations absent from the 62-row table) falls through to
+the corpus-mode fallback, same as v1 -- this file does not extrapolate rules
+for combinations the data never showed.
 """
 import os
 import sys
@@ -82,47 +63,87 @@ def predict_intent(row, fallback_intent=DEFAULT_FALLBACK_INTENT):
     emotion = _dominant(row, "emotion", EMOTION_CLASSES)
     gesture = _dominant(row, "gesture", GESTURE_CLASSES)
     motion = _dominant(row, "motion", MOTION_CLASSES)
-    context = _dominant(row, "context", CONTEXT_CLASSES)
 
-    # 1. Emergency escalation -- both_hands_up almost always means F02.
-    #    Narrow authored exception: kitchen + Anger + standing -> F07.
+    # 1. both_hands_up: emotion-dependent (see module docstring -- this
+    #    replaces v1's scene-dependent carve-out). Fear/Surprise/anything
+    #    else not observed in the data escalates to F02 (emergency); Anger
+    #    is frustration (F07), not danger; Neutral is not an emergency at
+    #    all (F05, e.g. a startled-but-unbothered stretch).
     if gesture == "both_hands_up":
-        if context == "kitchen" and emotion == "Anger" and motion == "standing":
+        if emotion == "Anger":
             return "F07"
+        if emotion == "Neutral":
+            return "F05"
         return "F02"
 
-    # 2. F08: disgust + thumbs_down + stepping_back (consistent both scenes).
-    if gesture == "thumbs_down" and motion == "stepping_back" and emotion == "Disgust":
-        return "F08"
+    # 2. Unknown-but-valid gesture ("idle" -- a person/hand present but not
+    #    gesturing, distinct from gesture genuinely missing below). Resolves
+    #    v1's F04/F10 tie: Sad + idle is F10 (discouraged, no directed
+    #    signal); Sad + an active gesture (thumbs_down/beckoning, below)
+    #    is F04 instead.
+    if gesture == "Unknown":
+        if emotion == "Sad":
+            return "F10"
+        if emotion == "Fear":
+            return "F02"
+        if emotion == "Neutral":
+            return "F05"
 
-    # 3. F04/F10 collision (see module docstring, ambiguity #2) -- sitting +
-    #    (raise_hand or thumbs_down) always predicted as F04; true F10
-    #    clips are unresolvable with these cues and will be misclassified.
-    if gesture in ("raise_hand", "thumbs_down") and motion == "sitting":
-        return "F04"
+    # 3. thumbs_down / thumbs_up: purely emotion-dispatched, context-free.
+    if gesture in ("thumbs_down", "thumbs_up"):
+        if emotion == "Sad":
+            return "F04"
+        if emotion == "Anger":
+            return "F07"
+        if emotion == "Disgust":
+            return "F08"
+        if emotion == "Happy":
+            return "F01"
 
-    # 4. F05: point or raise_hand while NOT walking (sitting/standing).
-    if gesture in ("point", "raise_hand") and motion in ("sitting", "standing"):
-        return "F05"
+    # 4. raise_hand: Happy is context-dependent (kitchen=positive greeting,
+    #    classroom=quietly focused/not to be interrupted); Neutral or
+    #    missing-emotion is a help request regardless of context.
+    if gesture == "raise_hand":
+        context = _dominant(row, "context", CONTEXT_CLASSES)
+        if emotion == "Happy":
+            return "F01" if context == "kitchen" else "F05"
+        if emotion in ("Neutral", None):
+            return "F04"
 
-    # 5. F03: beckoning (any motion), or point while walking.
+    # 5. beckoning: Neutral is a task summons; Sad is a help request.
     if gesture == "beckoning":
-        return "F03"
-    if gesture == "point" and motion == "walking":
-        return "F03"
+        if emotion == "Neutral":
+            return "F03"
+        if emotion == "Sad":
+            return "F04"
 
-    # 6. F01/F09: happy + (wave or thumbs_up). Scene disambiguates, per
-    #    ambiguity #1's sibling pattern in the table (kitchen+walking -> F09).
-    if emotion == "Happy" and gesture in ("wave", "thumbs_up"):
-        if context == "kitchen" and motion == "walking":
-            return "F09"
-        return "F01"
+    # 6. point: emotion (+ motion for Anger) dependent.
+    if gesture == "point":
+        if emotion == "Anger":
+            if motion == "walking":
+                return "F06"
+            if motion == "standing":
+                return "F07"
+        if emotion == "Disgust":
+            return "F06"
+        if emotion in ("Happy", "Neutral"):
+            return "F03"
 
-    # 7. F06: point + stepping_back (S27's pattern). S08's own [MISSING]
-    #    intended gesture has no measurable equivalent, so that half of
-    #    F06's authored pattern is unreachable from measured cues alone.
-    if gesture == "point" and motion == "stepping_back":
-        return "F06"
+    # 7. wave: Anger is frustration (F06, wants the robot to back off);
+    #    every other observed emotion (Happy/Neutral/Sad/missing) is F01 --
+    #    F09 ("farewell") no longer exists as a separate class in v2.
+    if gesture == "wave":
+        return "F06" if emotion == "Anger" else "F01"
+
+    # 8. Gesture genuinely missing (not idle -- _dominant() returned None,
+    #    i.e. missing_gesture is set or nothing scored above zero).
+    if gesture is None:
+        if emotion == "Fear":
+            return "F02"
+        if emotion == "Sad" and motion == "sitting":
+            return "F04"
+        if emotion in ("Neutral", None) and motion == "walking":
+            return "F06"
 
     return fallback_intent
 
@@ -162,6 +183,7 @@ if __name__ == "__main__":
 
     from tracking.dataset_logging import log_dataset
     from tracking.hashing import sha256_file
+    from tracking.metrics import log_overall_metrics
     from tracking.mlflow_setup import init_tracking
 
     init_tracking()
@@ -170,9 +192,10 @@ if __name__ == "__main__":
         mlflow.set_tag("code_file", os.path.relpath(__file__, REPO_ROOT))
         mlflow.set_tag("code_version_sha256", sha256_file(__file__))
 
-        df = log_dataset(context="training")
+        df = log_dataset(context="training", allow_stale_override=True)
+        all_classes = sorted(df["intent"].unique())
 
-        train_df = df[df["split_scenario"] == "train"]
+        train_df = df[df["split_design_v2"] == "train"]
         fallback = fit_fallback(train_df)
         mlflow.log_param("fallback_intent", fallback)
         mlflow.log_param("default_fallback_intent_constant", DEFAULT_FALLBACK_INTENT)
@@ -183,18 +206,37 @@ if __name__ == "__main__":
         overall_acc = (df["rule_pred"] == df["intent"]).mean()
         mlflow.log_metric("overall_accuracy_all_clips", overall_acc)
         print(f"[rule_based] overall accuracy (all {len(df)} clips, includes train -- not a test number): {overall_acc:.3f}")
+        log_overall_metrics(mlflow, df["intent"], df["rule_pred"], all_classes,
+                             "overall_accuracy_all_clips", print_prefix="[rule_based] overall")
 
-        for split_name in ["train", "val", "test"]:
-            sub = df[df["split_scenario"] == split_name]
+        scoreable_df = df[df["scoreable"] == "TRUE"]
+        overall_acc_scoreable = (scoreable_df["rule_pred"] == scoreable_df["intent"]).mean()
+        mlflow.log_metric("overall_accuracy_all_clips_scoreable_only", overall_acc_scoreable)
+        print(f"[rule_based] overall accuracy (scoreable-only, n={len(scoreable_df)}): {overall_acc_scoreable:.3f}")
+        log_overall_metrics(mlflow, scoreable_df["intent"], scoreable_df["rule_pred"], all_classes,
+                             "overall_accuracy_all_clips_scoreable_only", print_prefix="[rule_based] overall scoreable-only")
+
+        for split_name in ["train", "dev", "test"]:
+            sub = df[df["split_design_v2"] == split_name]
             if len(sub) == 0:
                 continue
             acc = (sub["rule_pred"] == sub["intent"]).mean()
             mlflow.log_metric(f"{split_name}_accuracy", acc)
             mlflow.log_param(f"n_{split_name}", len(sub))
-            print(f"[rule_based] split_scenario={split_name}: n={len(sub)}, accuracy={acc:.3f}")
+            print(f"[rule_based] split_design_v2={split_name}: n={len(sub)}, accuracy={acc:.3f}")
+            log_overall_metrics(mlflow, sub["intent"], sub["rule_pred"], all_classes,
+                                 split_name, print_prefix=f"[rule_based]   {split_name}")
 
-        print("\n[rule_based] per-class recall (split_scenario=test):")
-        test_df = df[df["split_scenario"] == "test"]
+            sub_scoreable = sub[sub["scoreable"] == "TRUE"]
+            if len(sub_scoreable) > 0:
+                acc_scoreable = (sub_scoreable["rule_pred"] == sub_scoreable["intent"]).mean()
+                mlflow.log_metric(f"{split_name}_accuracy_scoreable_only", acc_scoreable)
+                print(f"[rule_based]   scoreable-only: n={len(sub_scoreable)}, accuracy={acc_scoreable:.3f}")
+                log_overall_metrics(mlflow, sub_scoreable["intent"], sub_scoreable["rule_pred"], all_classes,
+                                     f"{split_name}_scoreable_only", print_prefix=f"[rule_based]   {split_name} scoreable-only")
+
+        print("\n[rule_based] per-class recall (split_design_v2=test):")
+        test_df = df[df["split_design_v2"] == "test"]
         recall_rows = []
         for cls in sorted(df["intent"].unique()):
             sub = test_df[test_df["intent"] == cls]

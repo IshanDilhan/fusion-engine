@@ -27,10 +27,18 @@ EMOTION_MAP = {
 # "[MISSING]" is a deliberately-absent cue in the authored scenario (S08) --
 # mapped to None, meaning "no intended gesture to compare against", not
 # "the model should have detected nothing".
+# "idle" (v2 scenario table) is a genuine trained class, not a stand-in for
+# missing -- gesture_runner.py's keypoint_classifier has a real "Open Palm"/
+# "Close" output (see runners/gesture_runner.py's idle-vs-missing fix) for a
+# hand that's present but not making any recognized gesture. Maps to the
+# existing "Unknown" class (the same one the model emits for it), not a new
+# one -- "none ≠ [MISSING]" is a valid/confidence distinction at measurement
+# time, not a distinct label in this 8-class vocabulary.
 GESTURE_MAP = {
     "point / (writing)": "point",
     "raise hand": "raise_hand",
     "[missing]": None,
+    "idle": "Unknown",
     "beckoning": "beckoning",
     "both hands up": "both_hands_up",
     "point": "point",
@@ -60,8 +68,10 @@ GESTURE_MAP = {
 # Phase 0 agreement report for the flagged scenario (S19_F02).
 MOTION_MAP = {
     "sitting": "sitting",
+    "sit": "sitting",           # v2 scenarios.csv's motion_v3 spelling
     "stand": "standing",
     "stepping back": "stepping_back",
+    "step back": "stepping_back",  # v2 scenarios.csv's motion_v3 spelling
     "walk": "walking",
     "walk (toward)": "walking",
     "walking": "walking",

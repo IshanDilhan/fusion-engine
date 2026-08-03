@@ -1,5 +1,11 @@
 """
-Builds Data/Dataset/hri-multimodal-intent-v1.0.0/annotations/splits.csv.
+Builds Data/Dataset/<active version, see pipeline/dataset_config.py>/annotations/splits.csv.
+
+NOTE: as of v2.0.0, the dataset ships its own pre-curated splits.csv
+(clip-level split_design column, built with dedup/masking provenance this
+script knows nothing about) -- this script's grouped-split derivation is
+superseded for v2 and does not need to run. Kept and parameterized for a
+future dataset version that, like v1, ships with no split assignment yet.
 
 Produces TWO independent grouped train/val/test assignments, as separate
 columns on the same clip-level file:
@@ -38,7 +44,9 @@ import sys
 from collections import defaultdict
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATASET_ROOT = os.path.join(REPO_ROOT, "Data", "Dataset", "hri-multimodal-intent-v1.0.0")
+sys.path.insert(0, os.path.join(REPO_ROOT, "pipeline"))
+from dataset_config import DATASET_ROOT  # noqa: E402
+
 CLIPS_CSV = os.path.join(DATASET_ROOT, "annotations", "clips.csv")
 OUT_CSV = os.path.join(DATASET_ROOT, "annotations", "splits.csv")
 

@@ -21,8 +21,8 @@ Singleton scenarios (exactly 1 clip) are flagged separately -- a "majority"
 of one clip is not a statistically meaningful agreement/disagreement signal.
 
 Stdlib-only. Reads:
-  - Data/Dataset/hri-multimodal-intent-v1.0.0/annotations/clips.csv
-  - Data/Dataset/hri-multimodal-intent-v1.0.0/annotations/scenarios.csv
+  - Data/Dataset/<active version, see pipeline/dataset_config.py>/annotations/clips.csv
+  - Data/Dataset/<active version>/annotations/scenarios.csv
   - pipeline/measured/clip_cues.csv (from aggregate_clip_cues.py)
 Writes:
   - reports/phase0_agreement.csv
@@ -37,8 +37,8 @@ from collections import Counter, defaultdict
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO_ROOT, "pipeline"))
 from canonical_map import map_intended  # noqa: E402
+from dataset_config import DATASET_ROOT  # noqa: E402
 
-DATASET_ROOT = os.path.join(REPO_ROOT, "Data", "Dataset", "hri-multimodal-intent-v1.0.0")
 CLIPS_CSV = os.path.join(DATASET_ROOT, "annotations", "clips.csv")
 SCENARIOS_CSV = os.path.join(DATASET_ROOT, "annotations", "scenarios.csv")
 CLIP_CUES_CSV = os.path.join(REPO_ROOT, "pipeline", "measured", "clip_cues.csv")

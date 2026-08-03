@@ -53,8 +53,8 @@ Usage:
 
     # batch mode: loads the model ONCE, loops every clip in clips.csv
     .venvs/motion/bin/python runners/motion_runner.py \
-        --manifest Data/Dataset/hri-multimodal-intent-v1.0.0/annotations/clips.csv \
-        --clips-root Data/Dataset/hri-multimodal-intent-v1.0.0 \
+        --manifest Data/Dataset/hri-multimodal-intent-v2.0.0/annotations/clips.csv \
+        --clips-root Data/Dataset/hri-multimodal-intent-v2.0.0/raw/clips \
         --out pipeline/measured/motion_frame_cues.jsonl
 """
 import argparse

@@ -1,0 +1,12 @@
+{
+  "trial": 5,
+  "base_lr": 0.0002,
+  "batch_size": 32,
+  "optimizer": "adam",
+  "weight_decay": 1e-05,
+  "label_smoothing": 0.1,
+  "accuracy": 77.09,
+  "balanced_acc": 75.51,
+  "macro_f1": 69.67,
+  "f1_weighted": 78.08
+}

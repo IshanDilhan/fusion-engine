@@ -1,0 +1,1271 @@
+clip_id,scenario,context,true,offline_pred,offline_conf,engine_pred,engine_frac,overlap
+S01_F04_c001,S01_F04,classroom,raise_hand,raise_hand,0.992,raise_hand,0.86,TRAINED (subject+clips in train)
+S01_F04_c002,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.842,TRAINED (subject+clips in train)
+S01_F04_c003,S01_F04,classroom,raise_hand,raise_hand,0.993,raise_hand,0.838,TRAINED (subject+clips in train)
+S01_F04_c004,S01_F04,classroom,raise_hand,raise_hand,0.993,raise_hand,0.8,TRAINED (subject+clips in train)
+S01_F04_c005,S01_F04,classroom,raise_hand,raise_hand,0.991,raise_hand,0.854,TRAINED (subject+clips in train)
+S01_F04_c006,S01_F04,classroom,raise_hand,raise_hand,0.994,raise_hand,0.857,TRAINED (subject+clips in train)
+S01_F04_c007,S01_F04,classroom,raise_hand,raise_hand,0.99,raise_hand,0.88,TRAINED (subject+clips in train)
+S01_F04_c008,S01_F04,classroom,raise_hand,raise_hand,0.999,raise_hand,0.88,TRAINED (subject+clips in train)
+S01_F04_c009,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.867,TRAINED (subject+clips in train)
+S01_F04_c010,S01_F04,classroom,raise_hand,raise_hand,0.997,raise_hand,0.885,TRAINED (subject+clips in train)
+S01_F04_c011,S01_F04,classroom,raise_hand,raise_hand,0.993,raise_hand,0.867,TRAINED (subject+clips in train)
+S01_F04_c012,S01_F04,classroom,raise_hand,raise_hand,0.992,raise_hand,0.875,TRAINED (subject+clips in train)
+S01_F04_c013,S01_F04,classroom,raise_hand,raise_hand,0.994,raise_hand,0.885,TRAINED (subject+clips in train)
+S01_F04_c014,S01_F04,classroom,raise_hand,raise_hand,0.994,raise_hand,0.9,TRAINED (subject+clips in train)
+S01_F04_c015,S01_F04,classroom,raise_hand,raise_hand,0.997,raise_hand,0.867,TRAINED (subject+clips in train)
+S01_F04_c016,S01_F04,classroom,raise_hand,raise_hand,0.993,raise_hand,0.913,TRAINED (subject+clips in train)
+S01_F04_c017,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.891,TRAINED (subject+clips in train)
+S01_F04_c018,S01_F04,classroom,raise_hand,raise_hand,0.997,raise_hand,0.91,TRAINED (subject+clips in train)
+S01_F04_c019,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.905,TRAINED (subject+clips in train)
+S01_F04_c020,S01_F04,classroom,raise_hand,raise_hand,0.994,raise_hand,0.909,TRAINED (subject+clips in train)
+S01_F04_c021,S01_F04,classroom,raise_hand,raise_hand,0.996,raise_hand,0.905,TRAINED (subject+clips in train)
+S01_F04_c022,S01_F04,classroom,raise_hand,raise_hand,0.996,raise_hand,0.86,TRAINED (subject+clips in train)
+S01_F04_c023,S01_F04,classroom,raise_hand,raise_hand,0.994,raise_hand,0.87,TRAINED (subject+clips in train)
+S01_F04_c024,S01_F04,classroom,raise_hand,raise_hand,0.996,raise_hand,0.867,TRAINED (subject+clips in train)
+S01_F04_c025,S01_F04,classroom,raise_hand,raise_hand,0.996,raise_hand,0.872,TRAINED (subject+clips in train)
+S01_F04_c026,S01_F04,classroom,raise_hand,raise_hand,0.988,raise_hand,0.872,TRAINED (subject+clips in train)
+S01_F04_c027,S01_F04,classroom,raise_hand,raise_hand,0.994,raise_hand,0.867,TRAINED (subject+clips in train)
+S01_F04_c028,S01_F04,classroom,raise_hand,raise_hand,0.997,raise_hand,0.86,TRAINED (subject+clips in train)
+S01_F04_c029,S01_F04,classroom,raise_hand,raise_hand,0.996,raise_hand,0.86,TRAINED (subject+clips in train)
+S01_F04_c030,S01_F04,classroom,raise_hand,raise_hand,0.996,raise_hand,0.898,TRAINED (subject+clips in train)
+S01_F04_c031,S01_F04,classroom,raise_hand,raise_hand,0.994,raise_hand,0.906,TRAINED (subject+clips in train)
+S01_F04_c032,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.891,TRAINED (subject+clips in train)
+S01_F04_c033,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.885,TRAINED (subject+clips in train)
+S01_F04_c034,S01_F04,classroom,raise_hand,raise_hand,0.996,raise_hand,0.87,TRAINED (subject+clips in train)
+S01_F04_c035,S01_F04,classroom,raise_hand,raise_hand,0.996,raise_hand,0.902,TRAINED (subject+clips in train)
+S01_F04_c036,S01_F04,classroom,raise_hand,raise_hand,0.993,raise_hand,0.889,TRAINED (subject+clips in train)
+S01_F04_c037,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.905,TRAINED (subject+clips in train)
+S01_F04_c038,S01_F04,classroom,raise_hand,raise_hand,0.993,raise_hand,0.906,TRAINED (subject+clips in train)
+S01_F04_c039,S01_F04,classroom,raise_hand,raise_hand,0.997,raise_hand,0.872,TRAINED (subject+clips in train)
+S01_F04_c040,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.921,TRAINED (subject+clips in train)
+S01_F04_c041,S01_F04,classroom,raise_hand,raise_hand,0.99,raise_hand,0.864,TRAINED (subject+clips in train)
+S01_F04_c042,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.867,TRAINED (subject+clips in train)
+S01_F04_c043,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.885,TRAINED (subject+clips in train)
+S01_F04_c044,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.864,TRAINED (subject+clips in train)
+S01_F04_c045,S01_F04,classroom,raise_hand,raise_hand,0.993,raise_hand,0.864,TRAINED (subject+clips in train)
+S01_F04_c046,S01_F04,classroom,raise_hand,raise_hand,0.994,raise_hand,0.872,TRAINED (subject+clips in train)
+S01_F04_c047,S01_F04,classroom,raise_hand,raise_hand,0.997,raise_hand,0.9,TRAINED (subject+clips in train)
+S01_F04_c048,S01_F04,classroom,raise_hand,raise_hand,0.996,raise_hand,0.902,TRAINED (subject+clips in train)
+S01_F04_c049,S01_F04,classroom,raise_hand,raise_hand,0.993,raise_hand,0.918,TRAINED (subject+clips in train)
+S01_F04_c050,S01_F04,classroom,raise_hand,raise_hand,0.997,raise_hand,0.943,TRAINED (subject+clips in train)
+S01_F04_c051,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.931,TRAINED (subject+clips in train)
+S01_F04_c052,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.898,TRAINED (subject+clips in train)
+S01_F04_c053,S01_F04,classroom,raise_hand,raise_hand,0.994,raise_hand,0.796,TRAINED (subject+clips in train)
+S01_F04_c054,S01_F04,classroom,raise_hand,raise_hand,0.994,raise_hand,0.897,TRAINED (subject+clips in train)
+S01_F04_c055,S01_F04,classroom,raise_hand,raise_hand,0.996,raise_hand,0.922,TRAINED (subject+clips in train)
+S01_F04_c056,S01_F04,classroom,raise_hand,raise_hand,0.996,raise_hand,0.829,TRAINED (subject+clips in train)
+S01_F04_c057,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.872,TRAINED (subject+clips in train)
+S01_F04_c058,S01_F04,classroom,raise_hand,raise_hand,0.997,raise_hand,0.912,TRAINED (subject+clips in train)
+S01_F04_c059,S01_F04,classroom,raise_hand,raise_hand,0.994,raise_hand,0.917,TRAINED (subject+clips in train)
+S01_F04_c060,S01_F04,classroom,raise_hand,raise_hand,0.998,raise_hand,0.933,TRAINED (subject+clips in train)
+S01_F04_c061,S01_F04,classroom,raise_hand,raise_hand,0.994,raise_hand,0.887,TRAINED (subject+clips in train)
+S01_F04_c062,S01_F04,classroom,raise_hand,raise_hand,0.992,raise_hand,0.889,TRAINED (subject+clips in train)
+S01_F04_c063,S01_F04,classroom,raise_hand,raise_hand,0.995,raise_hand,0.897,TRAINED (subject+clips in train)
+S01_F04_c064,S01_F04,classroom,raise_hand,raise_hand,0.991,raise_hand,0.908,TRAINED (subject+clips in train)
+S01_F04_c065,S01_F04,classroom,raise_hand,raise_hand,0.992,raise_hand,0.898,TRAINED (subject+clips in train)
+S01_F04_c066,S01_F04,classroom,raise_hand,raise_hand,0.993,raise_hand,0.912,TRAINED (subject+clips in train)
+S01_F04_c067,S01_F04,classroom,raise_hand,raise_hand,0.994,raise_hand,0.891,TRAINED (subject+clips in train)
+S01_F04_c068,S01_F04,classroom,raise_hand,raise_hand,0.996,raise_hand,0.917,TRAINED (subject+clips in train)
+S01_F04_c069,S01_F04,classroom,raise_hand,raise_hand,0.996,raise_hand,0.854,TRAINED (subject+clips in train)
+S01_F04_c070,S01_F04,classroom,raise_hand,raise_hand,0.993,raise_hand,0.88,TRAINED (subject+clips in train)
+S02_F01_c001,S02_F01,classroom,wave,wave,0.855,wave,0.71,unseen
+S02_F01_c002,S02_F01,classroom,wave,wave,0.855,wave,0.71,unseen
+S02_F01_c003,S02_F01,classroom,wave,raise_hand,0.577,raise_hand,0.882,unseen
+S02_F01_c004,S02_F01,classroom,wave,raise_hand,0.577,raise_hand,0.882,unseen
+S02_F01_c005,S02_F01,classroom,wave,raise_hand,0.78,raise_hand,0.833,unseen
+S02_F01_c006,S02_F01,classroom,wave,raise_hand,0.78,raise_hand,0.833,unseen
+S02_F01_c007,S02_F01,classroom,wave,raise_hand,0.95,raise_hand,0.889,unseen
+S02_F01_c008,S02_F01,classroom,wave,raise_hand,0.745,raise_hand,0.803,unseen
+S02_F01_c009,S02_F01,classroom,wave,raise_hand,0.9,raise_hand,0.872,unseen
+S02_F01_c010,S02_F01,classroom,wave,wave,0.673,wave,0.843,unseen
+S02_F01_c011,S02_F01,classroom,wave,wave,0.653,wave,0.806,unseen
+S02_F01_c012,S02_F01,classroom,wave,wave,0.653,wave,0.806,unseen
+S02_F01_c013,S02_F01,classroom,wave,raise_hand,0.767,raise_hand,0.296,unseen
+S02_F01_c014,S02_F01,classroom,wave,raise_hand,0.767,raise_hand,0.296,unseen
+S02_F01_c015,S02_F01,classroom,wave,wave,0.679,wave,0.407,unseen
+S02_F01_c016,S02_F01,classroom,wave,wave,0.679,wave,0.407,unseen
+S02_F01_c017,S02_F01,classroom,wave,wave,0.618,idle,1.0,unseen
+S02_F01_c018,S02_F01,classroom,wave,wave,0.835,wave,0.706,unseen
+S02_F01_c019,S02_F01,classroom,wave,raise_hand,0.552,idle,1.0,unseen
+S02_F01_c020,S02_F01,classroom,wave,wave,0.804,wave,0.739,unseen
+S02_F01_c021,S02_F01,classroom,wave,raise_hand,0.518,wave,0.196,unseen
+S02_F01_c022,S02_F01,classroom,wave,wave,0.884,wave,0.883,unseen
+S02_F01_c023,S02_F01,classroom,wave,raise_hand,0.667,raise_hand,0.611,unseen
+S02_F01_c024,S02_F01,classroom,wave,wave,0.848,wave,0.788,unseen
+S02_F01_c025,S02_F01,classroom,wave,raise_hand,0.962,raise_hand,0.806,unseen
+S02_F01_c026,S02_F01,classroom,wave,wave,0.689,wave,0.742,unseen
+S02_F01_c027,S02_F01,classroom,wave,raise_hand,0.783,raise_hand,0.2,unseen
+S02_F01_c028,S02_F01,classroom,wave,raise_hand,0.965,wave,0.885,unseen
+S02_F01_c029,S02_F01,classroom,wave,raise_hand,0.818,wave,0.778,unseen
+S02_F01_c030,S02_F01,classroom,wave,raise_hand,0.97,raise_hand,0.552,unseen
+S02_F01_c031,S02_F01,classroom,wave,raise_hand,0.838,raise_hand,0.106,unseen
+S02_F01_c032,S02_F01,classroom,wave,raise_hand,0.958,wave,0.683,unseen
+S02_F01_c033,S02_F01,classroom,wave,raise_hand,0.984,raise_hand,0.537,unseen
+S02_F01_c034,S02_F01,classroom,wave,raise_hand,0.92,wave,0.698,unseen
+S02_F01_c035,S02_F01,classroom,wave,raise_hand,0.98,wave,0.867,unseen
+S02_F01_c036,S02_F01,classroom,wave,raise_hand,0.985,raise_hand,0.69,unseen
+S02_F01_c037,S02_F01,classroom,wave,raise_hand,0.99,raise_hand,0.885,unseen
+S02_F01_c038,S02_F01,classroom,wave,raise_hand,0.994,raise_hand,0.887,unseen
+S02_F01_c039,S02_F01,classroom,wave,raise_hand,0.988,raise_hand,0.918,unseen
+S02_F01_c040,S02_F01,classroom,wave,raise_hand,0.993,raise_hand,0.887,unseen
+S02_F01_c041,S02_F01,classroom,wave,raise_hand,0.991,raise_hand,0.85,unseen
+S02_F01_c042,S02_F01,classroom,wave,raise_hand,0.991,raise_hand,0.867,unseen
+S02_F01_c043,S02_F01,classroom,wave,raise_hand,0.989,raise_hand,0.846,unseen
+S02_F01_c044,S02_F01,classroom,wave,raise_hand,0.995,raise_hand,0.842,unseen
+S02_F01_c045,S02_F01,classroom,wave,raise_hand,0.991,raise_hand,0.878,unseen
+S02_F01_c046,S02_F01,classroom,wave,raise_hand,0.994,raise_hand,0.872,unseen
+S02_F01_c047,S02_F01,classroom,wave,raise_hand,0.992,raise_hand,0.885,unseen
+S02_F01_c048,S02_F01,classroom,wave,raise_hand,0.993,raise_hand,0.906,unseen
+S02_F01_c049,S02_F01,classroom,wave,raise_hand,0.884,raise_hand,0.23,unseen
+S02_F01_c050,S02_F01,classroom,wave,raise_hand,0.98,raise_hand,0.689,unseen
+S02_F01_c051,S02_F01,classroom,wave,raise_hand,0.84,wave,0.706,unseen
+S02_F01_c052,S02_F01,classroom,wave,raise_hand,0.971,wave,0.829,unseen
+S02_F01_c053,S02_F01,classroom,wave,raise_hand,0.921,raise_hand,0.316,unseen
+S02_F01_c054,S02_F01,classroom,wave,raise_hand,0.976,wave,0.863,unseen
+S02_F01_c055,S02_F01,classroom,wave,raise_hand,0.929,wave,0.561,unseen
+S02_F01_c056,S02_F01,classroom,wave,raise_hand,0.934,wave,0.556,unseen
+S02_F01_c057,S02_F01,classroom,wave,raise_hand,0.573,wave,0.854,unseen
+S02_F01_c058,S02_F01,classroom,wave,raise_hand,0.785,wave,0.696,unseen
+S02_F01_c059,S02_F01,classroom,wave,idle,0.597,idle,1.0,unseen
+S02_F01_c060,S02_F01,classroom,wave,raise_hand,0.99,idle,1.0,unseen
+S02_F01_c061,S02_F01,classroom,wave,raise_hand,0.966,wave,0.764,unseen
+S03_F05_c001,S03_F05,classroom,point,idle,0.585,idle,1.0,unseen
+S03_F05_c002,S03_F05,classroom,point,idle,0.705,idle,1.0,unseen
+S03_F05_c003,S03_F05,classroom,point,idle,0.422,idle,1.0,unseen
+S03_F05_c004,S03_F05,classroom,point,idle,0.722,idle,1.0,unseen
+S03_F05_c005,S03_F05,classroom,point,idle,0.463,thumbs_up,0.562,unseen
+S03_F05_c006,S03_F05,classroom,point,idle,0.698,idle,1.0,unseen
+S03_F05_c007,S03_F05,classroom,point,thumbs_up,0.577,thumbs_up,0.236,unseen
+S03_F05_c008,S03_F05,classroom,point,idle,0.692,idle,1.0,unseen
+S03_F05_c009,S03_F05,classroom,point,thumbs_up,0.492,thumbs_up,0.113,unseen
+S03_F05_c010,S03_F05,classroom,point,idle,0.568,idle,1.0,unseen
+S03_F05_c011,S03_F05,classroom,point,idle,0.54,idle,1.0,unseen
+S03_F05_c012,S03_F05,classroom,point,idle,0.673,idle,1.0,unseen
+S03_F05_c013,S03_F05,classroom,point,raise_hand,0.554,idle,1.0,unseen
+S03_F05_c014,S03_F05,classroom,point,idle,0.75,idle,1.0,unseen
+S03_F05_c015,S03_F05,classroom,point,idle,0.756,idle,1.0,unseen
+S03_F05_c016,S03_F05,classroom,point,idle,0.689,idle,1.0,unseen
+S03_F05_c017,S03_F05,classroom,point,idle,0.496,idle,1.0,unseen
+S03_F05_c018,S03_F05,classroom,point,idle,0.635,idle,1.0,unseen
+S03_F05_c019,S03_F05,classroom,point,thumbs_up,0.453,idle,1.0,unseen
+S03_F05_c020,S03_F05,classroom,point,idle,0.45,idle,1.0,unseen
+S03_F05_c021,S03_F05,classroom,point,idle,0.534,idle,1.0,unseen
+S03_F05_c022,S03_F05,classroom,point,idle,0.534,idle,1.0,unseen
+S03_F05_c023,S03_F05,classroom,point,idle,0.699,idle,1.0,unseen
+S03_F05_c024,S03_F05,classroom,point,thumbs_down,0.758,thumbs_down,0.119,unseen
+S03_F05_c025,S03_F05,classroom,point,idle,0.737,idle,1.0,unseen
+S03_F05_c026,S03_F05,classroom,point,raise_hand,0.635,raise_hand,0.844,unseen
+S03_F05_c027,S03_F05,classroom,point,thumbs_down,0.37,idle,1.0,unseen
+S03_F05_c028,S03_F05,classroom,point,idle,0.711,idle,1.0,unseen
+S03_F05_c029,S03_F05,classroom,point,idle,0.659,idle,1.0,unseen
+S03_F05_c030,S03_F05,classroom,point,idle,0.659,idle,1.0,unseen
+S03_F05_c031,S03_F05,classroom,point,idle,0.724,idle,1.0,unseen
+S03_F05_c032,S03_F05,classroom,point,thumbs_up,0.672,thumbs_up,0.6,unseen
+S03_F05_c033,S03_F05,classroom,point,idle,0.655,idle,1.0,unseen
+S03_F05_c034,S03_F05,classroom,point,idle,0.745,idle,1.0,unseen
+S03_F05_c035,S03_F05,classroom,point,idle,0.73,idle,1.0,unseen
+S03_F05_c036,S03_F05,classroom,point,thumbs_down,0.465,idle,1.0,unseen
+S03_F05_c037,S03_F05,classroom,point,idle,0.747,idle,1.0,unseen
+S03_F05_c038,S03_F05,classroom,point,idle,0.522,idle,1.0,unseen
+S03_F05_c039,S03_F05,classroom,point,idle,0.725,idle,1.0,unseen
+S03_F05_c040,S03_F05,classroom,point,idle,0.426,idle,1.0,unseen
+S03_F05_c041,S03_F05,classroom,point,raise_hand,0.974,raise_hand,0.878,unseen
+S03_F05_c042,S03_F05,classroom,point,raise_hand,0.977,raise_hand,0.87,unseen
+S03_F05_c043,S03_F05,classroom,point,raise_hand,0.365,idle,1.0,unseen
+S03_F05_c044,S03_F05,classroom,point,idle,0.733,idle,1.0,unseen
+S03_F05_c045,S03_F05,classroom,point,raise_hand,0.628,raise_hand,0.796,unseen
+S03_F05_c046,S03_F05,classroom,point,thumbs_down,0.699,thumbs_down,0.409,unseen
+S03_F05_c047,S03_F05,classroom,point,idle,0.728,idle,1.0,unseen
+S03_F05_c048,S03_F05,classroom,point,thumbs_down,0.831,idle,1.0,unseen
+S03_F05_c049,S03_F05,classroom,point,idle,0.76,idle,1.0,unseen
+S03_F05_c050,S03_F05,classroom,point,thumbs_down,0.894,thumbs_down,0.879,unseen
+S03_F05_c051,S03_F05,classroom,point,idle,0.718,idle,1.0,unseen
+S03_F05_c052,S03_F05,classroom,point,thumbs_down,0.847,thumbs_down,0.545,unseen
+S03_F05_c053,S03_F05,classroom,point,idle,0.739,idle,1.0,unseen
+S03_F05_c054,S03_F05,classroom,point,thumbs_down,0.91,thumbs_down,0.854,unseen
+S03_F05_c055,S03_F05,classroom,point,idle,0.745,idle,1.0,unseen
+S04_F04_c001,S04_F04,classroom,thumbs_down,thumbs_down,0.882,thumbs_down,0.875,unseen
+S04_F04_c002,S04_F04,classroom,thumbs_down,thumbs_down,0.84,thumbs_down,0.887,unseen
+S04_F04_c003,S04_F04,classroom,thumbs_down,thumbs_down,0.873,thumbs_down,0.825,unseen
+S04_F04_c004,S04_F04,classroom,thumbs_down,thumbs_down,0.858,thumbs_down,0.851,unseen
+S04_F04_c005,S04_F04,classroom,thumbs_down,thumbs_down,0.876,thumbs_down,0.79,unseen
+S04_F04_c006,S04_F04,classroom,thumbs_down,thumbs_down,0.875,thumbs_down,0.894,unseen
+S04_F04_c007,S04_F04,classroom,thumbs_down,thumbs_down,0.862,thumbs_down,0.869,unseen
+S04_F04_c008,S04_F04,classroom,thumbs_down,thumbs_down,0.653,thumbs_down,0.897,unseen
+S04_F04_c009,S04_F04,classroom,thumbs_down,thumbs_down,0.859,thumbs_down,0.905,unseen
+S04_F04_c010,S04_F04,classroom,thumbs_down,thumbs_down,0.831,thumbs_down,0.564,unseen
+S04_F04_c011,S04_F04,classroom,thumbs_down,thumbs_down,0.847,thumbs_down,0.879,unseen
+S04_F04_c012,S04_F04,classroom,thumbs_down,thumbs_down,0.754,thumbs_down,0.789,unseen
+S04_F04_c013,S04_F04,classroom,thumbs_down,thumbs_down,0.827,thumbs_down,0.873,unseen
+S04_F04_c014,S04_F04,classroom,thumbs_down,thumbs_down,0.85,thumbs_down,0.857,unseen
+S04_F04_c015,S04_F04,classroom,thumbs_down,thumbs_down,0.882,thumbs_down,0.857,unseen
+S04_F04_c016,S04_F04,classroom,thumbs_down,thumbs_down,0.837,thumbs_down,0.851,unseen
+S04_F04_c017,S04_F04,classroom,thumbs_down,thumbs_down,0.871,thumbs_down,0.841,unseen
+S04_F04_c018,S04_F04,classroom,thumbs_down,thumbs_down,0.887,thumbs_down,0.841,unseen
+S04_F04_c019,S04_F04,classroom,thumbs_down,thumbs_down,0.846,thumbs_down,0.863,unseen
+S04_F04_c020,S04_F04,classroom,thumbs_down,thumbs_down,0.875,thumbs_down,0.797,unseen
+S04_F04_c021,S04_F04,classroom,thumbs_down,thumbs_down,0.433,raise_hand,0.677,unseen
+S04_F04_c022,S04_F04,classroom,thumbs_down,thumbs_down,0.849,thumbs_down,0.911,unseen
+S04_F04_c023,S04_F04,classroom,thumbs_down,thumbs_down,0.868,thumbs_down,0.826,unseen
+S04_F04_c024,S04_F04,classroom,thumbs_down,thumbs_down,0.859,thumbs_down,0.844,unseen
+S04_F04_c025,S04_F04,classroom,thumbs_down,thumbs_down,0.856,thumbs_down,0.857,unseen
+S04_F04_c026,S04_F04,classroom,thumbs_down,thumbs_down,0.864,thumbs_down,0.86,unseen
+S04_F04_c027,S04_F04,classroom,thumbs_down,thumbs_down,0.874,thumbs_down,0.851,unseen
+S04_F04_c028,S04_F04,classroom,thumbs_down,thumbs_down,0.734,thumbs_down,0.784,unseen
+S04_F04_c029,S04_F04,classroom,thumbs_down,thumbs_down,0.842,thumbs_down,0.837,unseen
+S04_F04_c030,S04_F04,classroom,thumbs_down,thumbs_down,0.839,thumbs_down,0.844,unseen
+S04_F04_c031,S04_F04,classroom,thumbs_down,thumbs_down,0.847,thumbs_down,0.855,unseen
+S04_F04_c032,S04_F04,classroom,thumbs_down,thumbs_down,0.859,thumbs_down,0.86,unseen
+S04_F04_c033,S04_F04,classroom,thumbs_down,thumbs_down,0.83,thumbs_down,0.881,unseen
+S04_F04_c034,S04_F04,classroom,thumbs_down,thumbs_down,0.793,thumbs_down,0.824,unseen
+S04_F04_c035,S04_F04,classroom,thumbs_down,thumbs_down,0.869,thumbs_down,0.851,unseen
+S04_F04_c036,S04_F04,classroom,thumbs_down,thumbs_down,0.575,thumbs_down,0.754,unseen
+S04_F04_c037,S04_F04,classroom,thumbs_down,raise_hand,0.92,raise_hand,0.734,unseen
+S04_F04_c038,S04_F04,classroom,thumbs_down,thumbs_down,0.852,thumbs_down,0.905,unseen
+S04_F04_c039,S04_F04,classroom,thumbs_down,thumbs_down,0.779,thumbs_down,0.526,unseen
+S04_F04_c040,S04_F04,classroom,thumbs_down,thumbs_down,0.865,thumbs_down,0.852,unseen
+S04_F04_c041,S04_F04,classroom,thumbs_down,thumbs_down,0.857,thumbs_down,0.894,unseen
+S04_F04_c042,S04_F04,classroom,thumbs_down,thumbs_down,0.623,thumbs_down,0.469,unseen
+S04_F04_c043,S04_F04,classroom,thumbs_down,thumbs_down,0.853,thumbs_down,0.758,unseen
+S04_F04_c044,S04_F04,classroom,thumbs_down,thumbs_down,0.863,thumbs_down,0.844,unseen
+S04_F04_c045,S04_F04,classroom,thumbs_down,thumbs_down,0.857,thumbs_down,0.844,unseen
+S04_F04_c046,S04_F04,classroom,thumbs_down,thumbs_down,0.772,thumbs_down,0.784,unseen
+S04_F04_c047,S04_F04,classroom,thumbs_down,thumbs_down,0.864,thumbs_down,0.854,unseen
+S04_F04_c048,S04_F04,classroom,thumbs_down,raise_hand,0.806,raise_hand,0.655,unseen
+S04_F04_c049,S04_F04,classroom,thumbs_down,raise_hand,0.428,idle,1.0,unseen
+S04_F04_c050,S04_F04,classroom,thumbs_down,raise_hand,0.9,raise_hand,0.889,unseen
+S04_F04_c051,S04_F04,classroom,thumbs_down,raise_hand,0.971,raise_hand,0.893,unseen
+S04_F04_c052,S04_F04,classroom,thumbs_down,thumbs_down,0.608,idle,1.0,unseen
+S04_F04_c053,S04_F04,classroom,thumbs_down,thumbs_down,0.786,thumbs_down,0.869,unseen
+S04_F04_c054,S04_F04,classroom,thumbs_down,thumbs_down,0.775,thumbs_down,0.822,unseen
+S04_F04_c055,S04_F04,classroom,thumbs_down,thumbs_down,0.867,thumbs_down,0.578,unseen
+S04_F04_c056,S04_F04,classroom,thumbs_down,raise_hand,0.959,raise_hand,0.875,unseen
+S04_F04_c057,S04_F04,classroom,thumbs_down,idle,0.517,idle,1.0,unseen
+S04_F04_c058,S04_F04,classroom,thumbs_down,thumbs_down,0.816,thumbs_down,0.727,unseen
+S04_F04_c059,S04_F04,classroom,thumbs_down,thumbs_down,0.871,thumbs_down,0.868,unseen
+S04_F04_c060,S04_F04,classroom,thumbs_down,idle,0.741,idle,1.0,unseen
+S04_F04_c061,S04_F04,classroom,thumbs_down,thumbs_down,0.488,thumbs_down,0.25,unseen
+S05_F02_c001,S05_F02,classroom,both_hands_up,idle,0.715,idle,1.0,unseen
+S05_F02_c002,S05_F02,classroom,both_hands_up,idle,0.66,idle,1.0,unseen
+S05_F02_c003,S05_F02,classroom,both_hands_up,idle,0.695,idle,1.0,unseen
+S05_F02_c004,S05_F02,classroom,both_hands_up,idle,0.525,idle,1.0,unseen
+S05_F02_c005,S05_F02,classroom,both_hands_up,idle,0.687,idle,1.0,unseen
+S05_F02_c006,S05_F02,classroom,both_hands_up,idle,0.712,idle,1.0,unseen
+S05_F02_c007,S05_F02,classroom,both_hands_up,idle,0.745,idle,1.0,unseen
+S05_F02_c008,S05_F02,classroom,both_hands_up,idle,0.747,idle,1.0,unseen
+S05_F02_c009,S05_F02,classroom,both_hands_up,idle,0.755,idle,1.0,unseen
+S05_F02_c010,S05_F02,classroom,both_hands_up,idle,0.75,idle,1.0,unseen
+S05_F02_c011,S05_F02,classroom,both_hands_up,idle,0.739,idle,1.0,unseen
+S05_F02_c012,S05_F02,classroom,both_hands_up,idle,0.718,idle,1.0,unseen
+S05_F02_c013,S05_F02,classroom,both_hands_up,idle,0.654,idle,1.0,unseen
+S05_F02_c014,S05_F02,classroom,both_hands_up,idle,0.761,idle,1.0,unseen
+S05_F02_c015,S05_F02,classroom,both_hands_up,idle,0.755,idle,1.0,unseen
+S05_F02_c016,S05_F02,classroom,both_hands_up,raise_hand,0.577,idle,1.0,unseen
+S05_F02_c017,S05_F02,classroom,both_hands_up,idle,0.701,idle,1.0,unseen
+S05_F02_c018,S05_F02,classroom,both_hands_up,idle,0.684,idle,1.0,unseen
+S05_F02_c019,S05_F02,classroom,both_hands_up,idle,0.647,idle,1.0,unseen
+S05_F02_c020,S05_F02,classroom,both_hands_up,idle,0.716,idle,1.0,unseen
+S05_F02_c021,S05_F02,classroom,both_hands_up,idle,0.738,idle,1.0,unseen
+S05_F02_c022,S05_F02,classroom,both_hands_up,idle,0.595,idle,1.0,unseen
+S05_F02_c023,S05_F02,classroom,both_hands_up,idle,0.728,idle,1.0,unseen
+S05_F02_c024,S05_F02,classroom,both_hands_up,idle,0.721,idle,1.0,unseen
+S05_F02_c025,S05_F02,classroom,both_hands_up,idle,0.585,idle,1.0,unseen
+S05_F02_c026,S05_F02,classroom,both_hands_up,idle,0.743,idle,1.0,unseen
+S05_F02_c027,S05_F02,classroom,both_hands_up,idle,0.636,idle,1.0,unseen
+S05_F02_c028,S05_F02,classroom,both_hands_up,raise_hand,0.699,raise_hand,0.34,unseen
+S05_F02_c029,S05_F02,classroom,both_hands_up,idle,0.691,idle,1.0,unseen
+S05_F02_c030,S05_F02,classroom,both_hands_up,idle,0.711,idle,1.0,unseen
+S05_F02_c031,S05_F02,classroom,both_hands_up,raise_hand,0.407,idle,1.0,unseen
+S05_F02_c032,S05_F02,classroom,both_hands_up,idle,0.74,idle,1.0,unseen
+S05_F02_c033,S05_F02,classroom,both_hands_up,idle,0.73,idle,1.0,unseen
+S05_F02_c034,S05_F02,classroom,both_hands_up,idle,0.711,idle,1.0,unseen
+S05_F02_c035,S05_F02,classroom,both_hands_up,idle,0.772,idle,1.0,unseen
+S05_F02_c036,S05_F02,classroom,both_hands_up,idle,0.754,idle,1.0,unseen
+S05_F02_c037,S05_F02,classroom,both_hands_up,raise_hand,0.862,raise_hand,0.833,unseen
+S05_F02_c038,S05_F02,classroom,both_hands_up,raise_hand,0.506,raise_hand,0.04,unseen
+S05_F02_c039,S05_F02,classroom,both_hands_up,idle,0.727,idle,1.0,unseen
+S05_F02_c040,S05_F02,classroom,both_hands_up,raise_hand,0.878,raise_hand,0.72,unseen
+S05_F02_c041,S05_F02,classroom,both_hands_up,raise_hand,0.692,raise_hand,0.2,unseen
+S05_F02_c042,S05_F02,classroom,both_hands_up,idle,0.665,idle,1.0,unseen
+S05_F02_c043,S05_F02,classroom,both_hands_up,raise_hand,0.654,raise_hand,0.333,unseen
+S05_F02_c044,S05_F02,classroom,both_hands_up,raise_hand,0.712,raise_hand,0.588,unseen
+S05_F02_c045,S05_F02,classroom,both_hands_up,idle,0.7,idle,1.0,unseen
+S05_F02_c046,S05_F02,classroom,both_hands_up,idle,0.494,idle,1.0,unseen
+S05_F02_c047,S05_F02,classroom,both_hands_up,raise_hand,0.756,raise_hand,0.536,unseen
+S05_F02_c048,S05_F02,classroom,both_hands_up,raise_hand,0.788,raise_hand,0.765,unseen
+S05_F02_c049,S05_F02,classroom,both_hands_up,raise_hand,0.837,raise_hand,0.791,unseen
+S05_F02_c050,S05_F02,classroom,both_hands_up,idle,0.727,idle,1.0,unseen
+S06_F08_c001,S06_F08,classroom,thumbs_down,idle,0.666,idle,1.0,unseen
+S06_F08_c002,S06_F08,classroom,thumbs_down,thumbs_down,0.449,thumbs_down,0.157,unseen
+S06_F08_c003,S06_F08,classroom,thumbs_down,thumbs_down,0.852,thumbs_down,0.812,unseen
+S06_F08_c004,S06_F08,classroom,thumbs_down,thumbs_down,0.863,thumbs_down,0.863,unseen
+S06_F08_c005,S06_F08,classroom,thumbs_down,thumbs_down,0.864,thumbs_down,0.837,unseen
+S06_F08_c006,S06_F08,classroom,thumbs_down,thumbs_down,0.876,thumbs_down,0.857,unseen
+S06_F08_c007,S06_F08,classroom,thumbs_down,thumbs_down,0.541,thumbs_down,0.1,unseen
+S06_F08_c008,S06_F08,classroom,thumbs_down,thumbs_down,0.56,thumbs_down,0.146,unseen
+S06_F08_c009,S06_F08,classroom,thumbs_down,thumbs_down,0.793,thumbs_down,0.86,unseen
+S06_F08_c010,S06_F08,classroom,thumbs_down,raise_hand,0.348,thumbs_down,0.094,unseen
+S06_F08_c011,S06_F08,classroom,thumbs_down,idle,0.539,idle,1.0,unseen
+S06_F08_c012,S06_F08,classroom,thumbs_down,thumbs_down,0.612,thumbs_down,0.128,unseen
+S06_F08_c013,S06_F08,classroom,thumbs_down,thumbs_down,0.831,thumbs_down,0.776,unseen
+S06_F08_c014,S06_F08,classroom,thumbs_down,thumbs_down,0.843,thumbs_down,0.705,unseen
+S06_F08_c015,S06_F08,classroom,thumbs_down,thumbs_down,0.896,thumbs_down,0.865,unseen
+S06_F08_c016,S06_F08,classroom,thumbs_down,thumbs_down,0.852,thumbs_down,0.846,unseen
+S06_F08_c017,S06_F08,classroom,thumbs_down,thumbs_down,0.876,thumbs_down,0.836,unseen
+S06_F08_c018,S06_F08,classroom,thumbs_down,thumbs_down,0.86,thumbs_down,0.818,unseen
+S06_F08_c019,S06_F08,classroom,thumbs_down,thumbs_down,0.891,thumbs_down,0.717,unseen
+S06_F08_c020,S06_F08,classroom,thumbs_down,idle,0.683,idle,1.0,unseen
+S06_F08_c021,S06_F08,classroom,thumbs_down,thumbs_down,0.87,thumbs_down,0.724,unseen
+S06_F08_c022,S06_F08,classroom,thumbs_down,thumbs_down,0.693,thumbs_down,0.489,unseen
+S06_F08_c023,S06_F08,classroom,thumbs_down,thumbs_down,0.795,thumbs_down,0.711,unseen
+S06_F08_c024,S06_F08,classroom,thumbs_down,thumbs_down,0.871,thumbs_down,0.865,unseen
+S06_F08_c025,S06_F08,classroom,thumbs_down,thumbs_down,0.872,thumbs_down,0.851,unseen
+S06_F08_c026,S06_F08,classroom,thumbs_down,thumbs_down,0.592,thumbs_down,0.044,unseen
+S06_F08_c027,S06_F08,classroom,thumbs_down,thumbs_down,0.885,thumbs_down,0.86,unseen
+S06_F08_c028,S06_F08,classroom,thumbs_down,thumbs_down,0.847,thumbs_down,0.851,unseen
+S06_F08_c029,S06_F08,classroom,thumbs_down,thumbs_down,0.81,thumbs_down,0.8,unseen
+S06_F08_c030,S06_F08,classroom,thumbs_down,thumbs_down,0.86,thumbs_down,0.844,unseen
+S06_F08_c031,S06_F08,classroom,thumbs_down,thumbs_down,0.866,thumbs_down,0.857,unseen
+S06_F08_c032,S06_F08,classroom,thumbs_down,thumbs_down,0.868,thumbs_down,0.855,unseen
+S06_F08_c033,S06_F08,classroom,thumbs_down,thumbs_down,0.8,thumbs_down,0.825,unseen
+S06_F08_c034,S06_F08,classroom,thumbs_down,thumbs_down,0.876,thumbs_down,0.896,unseen
+S06_F08_c035,S06_F08,classroom,thumbs_down,thumbs_down,0.821,thumbs_down,0.739,unseen
+S06_F08_c036,S06_F08,classroom,thumbs_down,thumbs_down,0.715,thumbs_down,0.836,unseen
+S06_F08_c037,S06_F08,classroom,thumbs_down,idle,0.419,idle,1.0,unseen
+S06_F08_c038,S06_F08,classroom,thumbs_down,idle,0.481,idle,1.0,unseen
+S06_F08_c039,S06_F08,classroom,thumbs_down,idle,0.446,idle,1.0,unseen
+S06_F08_c040,S06_F08,classroom,thumbs_down,thumbs_down,0.853,thumbs_down,0.857,unseen
+S06_F08_c041,S06_F08,classroom,thumbs_down,thumbs_down,0.826,thumbs_down,0.822,unseen
+S06_F08_c042,S06_F08,classroom,thumbs_down,thumbs_down,0.523,thumbs_down,0.041,unseen
+S06_F08_c043,S06_F08,classroom,thumbs_down,thumbs_down,0.839,thumbs_down,0.844,unseen
+S06_F08_c044,S06_F08,classroom,thumbs_down,thumbs_down,0.836,thumbs_down,0.8,unseen
+S06_F08_c045,S06_F08,classroom,thumbs_down,thumbs_down,0.882,thumbs_down,0.854,unseen
+S06_F08_c046,S06_F08,classroom,thumbs_down,thumbs_down,0.853,thumbs_down,0.873,unseen
+S06_F08_c047,S06_F08,classroom,thumbs_down,thumbs_down,0.853,thumbs_down,0.873,unseen
+S06_F08_c048,S06_F08,classroom,thumbs_down,thumbs_down,0.613,thumbs_down,0.178,unseen
+S06_F08_c049,S06_F08,classroom,thumbs_down,thumbs_down,0.657,thumbs_down,0.435,unseen
+S06_F08_c050,S06_F08,classroom,thumbs_down,thumbs_down,0.795,thumbs_down,0.886,unseen
+S06_F08_c051,S06_F08,classroom,thumbs_down,thumbs_down,0.795,thumbs_down,0.886,unseen
+S06_F08_c052,S06_F08,classroom,thumbs_down,thumbs_down,0.822,thumbs_down,0.814,unseen
+S06_F08_c053,S06_F08,classroom,thumbs_down,thumbs_down,0.885,thumbs_down,0.89,unseen
+S06_F08_c054,S06_F08,classroom,thumbs_down,thumbs_down,0.885,thumbs_down,0.89,unseen
+S06_F08_c055,S06_F08,classroom,thumbs_down,thumbs_down,0.666,thumbs_down,0.686,unseen
+S06_F08_c056,S06_F08,classroom,thumbs_down,thumbs_down,0.666,thumbs_down,0.686,unseen
+S06_F08_c057,S06_F08,classroom,thumbs_down,idle,0.475,idle,1.0,unseen
+S06_F08_c058,S06_F08,classroom,thumbs_down,thumbs_down,0.851,thumbs_down,0.881,unseen
+S06_F08_c059,S06_F08,classroom,thumbs_down,thumbs_down,0.847,thumbs_down,0.854,unseen
+S06_F08_c060,S06_F08,classroom,thumbs_down,thumbs_down,0.555,thumbs_down,0.109,unseen
+S06_F08_c061,S06_F08,classroom,thumbs_down,thumbs_down,0.555,thumbs_down,0.109,unseen
+S06_F08_c062,S06_F08,classroom,thumbs_down,thumbs_down,0.813,thumbs_down,0.851,unseen
+S06_F08_c063,S06_F08,classroom,thumbs_down,thumbs_down,0.813,thumbs_down,0.851,unseen
+S07_F03_c001,S07_F03,classroom,beckoning,beckoning,0.869,beckoning,0.851,TRAINED (subject+clips in train)
+S07_F03_c002,S07_F03,classroom,beckoning,beckoning,0.861,beckoning,0.892,TRAINED (subject+clips in train)
+S07_F03_c003,S07_F03,classroom,beckoning,beckoning,0.858,beckoning,0.877,TRAINED (subject+clips in train)
+S07_F03_c004,S07_F03,classroom,beckoning,beckoning,0.855,beckoning,0.877,TRAINED (subject+clips in train)
+S07_F03_c005,S07_F03,classroom,beckoning,beckoning,0.851,beckoning,0.848,TRAINED (subject+clips in train)
+S07_F03_c006,S07_F03,classroom,beckoning,beckoning,0.868,beckoning,0.854,TRAINED (subject+clips in train)
+S07_F03_c007,S07_F03,classroom,beckoning,beckoning,0.861,beckoning,0.868,TRAINED (subject+clips in train)
+S07_F03_c008,S07_F03,classroom,beckoning,beckoning,0.859,beckoning,0.829,TRAINED (subject+clips in train)
+S07_F03_c009,S07_F03,classroom,beckoning,beckoning,0.857,beckoning,0.865,TRAINED (subject+clips in train)
+S07_F03_c010,S07_F03,classroom,beckoning,beckoning,0.865,beckoning,0.854,TRAINED (subject+clips in train)
+S07_F03_c011,S07_F03,classroom,beckoning,beckoning,0.88,beckoning,0.881,TRAINED (subject+clips in train)
+S07_F03_c012,S07_F03,classroom,beckoning,beckoning,0.852,beckoning,0.877,TRAINED (subject+clips in train)
+S07_F03_c013,S07_F03,classroom,beckoning,beckoning,0.854,beckoning,0.896,TRAINED (subject+clips in train)
+S07_F03_c014,S07_F03,classroom,beckoning,beckoning,0.881,beckoning,0.904,TRAINED (subject+clips in train)
+S07_F03_c015,S07_F03,classroom,beckoning,beckoning,0.859,beckoning,0.901,TRAINED (subject+clips in train)
+S07_F03_c016,S07_F03,classroom,beckoning,beckoning,0.884,beckoning,0.899,TRAINED (subject+clips in train)
+S07_F03_c017,S07_F03,classroom,beckoning,beckoning,0.875,beckoning,0.844,TRAINED (subject+clips in train)
+S07_F03_c018,S07_F03,classroom,beckoning,beckoning,0.858,beckoning,0.854,TRAINED (subject+clips in train)
+S07_F03_c019,S07_F03,classroom,beckoning,beckoning,0.86,beckoning,0.86,TRAINED (subject+clips in train)
+S07_F03_c020,S07_F03,classroom,beckoning,beckoning,0.857,beckoning,0.841,TRAINED (subject+clips in train)
+S07_F03_c021,S07_F03,classroom,beckoning,beckoning,0.857,beckoning,0.844,TRAINED (subject+clips in train)
+S07_F03_c022,S07_F03,classroom,beckoning,beckoning,0.87,beckoning,0.841,TRAINED (subject+clips in train)
+S07_F03_c023,S07_F03,classroom,beckoning,beckoning,0.848,beckoning,0.894,TRAINED (subject+clips in train)
+S07_F03_c024,S07_F03,classroom,beckoning,beckoning,0.873,beckoning,0.889,TRAINED (subject+clips in train)
+S07_F03_c025,S07_F03,classroom,beckoning,beckoning,0.886,beckoning,0.877,TRAINED (subject+clips in train)
+S07_F03_c026,S07_F03,classroom,beckoning,beckoning,0.85,beckoning,0.883,TRAINED (subject+clips in train)
+S07_F03_c027,S07_F03,classroom,beckoning,beckoning,0.85,beckoning,0.883,TRAINED (subject+clips in train)
+S07_F03_c028,S07_F03,classroom,beckoning,beckoning,0.877,beckoning,0.889,TRAINED (subject+clips in train)
+S07_F03_c029,S07_F03,classroom,beckoning,beckoning,0.877,beckoning,0.889,TRAINED (subject+clips in train)
+S07_F03_c030,S07_F03,classroom,beckoning,beckoning,0.853,beckoning,0.892,TRAINED (subject+clips in train)
+S07_F03_c031,S07_F03,classroom,beckoning,beckoning,0.853,beckoning,0.892,TRAINED (subject+clips in train)
+S07_F03_c032,S07_F03,classroom,beckoning,beckoning,0.864,beckoning,0.857,TRAINED (subject+clips in train)
+S07_F03_c033,S07_F03,classroom,beckoning,beckoning,0.882,beckoning,0.63,TRAINED (subject+clips in train)
+S07_F03_c034,S07_F03,classroom,beckoning,beckoning,0.858,beckoning,0.865,TRAINED (subject+clips in train)
+S07_F03_c035,S07_F03,classroom,beckoning,beckoning,0.848,beckoning,0.848,TRAINED (subject+clips in train)
+S07_F03_c036,S07_F03,classroom,beckoning,beckoning,0.872,beckoning,0.841,TRAINED (subject+clips in train)
+S07_F03_c037,S07_F03,classroom,beckoning,beckoning,0.852,beckoning,0.86,TRAINED (subject+clips in train)
+S07_F03_c038,S07_F03,classroom,beckoning,beckoning,0.871,beckoning,0.879,TRAINED (subject+clips in train)
+S07_F03_c039,S07_F03,classroom,beckoning,beckoning,0.871,beckoning,0.879,TRAINED (subject+clips in train)
+S07_F03_c040,S07_F03,classroom,beckoning,beckoning,0.858,beckoning,0.883,TRAINED (subject+clips in train)
+S07_F03_c041,S07_F03,classroom,beckoning,beckoning,0.858,beckoning,0.883,TRAINED (subject+clips in train)
+S07_F03_c042,S07_F03,classroom,beckoning,beckoning,0.859,beckoning,0.863,TRAINED (subject+clips in train)
+S07_F03_c043,S07_F03,classroom,beckoning,beckoning,0.854,beckoning,0.892,TRAINED (subject+clips in train)
+S07_F03_c044,S07_F03,classroom,beckoning,beckoning,0.856,beckoning,0.887,TRAINED (subject+clips in train)
+S07_F03_c045,S07_F03,classroom,beckoning,beckoning,0.844,beckoning,0.894,TRAINED (subject+clips in train)
+S07_F03_c046,S07_F03,classroom,beckoning,beckoning,0.892,beckoning,0.638,TRAINED (subject+clips in train)
+S07_F03_c047,S07_F03,classroom,beckoning,beckoning,0.849,beckoning,0.854,TRAINED (subject+clips in train)
+S07_F03_c048,S07_F03,classroom,beckoning,beckoning,0.87,beckoning,0.86,TRAINED (subject+clips in train)
+S07_F03_c049,S07_F03,classroom,beckoning,beckoning,0.856,beckoning,0.854,TRAINED (subject+clips in train)
+S07_F03_c050,S07_F03,classroom,beckoning,beckoning,0.861,beckoning,0.877,TRAINED (subject+clips in train)
+S07_F03_c051,S07_F03,classroom,beckoning,beckoning,0.873,beckoning,0.87,TRAINED (subject+clips in train)
+S07_F03_c052,S07_F03,classroom,beckoning,beckoning,0.875,beckoning,0.868,TRAINED (subject+clips in train)
+S07_F03_c053,S07_F03,classroom,beckoning,beckoning,0.843,beckoning,0.883,TRAINED (subject+clips in train)
+S07_F03_c054,S07_F03,classroom,beckoning,beckoning,0.842,beckoning,0.881,TRAINED (subject+clips in train)
+S07_F03_c055,S07_F03,classroom,beckoning,beckoning,0.852,beckoning,0.865,TRAINED (subject+clips in train)
+S07_F03_c056,S07_F03,classroom,beckoning,beckoning,0.878,beckoning,0.873,TRAINED (subject+clips in train)
+S07_F03_c057,S07_F03,classroom,beckoning,beckoning,0.889,beckoning,0.897,TRAINED (subject+clips in train)
+S07_F03_c058,S07_F03,classroom,beckoning,beckoning,0.854,beckoning,0.844,TRAINED (subject+clips in train)
+S07_F03_c059,S07_F03,classroom,beckoning,beckoning,0.879,beckoning,0.851,TRAINED (subject+clips in train)
+S08_F06_c001,S08_F06,classroom,idle,idle,0.727,idle,1.0,unseen
+S08_F06_c002,S08_F06,classroom,idle,idle,0.458,idle,1.0,unseen
+S08_F06_c003,S08_F06,classroom,idle,idle,0.374,idle,1.0,unseen
+S08_F06_c004,S08_F06,classroom,idle,idle,0.732,idle,1.0,unseen
+S08_F06_c005,S08_F06,classroom,idle,idle,0.662,idle,1.0,unseen
+S08_F06_c006,S08_F06,classroom,idle,idle,0.692,idle,1.0,unseen
+S08_F06_c007,S08_F06,classroom,idle,idle,0.735,idle,1.0,unseen
+S08_F06_c008,S08_F06,classroom,idle,idle,0.773,idle,1.0,unseen
+S08_F06_c009,S08_F06,classroom,idle,idle,0.765,idle,1.0,unseen
+S08_F06_c010,S08_F06,classroom,idle,idle,0.739,idle,1.0,unseen
+S08_F06_c011,S08_F06,classroom,idle,idle,0.681,idle,1.0,unseen
+S08_F06_c012,S08_F06,classroom,idle,idle,0.649,idle,1.0,unseen
+S08_F06_c013,S08_F06,classroom,idle,idle,0.45,idle,1.0,unseen
+S08_F06_c014,S08_F06,classroom,idle,beckoning,0.376,idle,1.0,unseen
+S08_F06_c015,S08_F06,classroom,idle,idle,0.732,idle,1.0,unseen
+S08_F06_c016,S08_F06,classroom,idle,idle,0.739,idle,1.0,unseen
+S08_F06_c017,S08_F06,classroom,idle,idle,0.628,idle,1.0,unseen
+S08_F06_c018,S08_F06,classroom,idle,idle,0.66,idle,1.0,unseen
+S08_F06_c019,S08_F06,classroom,idle,idle,0.718,idle,1.0,unseen
+S08_F06_c020,S08_F06,classroom,idle,idle,0.718,idle,1.0,unseen
+S08_F06_c021,S08_F06,classroom,idle,idle,0.627,idle,1.0,unseen
+S08_F06_c022,S08_F06,classroom,idle,idle,0.706,idle,1.0,unseen
+S08_F06_c023,S08_F06,classroom,idle,idle,0.661,idle,1.0,unseen
+S08_F06_c024,S08_F06,classroom,idle,idle,0.698,idle,1.0,unseen
+S08_F06_c025,S08_F06,classroom,idle,idle,0.741,idle,1.0,unseen
+S08_F06_c026,S08_F06,classroom,idle,idle,0.724,idle,1.0,unseen
+S08_F06_c027,S08_F06,classroom,idle,idle,0.763,idle,1.0,unseen
+S08_F06_c028,S08_F06,classroom,idle,idle,0.744,idle,1.0,unseen
+S08_F06_c029,S08_F06,classroom,idle,idle,0.659,idle,1.0,unseen
+S08_F06_c030,S08_F06,classroom,idle,idle,0.671,idle,1.0,unseen
+S08_F06_c031,S08_F06,classroom,idle,idle,0.718,idle,1.0,unseen
+S08_F06_c032,S08_F06,classroom,idle,idle,0.426,beckoning,0.2,unseen
+S08_F06_c033,S08_F06,classroom,idle,beckoning,0.592,idle,1.0,unseen
+S08_F06_c034,S08_F06,classroom,idle,idle,0.762,idle,1.0,unseen
+S08_F06_c035,S08_F06,classroom,idle,idle,0.763,idle,1.0,unseen
+S08_F06_c036,S08_F06,classroom,idle,idle,0.775,idle,1.0,unseen
+S08_F06_c037,S08_F06,classroom,idle,idle,0.686,idle,1.0,unseen
+S08_F06_c038,S08_F06,classroom,idle,idle,0.717,idle,1.0,unseen
+S08_F06_c039,S08_F06,classroom,idle,idle,0.769,idle,1.0,unseen
+S08_F06_c040,S08_F06,classroom,idle,idle,0.622,idle,1.0,unseen
+S08_F06_c041,S08_F06,classroom,idle,idle,0.744,idle,1.0,unseen
+S08_F06_c042,S08_F06,classroom,idle,idle,0.762,idle,1.0,unseen
+S08_F06_c043,S08_F06,classroom,idle,idle,0.732,idle,1.0,unseen
+S08_F06_c044,S08_F06,classroom,idle,idle,0.729,idle,1.0,unseen
+S08_F06_c045,S08_F06,classroom,idle,idle,0.726,idle,1.0,unseen
+S08_F06_c046,S08_F06,classroom,idle,idle,0.717,idle,1.0,unseen
+S08_F06_c047,S08_F06,classroom,idle,idle,0.702,idle,1.0,unseen
+S08_F06_c048,S08_F06,classroom,idle,idle,0.747,idle,1.0,unseen
+S08_F06_c049,S08_F06,classroom,idle,idle,0.681,idle,1.0,unseen
+S08_F06_c050,S08_F06,classroom,idle,idle,0.734,idle,1.0,unseen
+S08_F06_c051,S08_F06,classroom,idle,idle,0.634,idle,1.0,unseen
+S08_F06_c052,S08_F06,classroom,idle,idle,0.697,idle,1.0,unseen
+S08_F06_c053,S08_F06,classroom,idle,idle,0.757,idle,1.0,unseen
+S08_F06_c054,S08_F06,classroom,idle,idle,0.597,idle,1.0,unseen
+S08_F06_c055,S08_F06,classroom,idle,idle,0.713,idle,1.0,unseen
+S08_F06_c056,S08_F06,classroom,idle,idle,0.658,idle,1.0,unseen
+S09_F02_c001,S09_F02,classroom,both_hands_up,idle,0.473,idle,1.0,unseen
+S09_F02_c002,S09_F02,classroom,both_hands_up,idle,0.748,idle,1.0,unseen
+S09_F02_c003,S09_F02,classroom,both_hands_up,raise_hand,0.954,raise_hand,0.635,unseen
+S09_F02_c004,S09_F02,classroom,both_hands_up,idle,0.69,idle,1.0,unseen
+S09_F02_c005,S09_F02,classroom,both_hands_up,idle,0.501,idle,1.0,unseen
+S09_F02_c006,S09_F02,classroom,both_hands_up,idle,0.541,idle,1.0,unseen
+S09_F02_c007,S09_F02,classroom,both_hands_up,idle,0.669,idle,1.0,unseen
+S09_F02_c008,S09_F02,classroom,both_hands_up,idle,0.688,idle,1.0,unseen
+S09_F02_c009,S09_F02,classroom,both_hands_up,idle,0.678,idle,1.0,unseen
+S09_F02_c010,S09_F02,classroom,both_hands_up,idle,0.706,idle,1.0,unseen
+S09_F02_c011,S09_F02,classroom,both_hands_up,raise_hand,0.953,raise_hand,0.761,unseen
+S09_F02_c012,S09_F02,classroom,both_hands_up,idle,0.654,idle,1.0,unseen
+S09_F02_c013,S09_F02,classroom,both_hands_up,idle,0.518,idle,1.0,unseen
+S09_F02_c014,S09_F02,classroom,both_hands_up,raise_hand,0.906,raise_hand,0.649,unseen
+S09_F02_c015,S09_F02,classroom,both_hands_up,idle,0.667,idle,1.0,unseen
+S09_F02_c016,S09_F02,classroom,both_hands_up,idle,0.778,idle,1.0,unseen
+S09_F02_c017,S09_F02,classroom,both_hands_up,idle,0.711,idle,1.0,unseen
+S09_F02_c018,S09_F02,classroom,both_hands_up,idle,0.632,idle,1.0,unseen
+S09_F02_c019,S09_F02,classroom,both_hands_up,idle,0.578,idle,1.0,unseen
+S09_F02_c020,S09_F02,classroom,both_hands_up,idle,0.603,idle,1.0,unseen
+S09_F02_c021,S09_F02,classroom,both_hands_up,idle,0.76,idle,1.0,unseen
+S09_F02_c022,S09_F02,classroom,both_hands_up,idle,0.65,idle,1.0,unseen
+S09_F02_c023,S09_F02,classroom,both_hands_up,idle,0.67,idle,1.0,unseen
+S09_F02_c024,S09_F02,classroom,both_hands_up,idle,0.644,idle,1.0,unseen
+S09_F02_c025,S09_F02,classroom,both_hands_up,idle,0.598,idle,1.0,unseen
+S09_F02_c026,S09_F02,classroom,both_hands_up,idle,0.533,idle,1.0,unseen
+S09_F02_c027,S09_F02,classroom,both_hands_up,idle,0.652,wave,0.097,unseen
+S09_F02_c028,S09_F02,classroom,both_hands_up,raise_hand,0.51,raise_hand,0.143,unseen
+S09_F02_c029,S09_F02,classroom,both_hands_up,raise_hand,0.452,idle,1.0,unseen
+S09_F02_c030,S09_F02,classroom,both_hands_up,idle,0.686,idle,1.0,unseen
+S09_F02_c031,S09_F02,classroom,both_hands_up,idle,0.636,idle,1.0,unseen
+S09_F02_c032,S09_F02,classroom,both_hands_up,raise_hand,0.7,raise_hand,0.22,unseen
+S09_F02_c033,S09_F02,classroom,both_hands_up,idle,0.577,idle,1.0,unseen
+S09_F02_c034,S09_F02,classroom,both_hands_up,idle,0.755,idle,1.0,unseen
+S09_F02_c035,S09_F02,classroom,both_hands_up,idle,0.668,idle,1.0,unseen
+S09_F02_c036,S09_F02,classroom,both_hands_up,raise_hand,0.815,raise_hand,0.333,unseen
+S09_F02_c037,S09_F02,classroom,both_hands_up,idle,0.644,idle,1.0,unseen
+S09_F02_c038,S09_F02,classroom,both_hands_up,idle,0.721,idle,1.0,unseen
+S09_F02_c039,S09_F02,classroom,both_hands_up,idle,0.678,idle,1.0,unseen
+S09_F02_c040,S09_F02,classroom,both_hands_up,idle,0.621,idle,1.0,unseen
+S09_F02_c041,S09_F02,classroom,both_hands_up,idle,0.688,idle,1.0,unseen
+S09_F02_c042,S09_F02,classroom,both_hands_up,idle,0.531,idle,1.0,unseen
+S09_F02_c043,S09_F02,classroom,both_hands_up,idle,0.678,idle,1.0,unseen
+S09_F02_c044,S09_F02,classroom,both_hands_up,idle,0.717,raise_hand,0.457,unseen
+S09_F02_c045,S09_F02,classroom,both_hands_up,idle,0.725,idle,1.0,unseen
+S09_F02_c046,S09_F02,classroom,both_hands_up,idle,0.722,idle,1.0,unseen
+S09_F02_c047,S09_F02,classroom,both_hands_up,idle,0.672,idle,1.0,unseen
+S09_F02_c048,S09_F02,classroom,both_hands_up,idle,0.741,idle,1.0,unseen
+S09_F02_c049,S09_F02,classroom,both_hands_up,raise_hand,0.841,raise_hand,0.786,unseen
+S09_F02_c050,S09_F02,classroom,both_hands_up,raise_hand,0.45,raise_hand,0.148,unseen
+S11_F05_c001,S11_F05,classroom,raise_hand,raise_hand,0.993,raise_hand,0.88,val/test subject (never trained)
+S11_F05_c002,S11_F05,classroom,raise_hand,raise_hand,0.993,raise_hand,0.872,val/test subject (never trained)
+S11_F05_c003,S11_F05,classroom,raise_hand,raise_hand,0.984,raise_hand,0.898,val/test subject (never trained)
+S11_F05_c004,S11_F05,classroom,raise_hand,raise_hand,0.994,raise_hand,0.875,val/test subject (never trained)
+S11_F05_c005,S11_F05,classroom,raise_hand,raise_hand,0.986,raise_hand,0.915,val/test subject (never trained)
+S11_F05_c006,S11_F05,classroom,raise_hand,raise_hand,0.912,raise_hand,0.875,val/test subject (never trained)
+S11_F05_c007,S11_F05,classroom,raise_hand,raise_hand,0.863,raise_hand,0.927,val/test subject (never trained)
+S11_F05_c008,S11_F05,classroom,raise_hand,raise_hand,0.992,raise_hand,0.895,val/test subject (never trained)
+S11_F05_c009,S11_F05,classroom,raise_hand,raise_hand,0.992,raise_hand,0.889,val/test subject (never trained)
+S11_F05_c010,S11_F05,classroom,raise_hand,raise_hand,0.992,raise_hand,0.889,val/test subject (never trained)
+S11_F05_c011,S11_F05,classroom,raise_hand,raise_hand,0.992,raise_hand,0.872,val/test subject (never trained)
+S11_F05_c012,S11_F05,classroom,raise_hand,raise_hand,0.983,raise_hand,0.882,val/test subject (never trained)
+S11_F05_c013,S11_F05,classroom,raise_hand,raise_hand,0.536,raise_hand,0.83,val/test subject (never trained)
+S11_F05_c014,S11_F05,classroom,raise_hand,raise_hand,0.979,raise_hand,0.865,val/test subject (never trained)
+S11_F05_c015,S11_F05,classroom,raise_hand,raise_hand,0.989,raise_hand,0.857,val/test subject (never trained)
+S11_F05_c016,S11_F05,classroom,raise_hand,raise_hand,0.984,raise_hand,0.878,val/test subject (never trained)
+S11_F05_c017,S11_F05,classroom,raise_hand,raise_hand,0.946,raise_hand,0.891,val/test subject (never trained)
+S11_F05_c018,S11_F05,classroom,raise_hand,raise_hand,0.984,raise_hand,0.909,val/test subject (never trained)
+S11_F05_c019,S11_F05,classroom,raise_hand,raise_hand,0.986,raise_hand,0.885,val/test subject (never trained)
+S11_F05_c020,S11_F05,classroom,raise_hand,raise_hand,0.992,raise_hand,0.885,val/test subject (never trained)
+S11_F05_c021,S11_F05,classroom,raise_hand,raise_hand,0.992,raise_hand,0.898,val/test subject (never trained)
+S11_F05_c022,S11_F05,classroom,raise_hand,raise_hand,0.994,raise_hand,0.891,val/test subject (never trained)
+S11_F05_c023,S11_F05,classroom,raise_hand,raise_hand,0.993,raise_hand,0.885,val/test subject (never trained)
+S11_F05_c024,S11_F05,classroom,raise_hand,raise_hand,0.989,raise_hand,0.872,val/test subject (never trained)
+S11_F05_c025,S11_F05,classroom,raise_hand,raise_hand,0.994,raise_hand,0.875,val/test subject (never trained)
+S11_F05_c026,S11_F05,classroom,raise_hand,raise_hand,0.992,raise_hand,0.867,val/test subject (never trained)
+S11_F05_c027,S11_F05,classroom,raise_hand,raise_hand,0.992,raise_hand,0.867,val/test subject (never trained)
+S11_F05_c028,S11_F05,classroom,raise_hand,raise_hand,0.995,raise_hand,0.878,val/test subject (never trained)
+S11_F05_c029,S11_F05,classroom,raise_hand,raise_hand,0.99,raise_hand,0.909,val/test subject (never trained)
+S11_F05_c030,S11_F05,classroom,raise_hand,raise_hand,0.995,raise_hand,0.878,val/test subject (never trained)
+S11_F05_c031,S11_F05,classroom,raise_hand,raise_hand,0.974,raise_hand,0.889,val/test subject (never trained)
+S11_F05_c032,S11_F05,classroom,raise_hand,raise_hand,0.988,raise_hand,0.906,val/test subject (never trained)
+S11_F05_c033,S11_F05,classroom,raise_hand,raise_hand,0.976,raise_hand,0.868,val/test subject (never trained)
+S11_F05_c034,S11_F05,classroom,raise_hand,raise_hand,0.975,raise_hand,0.875,val/test subject (never trained)
+S11_F05_c035,S11_F05,classroom,raise_hand,raise_hand,0.991,raise_hand,0.882,val/test subject (never trained)
+S11_F05_c036,S11_F05,classroom,raise_hand,raise_hand,0.882,raise_hand,0.854,val/test subject (never trained)
+S11_F05_c037,S11_F05,classroom,raise_hand,raise_hand,0.994,raise_hand,0.885,val/test subject (never trained)
+S11_F05_c038,S11_F05,classroom,raise_hand,raise_hand,0.993,raise_hand,0.86,val/test subject (never trained)
+S11_F05_c039,S11_F05,classroom,raise_hand,raise_hand,0.995,raise_hand,0.887,val/test subject (never trained)
+S11_F05_c040,S11_F05,classroom,raise_hand,raise_hand,0.995,raise_hand,0.878,val/test subject (never trained)
+S11_F05_c041,S11_F05,classroom,raise_hand,raise_hand,0.994,raise_hand,0.897,val/test subject (never trained)
+S11_F05_c042,S11_F05,classroom,raise_hand,raise_hand,0.994,raise_hand,0.902,val/test subject (never trained)
+S11_F05_c043,S11_F05,classroom,raise_hand,raise_hand,0.991,raise_hand,0.935,val/test subject (never trained)
+S11_F05_c044,S11_F05,classroom,raise_hand,raise_hand,0.995,raise_hand,0.909,val/test subject (never trained)
+S11_F05_c045,S11_F05,classroom,raise_hand,raise_hand,0.993,raise_hand,0.887,val/test subject (never trained)
+S11_F05_c046,S11_F05,classroom,raise_hand,raise_hand,0.996,raise_hand,0.902,val/test subject (never trained)
+S11_F05_c047,S11_F05,classroom,raise_hand,raise_hand,0.996,raise_hand,0.875,val/test subject (never trained)
+S11_F05_c048,S11_F05,classroom,raise_hand,raise_hand,0.993,raise_hand,0.882,val/test subject (never trained)
+S11_F05_c049,S11_F05,classroom,raise_hand,raise_hand,0.996,raise_hand,0.878,val/test subject (never trained)
+S11_F05_c050,S11_F05,classroom,raise_hand,raise_hand,0.992,raise_hand,0.87,val/test subject (never trained)
+S11_F05_c051,S11_F05,classroom,raise_hand,raise_hand,0.993,raise_hand,0.893,val/test subject (never trained)
+S11_F05_c052,S11_F05,classroom,raise_hand,raise_hand,0.994,raise_hand,0.88,val/test subject (never trained)
+S11_F05_c053,S11_F05,classroom,raise_hand,raise_hand,0.988,raise_hand,0.88,val/test subject (never trained)
+S11_F05_c054,S11_F05,classroom,raise_hand,raise_hand,0.996,raise_hand,0.893,val/test subject (never trained)
+S12_F01_c001,S12_F01,classroom,thumbs_up,thumbs_up,0.314,idle,1.0,unseen
+S12_F01_c002,S12_F01,classroom,thumbs_up,thumbs_up,0.874,thumbs_up,0.84,unseen
+S12_F01_c003,S12_F01,classroom,thumbs_up,thumbs_up,0.87,thumbs_up,0.86,unseen
+S12_F01_c004,S12_F01,classroom,thumbs_up,beckoning,0.807,beckoning,0.868,unseen
+S12_F01_c005,S12_F01,classroom,thumbs_up,beckoning,0.774,beckoning,0.85,unseen
+S12_F01_c006,S12_F01,classroom,thumbs_up,beckoning,0.531,idle,1.0,unseen
+S12_F01_c007,S12_F01,classroom,thumbs_up,thumbs_up,0.742,thumbs_up,0.879,unseen
+S12_F01_c008,S12_F01,classroom,thumbs_up,thumbs_up,0.719,thumbs_up,0.868,unseen
+S12_F01_c009,S12_F01,classroom,thumbs_up,thumbs_up,0.612,thumbs_up,0.839,unseen
+S12_F01_c010,S12_F01,classroom,thumbs_up,thumbs_up,0.884,thumbs_up,0.863,unseen
+S12_F01_c011,S12_F01,classroom,thumbs_up,beckoning,0.671,beckoning,0.837,unseen
+S12_F01_c012,S12_F01,classroom,thumbs_up,thumbs_up,0.833,thumbs_up,0.87,unseen
+S12_F01_c013,S12_F01,classroom,thumbs_up,thumbs_up,0.679,thumbs_up,0.822,unseen
+S12_F01_c014,S12_F01,classroom,thumbs_up,thumbs_up,0.843,thumbs_up,0.855,unseen
+S12_F01_c015,S12_F01,classroom,thumbs_up,thumbs_up,0.81,thumbs_up,0.863,unseen
+S12_F01_c016,S12_F01,classroom,thumbs_up,thumbs_up,0.862,thumbs_up,0.868,unseen
+S12_F01_c017,S12_F01,classroom,thumbs_up,thumbs_up,0.865,thumbs_up,0.873,unseen
+S12_F01_c018,S12_F01,classroom,thumbs_up,thumbs_up,0.849,thumbs_up,0.852,unseen
+S12_F01_c019,S12_F01,classroom,thumbs_up,thumbs_up,0.786,thumbs_up,0.883,unseen
+S12_F01_c020,S12_F01,classroom,thumbs_up,thumbs_up,0.865,thumbs_up,0.873,unseen
+S12_F01_c021,S12_F01,classroom,thumbs_up,thumbs_up,0.83,thumbs_up,0.908,unseen
+S12_F01_c022,S12_F01,classroom,thumbs_up,thumbs_up,0.873,thumbs_up,0.881,unseen
+S12_F01_c023,S12_F01,classroom,thumbs_up,thumbs_up,0.816,thumbs_up,0.846,unseen
+S12_F01_c024,S12_F01,classroom,thumbs_up,thumbs_up,0.866,thumbs_up,0.87,unseen
+S12_F01_c025,S12_F01,classroom,thumbs_up,thumbs_up,0.867,thumbs_up,0.851,unseen
+S12_F01_c026,S12_F01,classroom,thumbs_up,thumbs_up,0.836,thumbs_up,0.851,unseen
+S12_F01_c027,S12_F01,classroom,thumbs_up,thumbs_up,0.843,thumbs_up,0.854,unseen
+S12_F01_c028,S12_F01,classroom,thumbs_up,thumbs_up,0.895,thumbs_up,0.848,unseen
+S12_F01_c029,S12_F01,classroom,thumbs_up,thumbs_up,0.538,thumbs_up,0.277,unseen
+S12_F01_c030,S12_F01,classroom,thumbs_up,thumbs_up,0.874,thumbs_up,0.887,unseen
+S12_F01_c031,S12_F01,classroom,thumbs_up,thumbs_up,0.862,thumbs_up,0.879,unseen
+S12_F01_c032,S12_F01,classroom,thumbs_up,thumbs_up,0.829,thumbs_up,0.881,unseen
+S12_F01_c033,S12_F01,classroom,thumbs_up,thumbs_up,0.859,thumbs_up,0.873,unseen
+S12_F01_c034,S12_F01,classroom,thumbs_up,thumbs_up,0.869,thumbs_up,0.904,unseen
+S12_F01_c035,S12_F01,classroom,thumbs_up,thumbs_up,0.826,thumbs_up,0.854,unseen
+S12_F01_c036,S12_F01,classroom,thumbs_up,thumbs_up,0.855,thumbs_up,0.854,unseen
+S12_F01_c037,S12_F01,classroom,thumbs_up,thumbs_up,0.738,thumbs_up,0.07,unseen
+S12_F01_c038,S12_F01,classroom,thumbs_up,thumbs_up,0.86,thumbs_up,0.868,unseen
+S12_F01_c039,S12_F01,classroom,thumbs_up,thumbs_up,0.858,thumbs_up,0.844,unseen
+S12_F01_c040,S12_F01,classroom,thumbs_up,thumbs_up,0.872,thumbs_up,0.887,unseen
+S12_F01_c041,S12_F01,classroom,thumbs_up,thumbs_up,0.756,thumbs_up,0.833,unseen
+S12_F01_c042,S12_F01,classroom,thumbs_up,raise_hand,0.597,idle,1.0,unseen
+S12_F01_c043,S12_F01,classroom,thumbs_up,raise_hand,0.365,idle,1.0,unseen
+S12_F01_c044,S12_F01,classroom,thumbs_up,thumbs_up,0.883,thumbs_up,0.871,unseen
+S12_F01_c045,S12_F01,classroom,thumbs_up,thumbs_up,0.838,thumbs_up,0.879,unseen
+S12_F01_c046,S12_F01,classroom,thumbs_up,thumbs_up,0.872,thumbs_up,0.899,unseen
+S12_F01_c047,S12_F01,classroom,thumbs_up,thumbs_up,0.723,thumbs_up,0.25,unseen
+S12_F01_c048,S12_F01,classroom,thumbs_up,thumbs_up,0.864,thumbs_up,0.873,unseen
+S12_F01_c049,S12_F01,classroom,thumbs_up,thumbs_up,0.872,thumbs_up,0.844,unseen
+S12_F01_c050,S12_F01,classroom,thumbs_up,thumbs_up,0.871,thumbs_up,0.877,unseen
+S12_F01_c051,S12_F01,classroom,thumbs_up,thumbs_up,0.838,thumbs_up,0.854,unseen
+S12_F01_c052,S12_F01,classroom,thumbs_up,thumbs_up,0.865,thumbs_up,0.86,unseen
+S12_F01_c053,S12_F01,classroom,thumbs_up,thumbs_up,0.762,thumbs_up,0.863,unseen
+S12_F01_c054,S12_F01,classroom,thumbs_up,raise_hand,0.932,raise_hand,0.891,unseen
+S18_F01_c001,S18_F01,kitchen,thumbs_up,thumbs_up,0.768,thumbs_up,0.594,unseen
+S18_F01_c002,S18_F01,kitchen,thumbs_up,thumbs_up,0.843,thumbs_up,0.904,unseen
+S18_F01_c003,S18_F01,kitchen,thumbs_up,thumbs_up,0.869,thumbs_up,0.559,unseen
+S18_F01_c004,S18_F01,kitchen,thumbs_up,thumbs_up,0.787,thumbs_up,0.859,unseen
+S18_F01_c005,S18_F01,kitchen,thumbs_up,thumbs_up,0.85,thumbs_up,0.874,unseen
+S18_F01_c006,S18_F01,kitchen,thumbs_up,thumbs_up,0.87,thumbs_up,0.924,unseen
+S18_F01_c007,S18_F01,kitchen,thumbs_up,thumbs_up,0.871,thumbs_up,0.917,unseen
+S18_F01_c008,S18_F01,kitchen,thumbs_up,thumbs_up,0.839,thumbs_up,0.868,unseen
+S18_F01_c009,S18_F01,kitchen,thumbs_up,raise_hand,0.627,raise_hand,0.069,unseen
+S18_F01_c010,S18_F01,kitchen,thumbs_up,thumbs_up,0.862,thumbs_up,0.911,unseen
+S18_F01_c011,S18_F01,kitchen,thumbs_up,thumbs_up,0.876,thumbs_up,0.682,unseen
+S18_F01_c012,S18_F01,kitchen,thumbs_up,raise_hand,0.382,thumbs_down,0.235,unseen
+S18_F01_c013,S18_F01,kitchen,thumbs_up,thumbs_up,0.872,thumbs_up,0.925,unseen
+S18_F01_c014,S18_F01,kitchen,thumbs_up,thumbs_up,0.857,thumbs_up,0.895,unseen
+S18_F01_c015,S18_F01,kitchen,thumbs_up,thumbs_up,0.859,thumbs_up,0.712,unseen
+S18_F01_c016,S18_F01,kitchen,thumbs_up,thumbs_up,0.87,thumbs_up,0.936,unseen
+S18_F01_c017,S18_F01,kitchen,thumbs_up,thumbs_up,0.846,thumbs_up,0.653,unseen
+S18_F01_c018,S18_F01,kitchen,thumbs_up,thumbs_up,0.82,thumbs_up,0.86,unseen
+S18_F01_c019,S18_F01,kitchen,thumbs_up,idle,0.743,idle,1.0,unseen
+S18_F01_c020,S18_F01,kitchen,thumbs_up,idle,0.748,idle,1.0,unseen
+S18_F01_c021,S18_F01,kitchen,thumbs_up,idle,0.745,idle,1.0,unseen
+S18_F01_c022,S18_F01,kitchen,thumbs_up,idle,0.673,idle,1.0,unseen
+S18_F01_c023,S18_F01,kitchen,thumbs_up,idle,0.633,idle,1.0,unseen
+S18_F01_c024,S18_F01,kitchen,thumbs_up,idle,0.66,idle,1.0,unseen
+S18_F01_c025,S18_F01,kitchen,thumbs_up,idle,0.532,idle,1.0,unseen
+S18_F01_c026,S18_F01,kitchen,thumbs_up,idle,0.658,idle,1.0,unseen
+S18_F01_c027,S18_F01,kitchen,thumbs_up,thumbs_down,0.416,idle,1.0,unseen
+S18_F01_c028,S18_F01,kitchen,thumbs_up,idle,0.705,idle,1.0,unseen
+S18_F01_c029,S18_F01,kitchen,thumbs_up,idle,0.586,idle,1.0,unseen
+S18_F01_c030,S18_F01,kitchen,thumbs_up,idle,0.721,idle,1.0,unseen
+S18_F01_c031,S18_F01,kitchen,thumbs_up,idle,0.507,idle,1.0,unseen
+S18_F01_c032,S18_F01,kitchen,thumbs_up,idle,0.489,idle,1.0,unseen
+S18_F01_c033,S18_F01,kitchen,thumbs_up,thumbs_down,0.401,idle,1.0,unseen
+S18_F01_c034,S18_F01,kitchen,thumbs_up,idle,0.632,idle,1.0,unseen
+S18_F01_c035,S18_F01,kitchen,thumbs_up,thumbs_up,0.864,thumbs_up,0.924,unseen
+S18_F01_c036,S18_F01,kitchen,thumbs_up,thumbs_up,0.824,thumbs_up,0.917,unseen
+S18_F01_c037,S18_F01,kitchen,thumbs_up,thumbs_up,0.83,thumbs_up,0.918,unseen
+S18_F01_c038,S18_F01,kitchen,thumbs_up,thumbs_up,0.863,thumbs_up,0.912,unseen
+S18_F01_c039,S18_F01,kitchen,thumbs_up,thumbs_up,0.865,thumbs_up,0.915,unseen
+S18_F01_c040,S18_F01,kitchen,thumbs_up,thumbs_up,0.867,thumbs_up,0.914,unseen
+S18_F01_c041,S18_F01,kitchen,thumbs_up,thumbs_up,0.869,thumbs_up,0.913,unseen
+S18_F01_c042,S18_F01,kitchen,thumbs_up,thumbs_up,0.866,thumbs_up,0.907,unseen
+S18_F01_c043,S18_F01,kitchen,thumbs_up,thumbs_up,0.862,thumbs_up,0.912,unseen
+S18_F01_c044,S18_F01,kitchen,thumbs_up,raise_hand,0.315,thumbs_up,0.287,unseen
+S18_F01_c045,S18_F01,kitchen,thumbs_up,thumbs_up,0.73,thumbs_up,0.889,unseen
+S18_F01_c046,S18_F01,kitchen,thumbs_up,thumbs_down,0.26,idle,1.0,unseen
+S18_F01_c047,S18_F01,kitchen,thumbs_up,thumbs_up,0.868,thumbs_up,0.915,unseen
+S18_F01_c048,S18_F01,kitchen,thumbs_up,thumbs_up,0.86,thumbs_up,0.907,unseen
+S18_F01_c049,S18_F01,kitchen,thumbs_up,thumbs_up,0.844,thumbs_up,0.917,unseen
+S18_F01_c050,S18_F01,kitchen,thumbs_up,thumbs_up,0.87,thumbs_up,0.906,unseen
+S18_F01_c051,S18_F01,kitchen,thumbs_up,idle,0.763,idle,1.0,unseen
+S18_F01_c052,S18_F01,kitchen,thumbs_up,idle,0.754,idle,1.0,unseen
+S18_F01_c053,S18_F01,kitchen,thumbs_up,idle,0.748,idle,1.0,unseen
+S18_F01_c054,S18_F01,kitchen,thumbs_up,idle,0.549,idle,1.0,unseen
+S18_F01_c055,S18_F01,kitchen,thumbs_up,idle,0.363,beckoning,0.135,unseen
+S18_F01_c056,S18_F01,kitchen,thumbs_up,idle,0.734,idle,1.0,unseen
+S18_F01_c057,S18_F01,kitchen,thumbs_up,idle,0.361,idle,1.0,unseen
+S18_F01_c058,S18_F01,kitchen,thumbs_up,thumbs_up,0.852,thumbs_up,0.921,unseen
+S18_F01_c059,S18_F01,kitchen,thumbs_up,idle,0.713,idle,1.0,unseen
+S18_F01_c060,S18_F01,kitchen,thumbs_up,thumbs_up,0.437,thumbs_up,0.283,unseen
+S18_F01_c061,S18_F01,kitchen,thumbs_up,thumbs_up,0.759,thumbs_up,0.924,unseen
+S18_F01_c062,S18_F01,kitchen,thumbs_up,idle,0.626,idle,1.0,unseen
+S18_F01_c063,S18_F01,kitchen,thumbs_up,idle,0.532,idle,1.0,unseen
+S18_F01_c064,S18_F01,kitchen,thumbs_up,thumbs_up,0.824,thumbs_up,0.926,unseen
+S18_F01_c065,S18_F01,kitchen,thumbs_up,thumbs_up,0.855,thumbs_up,0.731,unseen
+S18_F01_c066,S18_F01,kitchen,thumbs_up,thumbs_up,0.782,thumbs_up,0.847,unseen
+S18_F01_c067,S18_F01,kitchen,thumbs_up,idle,0.712,idle,1.0,unseen
+S18_F01_c068,S18_F01,kitchen,thumbs_up,idle,0.74,idle,1.0,unseen
+S18_F01_c069,S18_F01,kitchen,thumbs_up,idle,0.752,idle,1.0,unseen
+S18_F01_c070,S18_F01,kitchen,thumbs_up,idle,0.704,idle,1.0,unseen
+S18_F01_c071,S18_F01,kitchen,thumbs_up,idle,0.722,idle,1.0,unseen
+S18_F01_c072,S18_F01,kitchen,thumbs_up,idle,0.752,idle,1.0,unseen
+S18_F01_c073,S18_F01,kitchen,thumbs_up,idle,0.704,idle,1.0,unseen
+S19_F02_c001,S19_F02,kitchen,both_hands_up,idle,0.779,idle,1.0,unseen
+S19_F02_c002,S19_F02,kitchen,both_hands_up,idle,0.746,idle,1.0,unseen
+S19_F02_c003,S19_F02,kitchen,both_hands_up,idle,0.61,idle,1.0,unseen
+S19_F02_c004,S19_F02,kitchen,both_hands_up,idle,0.75,idle,1.0,unseen
+S19_F02_c005,S19_F02,kitchen,both_hands_up,idle,0.646,idle,1.0,unseen
+S19_F02_c006,S19_F02,kitchen,both_hands_up,idle,0.55,raise_hand,0.491,unseen
+S19_F02_c007,S19_F02,kitchen,both_hands_up,idle,0.517,raise_hand,0.184,unseen
+S19_F02_c008,S19_F02,kitchen,both_hands_up,idle,0.753,idle,1.0,unseen
+S19_F02_c009,S19_F02,kitchen,both_hands_up,idle,0.719,idle,1.0,unseen
+S19_F02_c010,S19_F02,kitchen,both_hands_up,idle,0.672,idle,1.0,unseen
+S19_F02_c011,S19_F02,kitchen,both_hands_up,idle,0.568,idle,1.0,unseen
+S19_F02_c012,S19_F02,kitchen,both_hands_up,idle,0.524,raise_hand,0.383,unseen
+S19_F02_c013,S19_F02,kitchen,both_hands_up,raise_hand,0.821,raise_hand,0.746,unseen
+S19_F02_c014,S19_F02,kitchen,both_hands_up,raise_hand,0.841,raise_hand,0.645,unseen
+S19_F02_c015,S19_F02,kitchen,both_hands_up,raise_hand,0.933,raise_hand,0.75,unseen
+S19_F02_c016,S19_F02,kitchen,both_hands_up,idle,0.726,idle,1.0,unseen
+S19_F02_c017,S19_F02,kitchen,both_hands_up,thumbs_up,0.371,idle,1.0,unseen
+S19_F02_c018,S19_F02,kitchen,both_hands_up,idle,0.483,idle,1.0,unseen
+S19_F02_c019,S19_F02,kitchen,both_hands_up,idle,0.749,idle,1.0,unseen
+S19_F02_c020,S19_F02,kitchen,both_hands_up,idle,0.377,idle,1.0,unseen
+S19_F02_c021,S19_F02,kitchen,both_hands_up,thumbs_up,0.377,idle,1.0,unseen
+S19_F02_c022,S19_F02,kitchen,both_hands_up,idle,0.701,idle,1.0,unseen
+S19_F02_c023,S19_F02,kitchen,both_hands_up,idle,0.744,idle,1.0,unseen
+S19_F02_c024,S19_F02,kitchen,both_hands_up,idle,0.723,idle,1.0,unseen
+S19_F02_c025,S19_F02,kitchen,both_hands_up,idle,0.715,idle,1.0,unseen
+S19_F02_c026,S19_F02,kitchen,both_hands_up,idle,0.763,idle,1.0,unseen
+S19_F02_c027,S19_F02,kitchen,both_hands_up,idle,0.587,idle,1.0,unseen
+S19_F02_c028,S19_F02,kitchen,both_hands_up,idle,0.729,idle,1.0,unseen
+S19_F02_c029,S19_F02,kitchen,both_hands_up,idle,0.731,idle,1.0,unseen
+S19_F02_c030,S19_F02,kitchen,both_hands_up,idle,0.735,idle,1.0,unseen
+S19_F02_c031,S19_F02,kitchen,both_hands_up,idle,0.738,idle,1.0,unseen
+S19_F02_c032,S19_F02,kitchen,both_hands_up,idle,0.739,idle,1.0,unseen
+S19_F02_c033,S19_F02,kitchen,both_hands_up,idle,0.737,idle,1.0,unseen
+S19_F02_c034,S19_F02,kitchen,both_hands_up,idle,0.739,idle,1.0,unseen
+S19_F02_c035,S19_F02,kitchen,both_hands_up,idle,0.729,idle,1.0,unseen
+S19_F02_c036,S19_F02,kitchen,both_hands_up,idle,0.738,idle,1.0,unseen
+S19_F02_c037,S19_F02,kitchen,both_hands_up,idle,0.735,idle,1.0,unseen
+S19_F02_c038,S19_F02,kitchen,both_hands_up,idle,0.736,idle,1.0,unseen
+S19_F02_c039,S19_F02,kitchen,both_hands_up,idle,0.739,idle,1.0,unseen
+S19_F02_c040,S19_F02,kitchen,both_hands_up,idle,0.733,idle,1.0,unseen
+S19_F02_c041,S19_F02,kitchen,both_hands_up,raise_hand,0.68,raise_hand,0.601,unseen
+S19_F02_c042,S19_F02,kitchen,both_hands_up,idle,0.605,wave,0.331,unseen
+S19_F02_c043,S19_F02,kitchen,both_hands_up,idle,0.588,raise_hand,0.135,unseen
+S19_F02_c044,S19_F02,kitchen,both_hands_up,idle,0.628,wave,0.365,unseen
+S19_F02_c045,S19_F02,kitchen,both_hands_up,idle,0.779,idle,1.0,unseen
+S19_F02_c046,S19_F02,kitchen,both_hands_up,idle,0.414,idle,1.0,unseen
+S19_F02_c047,S19_F02,kitchen,both_hands_up,idle,0.756,idle,1.0,unseen
+S19_F02_c048,S19_F02,kitchen,both_hands_up,idle,0.68,wave,0.39,unseen
+S19_F02_c049,S19_F02,kitchen,both_hands_up,idle,0.752,idle,1.0,unseen
+S19_F02_c050,S19_F02,kitchen,both_hands_up,idle,0.765,idle,1.0,unseen
+S19_F02_c051,S19_F02,kitchen,both_hands_up,idle,0.579,idle,1.0,unseen
+S19_F02_c052,S19_F02,kitchen,both_hands_up,idle,0.68,wave,0.242,unseen
+S19_F02_c053,S19_F02,kitchen,both_hands_up,idle,0.759,idle,1.0,unseen
+S19_F02_c054,S19_F02,kitchen,both_hands_up,idle,0.609,wave,0.534,unseen
+S20_F03_c001,S20_F03,kitchen,beckoning,idle,0.746,idle,1.0,val/test subject (never trained)
+S20_F03_c002,S20_F03,kitchen,beckoning,beckoning,0.366,beckoning,0.24,val/test subject (never trained)
+S20_F03_c003,S20_F03,kitchen,beckoning,idle,0.733,idle,1.0,val/test subject (never trained)
+S20_F03_c004,S20_F03,kitchen,beckoning,idle,0.644,beckoning,0.208,val/test subject (never trained)
+S20_F03_c005,S20_F03,kitchen,beckoning,beckoning,0.806,beckoning,0.917,val/test subject (never trained)
+S20_F03_c006,S20_F03,kitchen,beckoning,beckoning,0.845,beckoning,0.72,val/test subject (never trained)
+S20_F03_c007,S20_F03,kitchen,beckoning,beckoning,0.848,beckoning,0.824,val/test subject (never trained)
+S20_F03_c008,S20_F03,kitchen,beckoning,beckoning,0.876,beckoning,0.914,val/test subject (never trained)
+S20_F03_c009,S20_F03,kitchen,beckoning,beckoning,0.867,beckoning,0.785,val/test subject (never trained)
+S20_F03_c010,S20_F03,kitchen,beckoning,beckoning,0.863,beckoning,0.506,val/test subject (never trained)
+S20_F03_c011,S20_F03,kitchen,beckoning,beckoning,0.49,beckoning,0.434,val/test subject (never trained)
+S20_F03_c012,S20_F03,kitchen,beckoning,idle,0.561,idle,1.0,val/test subject (never trained)
+S20_F03_c013,S20_F03,kitchen,beckoning,idle,0.721,beckoning,0.35,val/test subject (never trained)
+S20_F03_c014,S20_F03,kitchen,beckoning,idle,0.402,beckoning,0.373,val/test subject (never trained)
+S20_F03_c015,S20_F03,kitchen,beckoning,beckoning,0.868,beckoning,0.204,val/test subject (never trained)
+S20_F03_c016,S20_F03,kitchen,beckoning,idle,0.767,idle,1.0,val/test subject (never trained)
+S20_F03_c017,S20_F03,kitchen,beckoning,beckoning,0.483,beckoning,0.642,val/test subject (never trained)
+S20_F03_c018,S20_F03,kitchen,beckoning,beckoning,0.812,beckoning,0.882,val/test subject (never trained)
+S20_F03_c019,S20_F03,kitchen,beckoning,beckoning,0.835,beckoning,0.867,val/test subject (never trained)
+S20_F03_c020,S20_F03,kitchen,beckoning,beckoning,0.45,thumbs_down,0.22,val/test subject (never trained)
+S20_F03_c021,S20_F03,kitchen,beckoning,beckoning,0.848,beckoning,0.912,val/test subject (never trained)
+S20_F03_c022,S20_F03,kitchen,beckoning,beckoning,0.843,beckoning,0.655,val/test subject (never trained)
+S20_F03_c023,S20_F03,kitchen,beckoning,beckoning,0.781,beckoning,0.716,val/test subject (never trained)
+S20_F03_c024,S20_F03,kitchen,beckoning,beckoning,0.865,beckoning,0.922,val/test subject (never trained)
+S20_F03_c025,S20_F03,kitchen,beckoning,raise_hand,0.344,beckoning,0.736,val/test subject (never trained)
+S20_F03_c026,S20_F03,kitchen,beckoning,raise_hand,0.89,raise_hand,0.578,val/test subject (never trained)
+S20_F03_c027,S20_F03,kitchen,beckoning,idle,0.697,raise_hand,0.659,val/test subject (never trained)
+S20_F03_c028,S20_F03,kitchen,beckoning,raise_hand,0.449,raise_hand,0.372,val/test subject (never trained)
+S20_F03_c029,S20_F03,kitchen,beckoning,thumbs_down,0.635,thumbs_down,0.058,val/test subject (never trained)
+S20_F03_c030,S20_F03,kitchen,beckoning,beckoning,0.442,thumbs_down,0.609,val/test subject (never trained)
+S20_F03_c031,S20_F03,kitchen,beckoning,beckoning,0.865,beckoning,0.92,val/test subject (never trained)
+S20_F03_c032,S20_F03,kitchen,beckoning,idle,0.631,idle,1.0,val/test subject (never trained)
+S20_F03_c033,S20_F03,kitchen,beckoning,beckoning,0.856,beckoning,0.879,val/test subject (never trained)
+S20_F03_c034,S20_F03,kitchen,beckoning,thumbs_down,0.74,thumbs_down,0.317,val/test subject (never trained)
+S20_F03_c035,S20_F03,kitchen,beckoning,beckoning,0.86,beckoning,0.689,val/test subject (never trained)
+S20_F03_c036,S20_F03,kitchen,beckoning,beckoning,0.859,beckoning,0.874,val/test subject (never trained)
+S20_F03_c037,S20_F03,kitchen,beckoning,beckoning,0.846,beckoning,0.88,val/test subject (never trained)
+S20_F03_c038,S20_F03,kitchen,beckoning,beckoning,0.862,beckoning,0.807,val/test subject (never trained)
+S20_F03_c039,S20_F03,kitchen,beckoning,idle,0.719,idle,1.0,val/test subject (never trained)
+S20_F03_c040,S20_F03,kitchen,beckoning,beckoning,0.853,beckoning,0.844,val/test subject (never trained)
+S20_F03_c041,S20_F03,kitchen,beckoning,beckoning,0.878,beckoning,0.837,val/test subject (never trained)
+S20_F03_c042,S20_F03,kitchen,beckoning,beckoning,0.854,beckoning,0.919,val/test subject (never trained)
+S20_F03_c043,S20_F03,kitchen,beckoning,beckoning,0.786,beckoning,0.381,val/test subject (never trained)
+S20_F03_c044,S20_F03,kitchen,beckoning,wave,0.36,beckoning,0.677,val/test subject (never trained)
+S20_F03_c045,S20_F03,kitchen,beckoning,beckoning,0.843,beckoning,0.755,val/test subject (never trained)
+S20_F03_c046,S20_F03,kitchen,beckoning,beckoning,0.853,beckoning,0.838,val/test subject (never trained)
+S20_F03_c047,S20_F03,kitchen,beckoning,beckoning,0.875,beckoning,0.83,val/test subject (never trained)
+S20_F03_c048,S20_F03,kitchen,beckoning,beckoning,0.803,beckoning,0.828,val/test subject (never trained)
+S20_F03_c049,S20_F03,kitchen,beckoning,beckoning,0.869,beckoning,0.657,val/test subject (never trained)
+S20_F03_c050,S20_F03,kitchen,beckoning,beckoning,0.865,beckoning,0.769,val/test subject (never trained)
+S20_F03_c051,S20_F03,kitchen,beckoning,beckoning,0.871,beckoning,0.721,val/test subject (never trained)
+S20_F03_c052,S20_F03,kitchen,beckoning,beckoning,0.897,beckoning,0.368,val/test subject (never trained)
+S20_F03_c053,S20_F03,kitchen,beckoning,beckoning,0.885,beckoning,0.782,val/test subject (never trained)
+S20_F03_c054,S20_F03,kitchen,beckoning,beckoning,0.906,beckoning,0.81,val/test subject (never trained)
+S20_F03_c055,S20_F03,kitchen,beckoning,beckoning,0.873,beckoning,0.782,val/test subject (never trained)
+S20_F03_c056,S20_F03,kitchen,beckoning,beckoning,0.844,beckoning,0.636,val/test subject (never trained)
+S20_F03_c057,S20_F03,kitchen,beckoning,idle,0.65,idle,1.0,val/test subject (never trained)
+S20_F03_c058,S20_F03,kitchen,beckoning,beckoning,0.869,beckoning,0.645,val/test subject (never trained)
+S20_F03_c059,S20_F03,kitchen,beckoning,beckoning,0.84,beckoning,0.771,val/test subject (never trained)
+S20_F03_c060,S20_F03,kitchen,beckoning,beckoning,0.862,beckoning,0.556,val/test subject (never trained)
+S20_F03_c061,S20_F03,kitchen,beckoning,beckoning,0.877,beckoning,0.636,val/test subject (never trained)
+S20_F03_c062,S20_F03,kitchen,beckoning,beckoning,0.868,beckoning,0.593,val/test subject (never trained)
+S20_F03_c063,S20_F03,kitchen,beckoning,idle,0.653,idle,1.0,val/test subject (never trained)
+S21_F04_c001,S21_F04,kitchen,thumbs_down,thumbs_down,0.906,thumbs_down,0.855,unseen
+S21_F04_c002,S21_F04,kitchen,thumbs_down,raise_hand,0.943,raise_hand,0.929,unseen
+S21_F04_c003,S21_F04,kitchen,thumbs_down,thumbs_down,0.873,thumbs_down,0.817,unseen
+S21_F04_c004,S21_F04,kitchen,thumbs_down,thumbs_down,0.857,thumbs_down,0.84,unseen
+S21_F04_c005,S21_F04,kitchen,thumbs_down,thumbs_down,0.86,thumbs_down,0.72,unseen
+S21_F04_c006,S21_F04,kitchen,thumbs_down,thumbs_down,0.842,thumbs_down,0.902,unseen
+S21_F04_c007,S21_F04,kitchen,thumbs_down,thumbs_down,0.852,thumbs_down,0.909,unseen
+S21_F04_c008,S21_F04,kitchen,thumbs_down,thumbs_down,0.889,thumbs_down,0.921,unseen
+S21_F04_c009,S21_F04,kitchen,thumbs_down,thumbs_down,0.909,raise_hand,0.443,unseen
+S21_F04_c010,S21_F04,kitchen,thumbs_down,thumbs_down,0.884,thumbs_down,0.853,unseen
+S21_F04_c011,S21_F04,kitchen,thumbs_down,raise_hand,0.842,raise_hand,0.753,unseen
+S21_F04_c012,S21_F04,kitchen,thumbs_down,thumbs_down,0.859,thumbs_down,0.91,unseen
+S21_F04_c013,S21_F04,kitchen,thumbs_down,thumbs_down,0.871,thumbs_down,0.919,unseen
+S21_F04_c014,S21_F04,kitchen,thumbs_down,wave,0.712,raise_hand,0.568,unseen
+S21_F04_c015,S21_F04,kitchen,thumbs_down,idle,0.734,idle,1.0,unseen
+S21_F04_c016,S21_F04,kitchen,thumbs_down,thumbs_down,0.78,thumbs_down,0.529,unseen
+S21_F04_c017,S21_F04,kitchen,thumbs_down,raise_hand,0.992,raise_hand,0.908,unseen
+S21_F04_c018,S21_F04,kitchen,thumbs_down,idle,0.665,idle,1.0,unseen
+S21_F04_c019,S21_F04,kitchen,thumbs_down,idle,0.467,idle,1.0,unseen
+S21_F04_c020,S21_F04,kitchen,thumbs_down,idle,0.699,idle,1.0,unseen
+S21_F04_c021,S21_F04,kitchen,thumbs_down,idle,0.37,idle,1.0,unseen
+S21_F04_c022,S21_F04,kitchen,thumbs_down,idle,0.704,idle,1.0,unseen
+S21_F04_c023,S21_F04,kitchen,thumbs_down,idle,0.543,idle,1.0,unseen
+S21_F04_c024,S21_F04,kitchen,thumbs_down,idle,0.644,idle,1.0,unseen
+S21_F04_c025,S21_F04,kitchen,thumbs_down,idle,0.367,idle,1.0,unseen
+S21_F04_c026,S21_F04,kitchen,thumbs_down,idle,0.47,idle,1.0,unseen
+S21_F04_c027,S21_F04,kitchen,thumbs_down,idle,0.477,idle,1.0,unseen
+S21_F04_c028,S21_F04,kitchen,thumbs_down,idle,0.721,idle,1.0,unseen
+S21_F04_c029,S21_F04,kitchen,thumbs_down,idle,0.648,idle,1.0,unseen
+S21_F04_c030,S21_F04,kitchen,thumbs_down,idle,0.275,idle,1.0,unseen
+S21_F04_c031,S21_F04,kitchen,thumbs_down,idle,0.422,idle,1.0,unseen
+S21_F04_c032,S21_F04,kitchen,thumbs_down,idle,0.654,idle,1.0,unseen
+S21_F04_c033,S21_F04,kitchen,thumbs_down,thumbs_down,0.852,thumbs_down,0.906,unseen
+S21_F04_c034,S21_F04,kitchen,thumbs_down,thumbs_down,0.865,thumbs_down,0.87,unseen
+S21_F04_c035,S21_F04,kitchen,thumbs_down,thumbs_down,0.868,thumbs_down,0.879,unseen
+S21_F04_c036,S21_F04,kitchen,thumbs_down,thumbs_down,0.862,thumbs_down,0.854,unseen
+S21_F04_c037,S21_F04,kitchen,thumbs_down,thumbs_down,0.849,thumbs_down,0.901,unseen
+S21_F04_c038,S21_F04,kitchen,thumbs_down,thumbs_down,0.81,thumbs_down,0.887,unseen
+S21_F04_c039,S21_F04,kitchen,thumbs_down,thumbs_down,0.854,thumbs_down,0.914,unseen
+S21_F04_c040,S21_F04,kitchen,thumbs_down,thumbs_down,0.883,thumbs_down,0.899,unseen
+S21_F04_c041,S21_F04,kitchen,thumbs_down,thumbs_down,0.848,thumbs_down,0.771,unseen
+S21_F04_c042,S21_F04,kitchen,thumbs_down,thumbs_down,0.832,thumbs_down,0.892,unseen
+S21_F04_c043,S21_F04,kitchen,thumbs_down,thumbs_down,0.864,thumbs_down,0.906,unseen
+S21_F04_c044,S21_F04,kitchen,thumbs_down,thumbs_down,0.451,thumbs_down,0.657,unseen
+S21_F04_c045,S21_F04,kitchen,thumbs_down,thumbs_down,0.876,thumbs_down,0.607,unseen
+S21_F04_c046,S21_F04,kitchen,thumbs_down,thumbs_down,0.867,thumbs_down,0.634,unseen
+S21_F04_c047,S21_F04,kitchen,thumbs_down,thumbs_down,0.65,thumbs_down,0.194,unseen
+S21_F04_c048,S21_F04,kitchen,thumbs_down,thumbs_down,0.758,thumbs_down,0.553,unseen
+S21_F04_c049,S21_F04,kitchen,thumbs_down,thumbs_down,0.662,thumbs_down,0.138,unseen
+S21_F04_c050,S21_F04,kitchen,thumbs_down,thumbs_down,0.582,idle,1.0,unseen
+S21_F04_c051,S21_F04,kitchen,thumbs_down,idle,0.518,idle,1.0,unseen
+S21_F04_c052,S21_F04,kitchen,thumbs_down,idle,0.437,idle,1.0,unseen
+S21_F04_c053,S21_F04,kitchen,thumbs_down,idle,0.491,idle,1.0,unseen
+S21_F04_c054,S21_F04,kitchen,thumbs_down,thumbs_down,0.777,thumbs_down,0.36,unseen
+S21_F04_c055,S21_F04,kitchen,thumbs_down,idle,0.72,idle,1.0,unseen
+S21_F04_c056,S21_F04,kitchen,thumbs_down,thumbs_down,0.844,thumbs_down,0.317,unseen
+S21_F04_c057,S21_F04,kitchen,thumbs_down,idle,0.696,idle,1.0,unseen
+S21_F04_c058,S21_F04,kitchen,thumbs_down,thumbs_down,0.748,thumbs_down,0.215,unseen
+S22_F05_c001,S22_F05,kitchen,point,idle,0.718,idle,1.0,unseen
+S22_F05_c002,S22_F05,kitchen,point,idle,0.724,idle,1.0,unseen
+S22_F05_c003,S22_F05,kitchen,point,idle,0.736,idle,1.0,unseen
+S22_F05_c004,S22_F05,kitchen,point,idle,0.737,idle,1.0,unseen
+S22_F05_c005,S22_F05,kitchen,point,idle,0.717,idle,1.0,unseen
+S22_F05_c006,S22_F05,kitchen,point,idle,0.717,idle,1.0,unseen
+S22_F05_c007,S22_F05,kitchen,point,idle,0.717,idle,1.0,unseen
+S22_F05_c008,S22_F05,kitchen,point,idle,0.719,idle,1.0,unseen
+S22_F05_c009,S22_F05,kitchen,point,idle,0.721,idle,1.0,unseen
+S22_F05_c010,S22_F05,kitchen,point,idle,0.715,idle,1.0,unseen
+S22_F05_c011,S22_F05,kitchen,point,idle,0.716,idle,1.0,unseen
+S22_F05_c012,S22_F05,kitchen,point,idle,0.714,idle,1.0,unseen
+S22_F05_c013,S22_F05,kitchen,point,idle,0.724,idle,1.0,unseen
+S22_F05_c014,S22_F05,kitchen,point,idle,0.704,idle,1.0,unseen
+S22_F05_c015,S22_F05,kitchen,point,idle,0.719,idle,1.0,unseen
+S22_F05_c016,S22_F05,kitchen,point,idle,0.712,idle,1.0,unseen
+S22_F05_c017,S22_F05,kitchen,point,idle,0.702,idle,1.0,unseen
+S22_F05_c018,S22_F05,kitchen,point,idle,0.717,idle,1.0,unseen
+S22_F05_c019,S22_F05,kitchen,point,idle,0.733,idle,1.0,unseen
+S22_F05_c020,S22_F05,kitchen,point,idle,0.748,idle,1.0,unseen
+S22_F05_c021,S22_F05,kitchen,point,idle,0.75,idle,1.0,unseen
+S22_F05_c022,S22_F05,kitchen,point,idle,0.744,idle,1.0,unseen
+S22_F05_c023,S22_F05,kitchen,point,idle,0.714,idle,1.0,unseen
+S22_F05_c024,S22_F05,kitchen,point,idle,0.695,idle,1.0,unseen
+S22_F05_c025,S22_F05,kitchen,point,idle,0.744,idle,1.0,unseen
+S22_F05_c026,S22_F05,kitchen,point,idle,0.733,idle,1.0,unseen
+S22_F05_c027,S22_F05,kitchen,point,idle,0.735,idle,1.0,unseen
+S22_F05_c028,S22_F05,kitchen,point,idle,0.583,idle,1.0,unseen
+S22_F05_c029,S22_F05,kitchen,point,idle,0.759,idle,1.0,unseen
+S22_F05_c030,S22_F05,kitchen,point,idle,0.733,idle,1.0,unseen
+S22_F05_c031,S22_F05,kitchen,point,idle,0.715,idle,1.0,unseen
+S22_F05_c032,S22_F05,kitchen,point,idle,0.729,idle,1.0,unseen
+S22_F05_c033,S22_F05,kitchen,point,idle,0.638,idle,1.0,unseen
+S22_F05_c034,S22_F05,kitchen,point,idle,0.648,idle,1.0,unseen
+S22_F05_c035,S22_F05,kitchen,point,thumbs_down,0.762,thumbs_down,0.882,unseen
+S22_F05_c036,S22_F05,kitchen,point,idle,0.712,idle,1.0,unseen
+S22_F05_c037,S22_F05,kitchen,point,idle,0.694,idle,1.0,unseen
+S22_F05_c038,S22_F05,kitchen,point,idle,0.719,idle,1.0,unseen
+S22_F05_c039,S22_F05,kitchen,point,thumbs_down,0.616,thumbs_down,0.377,unseen
+S22_F05_c040,S22_F05,kitchen,point,idle,0.716,idle,1.0,unseen
+S22_F05_c041,S22_F05,kitchen,point,idle,0.687,idle,1.0,unseen
+S22_F05_c042,S22_F05,kitchen,point,idle,0.443,idle,1.0,unseen
+S22_F05_c043,S22_F05,kitchen,point,idle,0.407,idle,1.0,unseen
+S22_F05_c044,S22_F05,kitchen,point,idle,0.746,idle,1.0,unseen
+S22_F05_c045,S22_F05,kitchen,point,idle,0.714,idle,1.0,unseen
+S22_F05_c046,S22_F05,kitchen,point,idle,0.708,idle,1.0,unseen
+S22_F05_c047,S22_F05,kitchen,point,idle,0.718,idle,1.0,unseen
+S22_F05_c048,S22_F05,kitchen,point,idle,0.721,idle,1.0,unseen
+S22_F05_c049,S22_F05,kitchen,point,idle,0.722,idle,1.0,unseen
+S22_F05_c050,S22_F05,kitchen,point,idle,0.718,idle,1.0,unseen
+S22_F05_c051,S22_F05,kitchen,point,idle,0.713,idle,1.0,unseen
+S22_F05_c052,S22_F05,kitchen,point,idle,0.706,idle,1.0,unseen
+S22_F05_c053,S22_F05,kitchen,point,idle,0.711,idle,1.0,unseen
+S22_F05_c054,S22_F05,kitchen,point,idle,0.72,idle,1.0,unseen
+S22_F05_c055,S22_F05,kitchen,point,idle,0.715,idle,1.0,unseen
+S22_F05_c056,S22_F05,kitchen,point,idle,0.708,idle,1.0,unseen
+S22_F05_c057,S22_F05,kitchen,point,idle,0.719,idle,1.0,unseen
+S22_F05_c058,S22_F05,kitchen,point,idle,0.714,idle,1.0,unseen
+S22_F05_c059,S22_F05,kitchen,point,idle,0.712,idle,1.0,unseen
+S22_F05_c060,S22_F05,kitchen,point,idle,0.7,idle,1.0,unseen
+S23_F08_c001,S23_F08,kitchen,thumbs_down,thumbs_down,0.85,thumbs_down,0.524,unseen
+S23_F08_c002,S23_F08,kitchen,thumbs_down,idle,0.431,idle,1.0,unseen
+S23_F08_c003,S23_F08,kitchen,thumbs_down,idle,0.564,raise_hand,0.437,unseen
+S23_F08_c004,S23_F08,kitchen,thumbs_down,thumbs_down,0.87,thumbs_down,0.742,unseen
+S23_F08_c005,S23_F08,kitchen,thumbs_down,idle,0.695,idle,1.0,unseen
+S23_F08_c006,S23_F08,kitchen,thumbs_down,thumbs_down,0.358,idle,1.0,unseen
+S23_F08_c007,S23_F08,kitchen,thumbs_down,idle,0.604,idle,1.0,unseen
+S23_F08_c008,S23_F08,kitchen,thumbs_down,thumbs_down,0.866,thumbs_down,0.841,unseen
+S23_F08_c009,S23_F08,kitchen,thumbs_down,raise_hand,0.588,raise_hand,0.457,unseen
+S23_F08_c010,S23_F08,kitchen,thumbs_down,thumbs_down,0.892,thumbs_down,0.931,unseen
+S23_F08_c011,S23_F08,kitchen,thumbs_down,idle,0.686,idle,1.0,unseen
+S23_F08_c012,S23_F08,kitchen,thumbs_down,thumbs_down,0.826,thumbs_down,0.542,unseen
+S23_F08_c013,S23_F08,kitchen,thumbs_down,raise_hand,0.925,raise_hand,0.609,unseen
+S23_F08_c014,S23_F08,kitchen,thumbs_down,thumbs_down,0.881,thumbs_down,0.907,unseen
+S23_F08_c015,S23_F08,kitchen,thumbs_down,thumbs_down,0.358,thumbs_down,0.387,unseen
+S23_F08_c016,S23_F08,kitchen,thumbs_down,thumbs_down,0.783,thumbs_down,0.802,unseen
+S23_F08_c017,S23_F08,kitchen,thumbs_down,thumbs_down,0.411,thumbs_down,0.293,unseen
+S23_F08_c018,S23_F08,kitchen,thumbs_down,thumbs_down,0.891,thumbs_down,0.75,unseen
+S23_F08_c019,S23_F08,kitchen,thumbs_down,idle,0.709,idle,1.0,unseen
+S23_F08_c020,S23_F08,kitchen,thumbs_down,idle,0.703,idle,1.0,unseen
+S23_F08_c021,S23_F08,kitchen,thumbs_down,idle,0.68,idle,1.0,unseen
+S23_F08_c022,S23_F08,kitchen,thumbs_down,idle,0.762,idle,1.0,unseen
+S23_F08_c023,S23_F08,kitchen,thumbs_down,idle,0.699,idle,1.0,unseen
+S23_F08_c024,S23_F08,kitchen,thumbs_down,idle,0.699,idle,1.0,unseen
+S23_F08_c025,S23_F08,kitchen,thumbs_down,idle,0.724,idle,1.0,unseen
+S23_F08_c026,S23_F08,kitchen,thumbs_down,idle,0.697,idle,1.0,unseen
+S23_F08_c027,S23_F08,kitchen,thumbs_down,idle,0.756,idle,1.0,unseen
+S23_F08_c028,S23_F08,kitchen,thumbs_down,idle,0.726,idle,1.0,unseen
+S23_F08_c029,S23_F08,kitchen,thumbs_down,idle,0.77,idle,1.0,unseen
+S23_F08_c030,S23_F08,kitchen,thumbs_down,idle,0.771,idle,1.0,unseen
+S24_F07_c001,S24_F07,kitchen,both_hands_up,raise_hand,0.925,raise_hand,0.614,unseen
+S24_F07_c002,S24_F07,kitchen,both_hands_up,raise_hand,0.934,raise_hand,0.706,unseen
+S24_F07_c003,S24_F07,kitchen,both_hands_up,raise_hand,0.934,raise_hand,0.706,unseen
+S24_F07_c004,S24_F07,kitchen,both_hands_up,raise_hand,0.934,raise_hand,0.706,unseen
+S24_F07_c005,S24_F07,kitchen,both_hands_up,raise_hand,0.934,raise_hand,0.706,unseen
+S24_F07_c006,S24_F07,kitchen,both_hands_up,raise_hand,0.911,raise_hand,0.617,unseen
+S24_F07_c007,S24_F07,kitchen,both_hands_up,raise_hand,0.916,raise_hand,0.661,unseen
+S24_F07_c008,S24_F07,kitchen,both_hands_up,idle,0.495,raise_hand,0.054,unseen
+S24_F07_c009,S24_F07,kitchen,both_hands_up,raise_hand,0.875,raise_hand,0.71,unseen
+S24_F07_c010,S24_F07,kitchen,both_hands_up,raise_hand,0.942,raise_hand,0.879,unseen
+S24_F07_c011,S24_F07,kitchen,both_hands_up,raise_hand,0.942,raise_hand,0.879,unseen
+S24_F07_c012,S24_F07,kitchen,both_hands_up,raise_hand,0.942,raise_hand,0.879,unseen
+S24_F07_c013,S24_F07,kitchen,both_hands_up,raise_hand,0.942,raise_hand,0.879,unseen
+S24_F07_c014,S24_F07,kitchen,both_hands_up,raise_hand,0.962,raise_hand,0.684,unseen
+S24_F07_c015,S24_F07,kitchen,both_hands_up,raise_hand,0.985,raise_hand,0.887,unseen
+S24_F07_c016,S24_F07,kitchen,both_hands_up,raise_hand,0.876,raise_hand,0.585,unseen
+S24_F07_c017,S24_F07,kitchen,both_hands_up,raise_hand,0.911,raise_hand,0.649,unseen
+S24_F07_c018,S24_F07,kitchen,both_hands_up,raise_hand,0.656,raise_hand,0.312,unseen
+S24_F07_c019,S24_F07,kitchen,both_hands_up,raise_hand,0.806,raise_hand,0.4,unseen
+S24_F07_c020,S24_F07,kitchen,both_hands_up,raise_hand,0.927,raise_hand,0.688,unseen
+S24_F07_c021,S24_F07,kitchen,both_hands_up,raise_hand,0.927,raise_hand,0.473,unseen
+S24_F07_c022,S24_F07,kitchen,both_hands_up,idle,0.791,idle,1.0,unseen
+S24_F07_c023,S24_F07,kitchen,both_hands_up,idle,0.796,idle,1.0,unseen
+S24_F07_c024,S24_F07,kitchen,both_hands_up,idle,0.798,idle,1.0,unseen
+S24_F07_c025,S24_F07,kitchen,both_hands_up,idle,0.792,idle,1.0,unseen
+S24_F07_c026,S24_F07,kitchen,both_hands_up,idle,0.787,idle,1.0,unseen
+S24_F07_c027,S24_F07,kitchen,both_hands_up,idle,0.804,idle,1.0,unseen
+S24_F07_c028,S24_F07,kitchen,both_hands_up,idle,0.759,idle,1.0,unseen
+S24_F07_c029,S24_F07,kitchen,both_hands_up,idle,0.782,idle,1.0,unseen
+S24_F07_c030,S24_F07,kitchen,both_hands_up,idle,0.747,idle,1.0,unseen
+S24_F07_c031,S24_F07,kitchen,both_hands_up,idle,0.757,idle,1.0,unseen
+S24_F07_c032,S24_F07,kitchen,both_hands_up,idle,0.764,idle,1.0,unseen
+S24_F07_c033,S24_F07,kitchen,both_hands_up,idle,0.744,idle,1.0,unseen
+S24_F07_c034,S24_F07,kitchen,both_hands_up,idle,0.761,idle,1.0,unseen
+S24_F07_c035,S24_F07,kitchen,both_hands_up,idle,0.766,idle,1.0,unseen
+S24_F07_c036,S24_F07,kitchen,both_hands_up,idle,0.732,idle,1.0,unseen
+S24_F07_c037,S24_F07,kitchen,both_hands_up,idle,0.731,idle,1.0,unseen
+S24_F07_c038,S24_F07,kitchen,both_hands_up,idle,0.732,idle,1.0,unseen
+S24_F07_c039,S24_F07,kitchen,both_hands_up,idle,0.728,idle,1.0,unseen
+S24_F07_c040,S24_F07,kitchen,both_hands_up,idle,0.737,idle,1.0,unseen
+S24_F07_c041,S24_F07,kitchen,both_hands_up,idle,0.72,idle,1.0,unseen
+S24_F07_c042,S24_F07,kitchen,both_hands_up,idle,0.733,idle,1.0,unseen
+S24_F07_c043,S24_F07,kitchen,both_hands_up,idle,0.732,idle,1.0,unseen
+S24_F07_c044,S24_F07,kitchen,both_hands_up,idle,0.737,idle,1.0,unseen
+S24_F07_c045,S24_F07,kitchen,both_hands_up,idle,0.726,idle,1.0,unseen
+S24_F07_c046,S24_F07,kitchen,both_hands_up,idle,0.725,idle,1.0,unseen
+S24_F07_c047,S24_F07,kitchen,both_hands_up,idle,0.738,idle,1.0,unseen
+S24_F07_c048,S24_F07,kitchen,both_hands_up,idle,0.532,idle,1.0,unseen
+S24_F07_c049,S24_F07,kitchen,both_hands_up,idle,0.749,idle,1.0,unseen
+S24_F07_c050,S24_F07,kitchen,both_hands_up,raise_hand,0.471,idle,1.0,unseen
+S24_F07_c051,S24_F07,kitchen,both_hands_up,raise_hand,0.67,raise_hand,0.569,unseen
+S24_F07_c052,S24_F07,kitchen,both_hands_up,idle,0.452,idle,1.0,unseen
+S24_F07_c053,S24_F07,kitchen,both_hands_up,idle,0.71,idle,1.0,unseen
+S24_F07_c054,S24_F07,kitchen,both_hands_up,idle,0.571,idle,1.0,unseen
+S24_F07_c055,S24_F07,kitchen,both_hands_up,idle,0.642,idle,1.0,unseen
+S24_F07_c056,S24_F07,kitchen,both_hands_up,idle,0.578,idle,1.0,unseen
+S24_F07_c057,S24_F07,kitchen,both_hands_up,idle,0.612,idle,1.0,unseen
+S24_F07_c058,S24_F07,kitchen,both_hands_up,idle,0.557,idle,1.0,unseen
+S24_F07_c059,S24_F07,kitchen,both_hands_up,idle,0.642,idle,1.0,unseen
+S25_F09_c001,S25_F09,kitchen,wave,raise_hand,0.983,raise_hand,0.907,unseen
+S25_F09_c002,S25_F09,kitchen,wave,idle,0.679,idle,1.0,unseen
+S25_F09_c003,S25_F09,kitchen,wave,idle,0.539,raise_hand,0.21,unseen
+S25_F09_c004,S25_F09,kitchen,wave,raise_hand,0.889,raise_hand,0.542,unseen
+S25_F09_c005,S25_F09,kitchen,wave,raise_hand,0.965,raise_hand,0.772,unseen
+S25_F09_c006,S25_F09,kitchen,wave,raise_hand,0.991,raise_hand,0.932,unseen
+S25_F09_c007,S25_F09,kitchen,wave,raise_hand,0.99,raise_hand,0.926,unseen
+S25_F09_c008,S25_F09,kitchen,wave,raise_hand,0.981,raise_hand,0.921,unseen
+S25_F09_c009,S25_F09,kitchen,wave,raise_hand,0.96,raise_hand,0.928,unseen
+S25_F09_c010,S25_F09,kitchen,wave,raise_hand,0.978,raise_hand,0.927,unseen
+S25_F09_c011,S25_F09,kitchen,wave,raise_hand,0.99,raise_hand,0.929,unseen
+S25_F09_c012,S25_F09,kitchen,wave,raise_hand,0.98,raise_hand,0.919,unseen
+S25_F09_c013,S25_F09,kitchen,wave,raise_hand,0.977,raise_hand,0.933,unseen
+S25_F09_c014,S25_F09,kitchen,wave,raise_hand,0.979,raise_hand,0.926,unseen
+S25_F09_c015,S25_F09,kitchen,wave,raise_hand,0.987,raise_hand,0.925,unseen
+S25_F09_c016,S25_F09,kitchen,wave,raise_hand,0.972,raise_hand,0.93,unseen
+S25_F09_c017,S25_F09,kitchen,wave,raise_hand,0.991,raise_hand,0.92,unseen
+S25_F09_c018,S25_F09,kitchen,wave,wave,0.432,idle,1.0,unseen
+S25_F09_c019,S25_F09,kitchen,wave,wave,0.591,wave,0.375,unseen
+S25_F09_c020,S25_F09,kitchen,wave,idle,0.469,idle,1.0,unseen
+S25_F09_c021,S25_F09,kitchen,wave,wave,0.432,idle,1.0,unseen
+S25_F09_c022,S25_F09,kitchen,wave,idle,0.417,idle,1.0,unseen
+S25_F09_c023,S25_F09,kitchen,wave,wave,0.28,idle,1.0,unseen
+S25_F09_c024,S25_F09,kitchen,wave,wave,0.305,idle,1.0,unseen
+S25_F09_c025,S25_F09,kitchen,wave,wave,0.526,idle,1.0,unseen
+S25_F09_c026,S25_F09,kitchen,wave,wave,0.573,wave,0.552,unseen
+S25_F09_c027,S25_F09,kitchen,wave,wave,0.453,idle,1.0,unseen
+S25_F09_c028,S25_F09,kitchen,wave,wave,0.579,wave,0.101,unseen
+S25_F09_c029,S25_F09,kitchen,wave,idle,0.446,idle,1.0,unseen
+S25_F09_c030,S25_F09,kitchen,wave,thumbs_up,0.287,idle,1.0,unseen
+S25_F09_c031,S25_F09,kitchen,wave,idle,0.52,raise_hand,0.29,unseen
+S25_F09_c032,S25_F09,kitchen,wave,idle,0.713,raise_hand,0.469,unseen
+S25_F09_c033,S25_F09,kitchen,wave,idle,0.738,raise_hand,0.199,unseen
+S25_F09_c034,S25_F09,kitchen,wave,raise_hand,0.693,raise_hand,0.8,unseen
+S25_F09_c035,S25_F09,kitchen,wave,raise_hand,0.944,raise_hand,0.811,unseen
+S25_F09_c036,S25_F09,kitchen,wave,raise_hand,0.427,raise_hand,0.571,unseen
+S25_F09_c037,S25_F09,kitchen,wave,raise_hand,0.901,raise_hand,0.739,unseen
+S25_F09_c038,S25_F09,kitchen,wave,raise_hand,0.909,raise_hand,0.809,unseen
+S25_F09_c039,S25_F09,kitchen,wave,raise_hand,0.589,raise_hand,0.576,unseen
+S25_F09_c040,S25_F09,kitchen,wave,raise_hand,0.833,raise_hand,0.801,unseen
+S25_F09_c041,S25_F09,kitchen,wave,raise_hand,0.863,raise_hand,0.703,unseen
+S25_F09_c042,S25_F09,kitchen,wave,raise_hand,0.635,raise_hand,0.684,unseen
+S25_F09_c043,S25_F09,kitchen,wave,idle,0.721,wave,0.537,unseen
+S25_F09_c044,S25_F09,kitchen,wave,idle,0.764,idle,1.0,unseen
+S25_F09_c045,S25_F09,kitchen,wave,wave,0.652,wave,0.277,unseen
+S25_F09_c046,S25_F09,kitchen,wave,idle,0.276,idle,1.0,unseen
+S25_F09_c047,S25_F09,kitchen,wave,idle,0.764,idle,1.0,unseen
+S25_F09_c048,S25_F09,kitchen,wave,wave,0.621,wave,0.652,unseen
+S25_F09_c049,S25_F09,kitchen,wave,wave,0.532,wave,0.553,unseen
+S25_F09_c050,S25_F09,kitchen,wave,wave,0.795,wave,0.347,unseen
+S25_F09_c051,S25_F09,kitchen,wave,wave,0.464,wave,0.681,unseen
+S25_F09_c052,S25_F09,kitchen,wave,wave,0.464,wave,0.125,unseen
+S25_F09_c053,S25_F09,kitchen,wave,wave,0.724,wave,0.522,unseen
+S25_F09_c054,S25_F09,kitchen,wave,idle,0.654,wave,0.497,unseen
+S25_F09_c055,S25_F09,kitchen,wave,idle,0.756,wave,0.35,unseen
+S25_F09_c056,S25_F09,kitchen,wave,idle,0.404,wave,0.157,unseen
+S26_F02_c001,S26_F02,kitchen,both_hands_up,raise_hand,0.454,raise_hand,0.369,unseen
+S26_F02_c002,S26_F02,kitchen,both_hands_up,idle,0.576,raise_hand,0.654,unseen
+S26_F02_c003,S26_F02,kitchen,both_hands_up,idle,0.647,idle,1.0,unseen
+S26_F02_c004,S26_F02,kitchen,both_hands_up,raise_hand,0.476,raise_hand,0.398,unseen
+S26_F02_c005,S26_F02,kitchen,both_hands_up,raise_hand,0.879,raise_hand,0.633,unseen
+S26_F02_c006,S26_F02,kitchen,both_hands_up,raise_hand,0.909,raise_hand,0.919,unseen
+S26_F02_c007,S26_F02,kitchen,both_hands_up,raise_hand,0.712,raise_hand,0.5,unseen
+S26_F02_c008,S26_F02,kitchen,both_hands_up,raise_hand,0.617,raise_hand,0.765,unseen
+S26_F02_c009,S26_F02,kitchen,both_hands_up,idle,0.755,idle,1.0,unseen
+S26_F02_c010,S26_F02,kitchen,both_hands_up,raise_hand,0.489,raise_hand,0.409,unseen
+S26_F02_c011,S26_F02,kitchen,both_hands_up,raise_hand,0.807,raise_hand,0.877,unseen
+S26_F02_c012,S26_F02,kitchen,both_hands_up,idle,0.713,idle,1.0,unseen
+S26_F02_c013,S26_F02,kitchen,both_hands_up,idle,0.473,raise_hand,0.341,unseen
+S26_F02_c014,S26_F02,kitchen,both_hands_up,raise_hand,0.867,raise_hand,0.925,unseen
+S26_F02_c015,S26_F02,kitchen,both_hands_up,raise_hand,0.941,raise_hand,0.912,unseen
+S26_F02_c016,S26_F02,kitchen,both_hands_up,idle,0.74,idle,1.0,unseen
+S26_F02_c017,S26_F02,kitchen,both_hands_up,thumbs_down,0.304,idle,1.0,unseen
+S26_F02_c018,S26_F02,kitchen,both_hands_up,idle,0.44,idle,1.0,unseen
+S26_F02_c019,S26_F02,kitchen,both_hands_up,idle,0.789,idle,1.0,unseen
+S26_F02_c020,S26_F02,kitchen,both_hands_up,thumbs_down,0.291,idle,1.0,unseen
+S26_F02_c021,S26_F02,kitchen,both_hands_up,thumbs_up,0.348,idle,1.0,unseen
+S26_F02_c022,S26_F02,kitchen,both_hands_up,idle,0.781,idle,1.0,unseen
+S26_F02_c023,S26_F02,kitchen,both_hands_up,idle,0.636,idle,1.0,unseen
+S26_F02_c024,S26_F02,kitchen,both_hands_up,idle,0.7,idle,1.0,unseen
+S26_F02_c025,S26_F02,kitchen,both_hands_up,idle,0.742,idle,1.0,unseen
+S26_F02_c026,S26_F02,kitchen,both_hands_up,idle,0.798,idle,1.0,unseen
+S26_F02_c027,S26_F02,kitchen,both_hands_up,idle,0.739,idle,1.0,unseen
+S26_F02_c028,S26_F02,kitchen,both_hands_up,idle,0.724,wave,0.076,unseen
+S26_F02_c029,S26_F02,kitchen,both_hands_up,idle,0.749,idle,1.0,unseen
+S26_F02_c030,S26_F02,kitchen,both_hands_up,idle,0.74,idle,1.0,unseen
+S26_F02_c031,S26_F02,kitchen,both_hands_up,idle,0.553,wave,0.189,unseen
+S26_F02_c032,S26_F02,kitchen,both_hands_up,idle,0.738,idle,1.0,unseen
+S26_F02_c033,S26_F02,kitchen,both_hands_up,idle,0.732,idle,1.0,unseen
+S26_F02_c034,S26_F02,kitchen,both_hands_up,idle,0.59,raise_hand,0.505,unseen
+S26_F02_c035,S26_F02,kitchen,both_hands_up,raise_hand,0.901,raise_hand,0.727,unseen
+S26_F02_c036,S26_F02,kitchen,both_hands_up,idle,0.672,wave,0.525,unseen
+S26_F02_c037,S26_F02,kitchen,both_hands_up,idle,0.623,wave,0.505,unseen
+S26_F02_c038,S26_F02,kitchen,both_hands_up,idle,0.723,wave,0.075,unseen
+S26_F02_c039,S26_F02,kitchen,both_hands_up,idle,0.541,wave,0.453,unseen
+S26_F02_c040,S26_F02,kitchen,both_hands_up,idle,0.713,thumbs_down,0.158,unseen
+S26_F02_c041,S26_F02,kitchen,both_hands_up,idle,0.755,idle,1.0,unseen
+S26_F02_c042,S26_F02,kitchen,both_hands_up,idle,0.744,idle,1.0,unseen
+S26_F02_c043,S26_F02,kitchen,both_hands_up,idle,0.755,idle,1.0,unseen
+S26_F02_c044,S26_F02,kitchen,both_hands_up,idle,0.758,idle,1.0,unseen
+S26_F02_c045,S26_F02,kitchen,both_hands_up,idle,0.758,idle,1.0,unseen
+S26_F02_c046,S26_F02,kitchen,both_hands_up,idle,0.778,idle,1.0,unseen
+S26_F02_c047,S26_F02,kitchen,both_hands_up,idle,0.755,idle,1.0,unseen
+S26_F02_c048,S26_F02,kitchen,both_hands_up,idle,0.771,idle,1.0,unseen
+S27_F06_c001,S27_F06,kitchen,point,idle,0.724,idle,1.0,unseen
+S27_F06_c002,S27_F06,kitchen,point,idle,0.742,idle,1.0,unseen
+S27_F06_c003,S27_F06,kitchen,point,idle,0.696,idle,1.0,unseen
+S27_F06_c004,S27_F06,kitchen,point,idle,0.763,idle,1.0,unseen
+S27_F06_c005,S27_F06,kitchen,point,idle,0.702,idle,1.0,unseen
+S27_F06_c006,S27_F06,kitchen,point,idle,0.771,idle,1.0,unseen
+S27_F06_c007,S27_F06,kitchen,point,idle,0.747,idle,1.0,unseen
+S27_F06_c008,S27_F06,kitchen,point,idle,0.715,idle,1.0,unseen
+S27_F06_c009,S27_F06,kitchen,point,idle,0.727,idle,1.0,unseen
+S27_F06_c010,S27_F06,kitchen,point,idle,0.744,idle,1.0,unseen
+S27_F06_c011,S27_F06,kitchen,point,idle,0.62,idle,1.0,unseen
+S28_F10_c001,S28_F10,kitchen,thumbs_down,thumbs_down,0.831,thumbs_down,0.839,unseen
+S28_F10_c002,S28_F10,kitchen,thumbs_down,thumbs_down,0.845,thumbs_down,0.864,unseen
+S28_F10_c003,S28_F10,kitchen,thumbs_down,wave,0.578,wave,0.375,unseen
+S28_F10_c004,S28_F10,kitchen,thumbs_down,thumbs_down,0.867,thumbs_down,0.615,unseen
+S28_F10_c005,S28_F10,kitchen,thumbs_down,thumbs_down,0.873,thumbs_down,0.903,unseen
+S28_F10_c006,S28_F10,kitchen,thumbs_down,thumbs_down,0.831,thumbs_down,0.914,unseen
+S28_F10_c007,S28_F10,kitchen,thumbs_down,thumbs_down,0.855,thumbs_down,0.655,unseen
+S28_F10_c008,S28_F10,kitchen,thumbs_down,thumbs_down,0.855,thumbs_down,0.655,unseen
+S28_F10_c009,S28_F10,kitchen,thumbs_down,thumbs_down,0.855,thumbs_down,0.655,unseen
+S28_F10_c010,S28_F10,kitchen,thumbs_down,thumbs_down,0.855,thumbs_down,0.655,unseen
+S28_F10_c011,S28_F10,kitchen,thumbs_down,thumbs_down,0.832,thumbs_down,0.908,unseen
+S28_F10_c012,S28_F10,kitchen,thumbs_down,thumbs_down,0.81,thumbs_down,0.836,unseen
+S28_F10_c013,S28_F10,kitchen,thumbs_down,thumbs_down,0.833,thumbs_down,0.904,unseen
+S28_F10_c014,S28_F10,kitchen,thumbs_down,thumbs_down,0.724,thumbs_down,0.875,unseen
+S28_F10_c015,S28_F10,kitchen,thumbs_down,thumbs_down,0.855,thumbs_down,0.811,unseen
+S28_F10_c016,S28_F10,kitchen,thumbs_down,thumbs_down,0.734,thumbs_down,0.901,unseen
+S28_F10_c017,S28_F10,kitchen,thumbs_down,thumbs_down,0.856,thumbs_down,0.726,unseen
+S28_F10_c018,S28_F10,kitchen,thumbs_down,thumbs_down,0.707,thumbs_down,0.443,unseen
+S28_F10_c019,S28_F10,kitchen,thumbs_down,beckoning,0.439,thumbs_down,0.149,unseen
+S28_F10_c020,S28_F10,kitchen,thumbs_down,beckoning,0.439,thumbs_down,0.149,unseen
+S28_F10_c021,S28_F10,kitchen,thumbs_down,beckoning,0.439,thumbs_down,0.149,unseen
+S28_F10_c022,S28_F10,kitchen,thumbs_down,beckoning,0.439,thumbs_down,0.149,unseen
+S28_F10_c023,S28_F10,kitchen,thumbs_down,idle,0.599,idle,1.0,unseen
+S28_F10_c024,S28_F10,kitchen,thumbs_down,idle,0.604,idle,1.0,unseen
+S28_F10_c025,S28_F10,kitchen,thumbs_down,idle,0.569,idle,1.0,unseen
+S28_F10_c026,S28_F10,kitchen,thumbs_down,idle,0.555,idle,1.0,unseen
+S28_F10_c027,S28_F10,kitchen,thumbs_down,idle,0.422,idle,1.0,unseen
+S28_F10_c028,S28_F10,kitchen,thumbs_down,idle,0.657,idle,1.0,unseen
+S28_F10_c029,S28_F10,kitchen,thumbs_down,idle,0.43,idle,1.0,unseen
+S28_F10_c030,S28_F10,kitchen,thumbs_down,idle,0.537,idle,1.0,unseen
+S28_F10_c031,S28_F10,kitchen,thumbs_down,thumbs_down,0.272,idle,1.0,unseen
+S28_F10_c032,S28_F10,kitchen,thumbs_down,idle,0.683,idle,1.0,unseen
+S28_F10_c033,S28_F10,kitchen,thumbs_down,idle,0.654,idle,1.0,unseen
+S28_F10_c034,S28_F10,kitchen,thumbs_down,idle,0.331,idle,1.0,unseen
+S28_F10_c035,S28_F10,kitchen,thumbs_down,idle,0.46,idle,1.0,unseen
+S28_F10_c036,S28_F10,kitchen,thumbs_down,idle,0.412,idle,1.0,unseen
+S28_F10_c037,S28_F10,kitchen,thumbs_down,idle,0.382,idle,1.0,unseen
+S28_F10_c038,S28_F10,kitchen,thumbs_down,thumbs_down,0.869,thumbs_down,0.723,unseen
+S28_F10_c039,S28_F10,kitchen,thumbs_down,thumbs_down,0.85,thumbs_down,0.891,unseen
+S28_F10_c040,S28_F10,kitchen,thumbs_down,thumbs_down,0.551,thumbs_down,0.521,unseen
+S28_F10_c041,S28_F10,kitchen,thumbs_down,thumbs_down,0.857,thumbs_down,0.806,unseen
+S28_F10_c042,S28_F10,kitchen,thumbs_down,thumbs_down,0.856,thumbs_down,0.921,unseen
+S28_F10_c043,S28_F10,kitchen,thumbs_down,thumbs_down,0.865,thumbs_down,0.913,unseen
+S28_F10_c044,S28_F10,kitchen,thumbs_down,thumbs_down,0.8,thumbs_down,0.806,unseen
+S28_F10_c045,S28_F10,kitchen,thumbs_down,thumbs_down,0.859,thumbs_down,0.912,unseen
+S28_F10_c046,S28_F10,kitchen,thumbs_down,thumbs_down,0.862,thumbs_down,0.862,unseen
+S28_F10_c047,S28_F10,kitchen,thumbs_down,thumbs_down,0.842,thumbs_down,0.91,unseen
+S28_F10_c048,S28_F10,kitchen,thumbs_down,thumbs_down,0.864,thumbs_down,0.877,unseen
+S28_F10_c049,S28_F10,kitchen,thumbs_down,thumbs_down,0.859,thumbs_down,0.914,unseen
+S28_F10_c050,S28_F10,kitchen,thumbs_down,thumbs_down,0.829,thumbs_down,0.9,unseen
+S28_F10_c051,S28_F10,kitchen,thumbs_down,idle,0.747,idle,1.0,unseen
+S28_F10_c052,S28_F10,kitchen,thumbs_down,idle,0.736,idle,1.0,unseen
+S28_F10_c053,S28_F10,kitchen,thumbs_down,idle,0.691,idle,1.0,unseen
+S28_F10_c054,S28_F10,kitchen,thumbs_down,raise_hand,0.906,raise_hand,0.929,unseen
+S28_F10_c055,S28_F10,kitchen,thumbs_down,idle,0.478,raise_hand,0.571,unseen
+S28_F10_c056,S28_F10,kitchen,thumbs_down,idle,0.69,idle,1.0,unseen
+S28_F10_c057,S28_F10,kitchen,thumbs_down,raise_hand,0.922,raise_hand,0.923,unseen
+S28_F10_c058,S28_F10,kitchen,thumbs_down,raise_hand,0.931,raise_hand,0.929,unseen
+S28_F10_c059,S28_F10,kitchen,thumbs_down,idle,0.654,idle,1.0,unseen
+S28_F10_c060,S28_F10,kitchen,thumbs_down,idle,0.686,idle,1.0,unseen
+S28_F10_c061,S28_F10,kitchen,thumbs_down,idle,0.471,idle,1.0,unseen
+S28_F10_c062,S28_F10,kitchen,thumbs_down,raise_hand,0.55,raise_hand,0.179,unseen
+S28_F10_c063,S28_F10,kitchen,thumbs_down,wave,0.48,raise_hand,0.871,unseen
+S28_F10_c064,S28_F10,kitchen,thumbs_down,idle,0.621,idle,1.0,unseen
+S28_F10_c065,S28_F10,kitchen,thumbs_down,idle,0.782,idle,1.0,unseen
+S28_F10_c066,S28_F10,kitchen,thumbs_down,idle,0.798,idle,1.0,unseen
+S28_F10_c067,S28_F10,kitchen,thumbs_down,raise_hand,0.908,raise_hand,0.917,unseen
+S29_F03_c001,S29_F03,kitchen,point,idle,0.793,idle,1.0,unseen
+S29_F03_c002,S29_F03,kitchen,point,idle,0.801,idle,1.0,unseen
+S29_F03_c003,S29_F03,kitchen,point,idle,0.777,idle,1.0,unseen
+S29_F03_c004,S29_F03,kitchen,point,idle,0.795,idle,1.0,unseen
+S29_F03_c005,S29_F03,kitchen,point,idle,0.701,idle,1.0,unseen
+S29_F03_c006,S29_F03,kitchen,point,idle,0.83,idle,1.0,unseen
+S29_F03_c007,S29_F03,kitchen,point,idle,0.786,idle,1.0,unseen
+S29_F03_c008,S29_F03,kitchen,point,idle,0.826,idle,1.0,unseen
+S29_F03_c009,S29_F03,kitchen,point,idle,0.777,idle,1.0,unseen
+S29_F03_c010,S29_F03,kitchen,point,idle,0.744,idle,1.0,unseen
+S29_F03_c011,S29_F03,kitchen,point,idle,0.797,idle,1.0,unseen
+S29_F03_c012,S29_F03,kitchen,point,idle,0.814,idle,1.0,unseen
+S29_F03_c013,S29_F03,kitchen,point,idle,0.803,idle,1.0,unseen
+S29_F03_c014,S29_F03,kitchen,point,idle,0.799,idle,1.0,unseen
+S29_F03_c015,S29_F03,kitchen,point,idle,0.781,idle,1.0,unseen
+S29_F03_c016,S29_F03,kitchen,point,idle,0.787,idle,1.0,unseen
+S29_F03_c017,S29_F03,kitchen,point,idle,0.697,idle,1.0,unseen
+S29_F03_c018,S29_F03,kitchen,point,idle,0.722,idle,1.0,unseen
+S29_F03_c019,S29_F03,kitchen,point,idle,0.688,idle,1.0,unseen
+S29_F03_c020,S29_F03,kitchen,point,idle,0.758,idle,1.0,unseen
+S29_F03_c021,S29_F03,kitchen,point,idle,0.683,idle,1.0,unseen
+S29_F03_c022,S29_F03,kitchen,point,idle,0.742,idle,1.0,unseen
+S29_F03_c023,S29_F03,kitchen,point,idle,0.561,idle,1.0,unseen
+S29_F03_c024,S29_F03,kitchen,point,idle,0.709,idle,1.0,unseen
+S29_F03_c025,S29_F03,kitchen,point,idle,0.674,idle,1.0,unseen
+S29_F03_c026,S29_F03,kitchen,point,idle,0.707,idle,1.0,unseen
+S29_F03_c027,S29_F03,kitchen,point,idle,0.738,idle,1.0,unseen
+S29_F03_c028,S29_F03,kitchen,point,idle,0.738,idle,1.0,unseen
+S29_F03_c029,S29_F03,kitchen,point,idle,0.663,idle,1.0,unseen
+S29_F03_c030,S29_F03,kitchen,point,idle,0.782,idle,1.0,unseen
+S29_F03_c031,S29_F03,kitchen,point,idle,0.664,idle,1.0,unseen
+S29_F03_c032,S29_F03,kitchen,point,idle,0.736,idle,1.0,unseen
+S29_F03_c033,S29_F03,kitchen,point,idle,0.851,idle,1.0,unseen
+S29_F03_c034,S29_F03,kitchen,point,idle,0.745,idle,1.0,unseen
+S29_F03_c035,S29_F03,kitchen,point,idle,0.844,idle,1.0,unseen
+S29_F03_c036,S29_F03,kitchen,point,idle,0.749,idle,1.0,unseen
+S29_F03_c037,S29_F03,kitchen,point,idle,0.767,idle,1.0,unseen
+S29_F03_c038,S29_F03,kitchen,point,idle,0.758,idle,1.0,unseen
+S29_F03_c039,S29_F03,kitchen,point,idle,0.757,idle,1.0,unseen
+S29_F03_c040,S29_F03,kitchen,point,idle,0.725,idle,1.0,unseen
+S29_F03_c041,S29_F03,kitchen,point,idle,0.705,idle,1.0,unseen
+S29_F03_c042,S29_F03,kitchen,point,thumbs_down,0.346,thumbs_down,0.185,unseen
+S29_F03_c043,S29_F03,kitchen,point,idle,0.745,idle,1.0,unseen
+S29_F03_c044,S29_F03,kitchen,point,idle,0.665,thumbs_down,0.193,unseen
+S29_F03_c045,S29_F03,kitchen,point,idle,0.688,idle,1.0,unseen
+S29_F03_c046,S29_F03,kitchen,point,idle,0.707,idle,1.0,unseen
+S29_F03_c047,S29_F03,kitchen,point,idle,0.547,idle,1.0,unseen
+S29_F03_c048,S29_F03,kitchen,point,idle,0.743,thumbs_down,0.226,unseen
+S29_F03_c049,S29_F03,kitchen,point,idle,0.721,idle,1.0,unseen
+S29_F03_c050,S29_F03,kitchen,point,idle,0.657,idle,1.0,unseen
+S29_F03_c051,S29_F03,kitchen,point,idle,0.717,idle,1.0,unseen
+S29_F03_c052,S29_F03,kitchen,point,idle,0.61,thumbs_down,0.185,unseen
+S29_F03_c053,S29_F03,kitchen,point,thumbs_down,0.539,thumbs_down,0.441,unseen
+S29_F03_c054,S29_F03,kitchen,point,idle,0.381,thumbs_down,0.151,unseen
+S29_F03_c055,S29_F03,kitchen,point,idle,0.63,idle,1.0,unseen
+S29_F03_c056,S29_F03,kitchen,point,thumbs_down,0.581,thumbs_down,0.552,unseen
+S29_F03_c057,S29_F03,kitchen,point,thumbs_down,0.692,thumbs_down,0.198,unseen
+S29_F03_c058,S29_F03,kitchen,point,thumbs_down,0.592,idle,1.0,unseen

@@ -1,0 +1,3 @@
+model,classroom_acc,kitchen_acc,overall_acc,video_majority_acc,abstain_rate,acc_after_abstain,latency_ms
+EfficientNet-B0 (trained),97.1,63.1,82.2,81.5,0.0,82.2,25.3
+CLIP ViT-B/32 (zero-shot),100.0,98.8,99.5,99.5,0.2,99.5,23.7

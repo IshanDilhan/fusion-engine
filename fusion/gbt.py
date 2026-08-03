@@ -5,18 +5,22 @@ accuracy number are a moving baseline, not the locked deliverable yet).
 
 LightGBM multiclass classifier over the Phase-2 feature vector
 (pipeline/aggregate.py's 33 cue-derived columns), trained/evaluated on
-splits.csv's split_scenario partition (grouped by scenario, so variations of
-one scenario never straddle train/test).
+pipeline/build_features.py's split_design_v2 partition (train/dev/test,
+grouped by scenario and by video-take so no clip-level near-duplicate
+straddles a split boundary -- see build_features.py's assign_dev_split()).
 
-Implements, per the handover doc's Phase 4 spec:
+Implements, per the dataset's own design doc (v2.0.0's shipped
+final_dataset_merged.docx):
   - Class weighting (`class_weight="balanced"`) -- F02 is never down-weighted
     by construction (balanced weighting up-weights rarer classes, and F02 is
     one of the more common ones here, so this does not suppress it either).
   - Modality-dropout augmentation during training: for each training row,
-    with probability DROPOUT_P, zero one cue's block and set its missing bit
+    with probability DROPOUT_P per cue (capped at MAX_DROPPED_CUES), zero
+    that cue's block and set its missing bit, relabeling to RELABEL_INTENT
+    when 2+ cues drop and the survivors no longer identify the true intent
     -- teaches the model to redistribute weight onto the remaining cues
-    instead of only ever seeing this dataset's near-total absence of real
-    missingness.
+    instead of only ever seeing this dataset's real (but per-clip, not
+    per-row) missingness (see build_features.py's apply_cue_mask()).
   - Safety override: if the model's predicted F02 probability exceeds
     F02_SAFETY_THRESHOLD, classify as F02 regardless of argmax.
 
@@ -38,7 +42,7 @@ sys.path.insert(0, REPO_ROOT)
 sys.path.insert(0, os.path.join(REPO_ROOT, "pipeline"))
 from aggregate import FEATURE_NAMES  # noqa: E402
 sys.path.insert(0, os.path.join(REPO_ROOT, "fusion"))
-from rule_based import predict_all, fit_fallback  # noqa: E402
+from rule_based import predict_all, fit_fallback, predict_intent  # noqa: E402
 
 FEATURES_PATH = os.path.join(REPO_ROOT, "data", "features", "clip_features.parquet")
 
@@ -49,22 +53,51 @@ CUE_BLOCKS = {
     "context": [c for c in FEATURE_NAMES if c.startswith("context_")],
 }
 DROPOUT_P = 0.15  # per-cue, per-row probability of simulated dropout during training
+MAX_DROPPED_CUES = 2  # dataset docx spec: "randomly mask each cue with p~0.15, max 1-2 cues per sample"
+RELABEL_INTENT = "F05"  # safe default when a heavily-degraded row no longer identifies its true intent
 F02_SAFETY_THRESHOLD = 0.15
 RANDOM_SEED = 42
 
 
-def apply_modality_dropout(X: pd.DataFrame, rng: np.random.Generator) -> pd.DataFrame:
+def apply_modality_dropout(X: pd.DataFrame, y: pd.Series, rng: np.random.Generator):
+    """Per training row, independently rolls DROPOUT_P per cue block, capped
+    at MAX_DROPPED_CUES per row. When 2+ cues get dropped and the surviving
+    cues no longer identify the row's true intent (checked via rule_based's
+    own predict_intent on the post-dropout row, with a sentinel fallback so
+    "no rule matched" can't spuriously look like a match), the row's label
+    is relabeled to RELABEL_INTENT -- teaches the model to fall back safely
+    on heavily-degraded input rather than confidently guess wrong.
+
+    NOT applied: the dataset docx's "unless direction still identifies
+    F02/F06" carve-out -- gesture direction/point_target were dropped from
+    FEATURE_NAMES entirely (pipeline/aggregate.py's own docstring: they are
+    hardcoded constants upstream, carrying no real signal), so there is no
+    operable "direction" cue here to check against. Known simplification,
+    not a silent omission.
+    """
     X = X.copy()
-    for cue, cols in CUE_BLOCKS.items():
-        drop_mask = rng.random(len(X)) < DROPOUT_P
-        if not drop_mask.any():
+    y = y.copy()
+    cue_names = list(CUE_BLOCKS.keys())
+    n_relabeled = 0
+
+    for idx in X.index:
+        drawn = [cue for cue in cue_names if rng.random() < DROPOUT_P]
+        if len(drawn) > MAX_DROPPED_CUES:
+            drawn = list(rng.choice(drawn, size=MAX_DROPPED_CUES, replace=False))
+        if not drawn:
             continue
-        value_cols = [c for c in cols if not c.startswith(f"{cue}_valid_fraction")]
-        X.loc[drop_mask, value_cols] = 0.0
-        if f"{cue}_valid_fraction" in cols:
-            X.loc[drop_mask, f"{cue}_valid_fraction"] = 0.0
-        X.loc[drop_mask, f"missing_{cue}"] = 1.0
-    return X
+
+        for cue in drawn:
+            X.loc[idx, CUE_BLOCKS[cue]] = 0.0
+            X.loc[idx, f"missing_{cue}"] = 1.0
+
+        if len(drawn) >= 2 and predict_intent(X.loc[idx], fallback_intent="__NO_RULE_MATCH__") != y.loc[idx]:
+            y.loc[idx] = RELABEL_INTENT
+            n_relabeled += 1
+
+    print(f"[gbt] modality dropout: {n_relabeled} rows relabeled to {RELABEL_INTENT} "
+          f"(>=2 cues dropped, remaining cues no longer identify true intent)")
+    return X, y
 
 
 def predict_with_safety_override(model, X, f02_idx):
@@ -103,6 +136,7 @@ def main():
 
     from tracking.dataset_logging import log_dataset
     from tracking.hashing import sha256_file
+    from tracking.metrics import log_overall_metrics
     from tracking.mlflow_setup import init_tracking
 
     init_tracking()
@@ -111,24 +145,35 @@ def main():
         mlflow.set_tag("code_file", os.path.relpath(__file__, REPO_ROOT))
         mlflow.set_tag("code_version_sha256", sha256_file(__file__))
 
-        df = log_dataset(context="training")
-        train_df = df[df["split_scenario"] == "train"].reset_index(drop=True)
-        val_df = df[df["split_scenario"] == "val"].reset_index(drop=True)
-        test_df = df[df["split_scenario"] == "test"].reset_index(drop=True)
+        df = log_dataset(context="training", allow_stale_override=True)
+        all_classes = sorted(df["intent"].unique())
+        train_df = df[df["split_design_v2"] == "train"].reset_index(drop=True)
+        dev_df = df[df["split_design_v2"] == "dev"].reset_index(drop=True)
+        test_df = df[df["split_design_v2"] == "test"].reset_index(drop=True)
         mlflow.log_param("n_train", len(train_df))
-        mlflow.log_param("n_val", len(val_df))
+        mlflow.log_param("n_dev", len(dev_df))
         mlflow.log_param("n_test", len(test_df))
 
         rng = np.random.default_rng(RANDOM_SEED)
-        X_train = apply_modality_dropout(train_df[FEATURE_NAMES], rng)
-        y_train = train_df["intent"]
+        X_train, y_train = apply_modality_dropout(train_df[FEATURE_NAMES], train_df["intent"], rng)
 
+        # Selected via fusion/tune_gbt.py's scenario-grouped (StratifiedGroupKFold
+        # by scenario_dir) 5-fold CV sweep over the train+dev pool -- the shipped
+        # dev split isn't scenario-disjoint, so tuning against it (previously
+        # 88.1% dev vs 48.1% test) optimized for the wrong kind of generalization.
+        # Under CV, this config scores marginally better than the old 300/depth-5
+        # default (macro F1 0.273 vs 0.264, within noise) -- capacity reduction
+        # alone is not a full fix (see tune_gbt.py's logistic-regression sanity
+        # check, which beats both), but it's a strict improvement with no
+        # downside, so it replaces the old default.
         model_params = dict(
             objective="multiclass",
             class_weight="balanced",
-            n_estimators=300,
-            max_depth=5,
+            n_estimators=50,
+            max_depth=3,
             learning_rate=0.05,
+            subsample=0.9,
+            colsample_bytree=0.7,
             random_state=RANDOM_SEED,
             verbosity=-1,
         )
@@ -149,7 +194,7 @@ def main():
         df["rule_pred"] = rule_preds_all
 
         recall_rows = []
-        for split_name, split_df in [("train", train_df), ("val", val_df), ("test", test_df)]:
+        for split_name, split_df in [("train", train_df), ("dev", dev_df), ("test", test_df)]:
             if len(split_df) == 0:
                 continue
             X = split_df[FEATURE_NAMES]
@@ -161,9 +206,20 @@ def main():
             rule_acc = (rule_sub["rule_pred"] == rule_sub["intent"]).mean()
             mlflow.log_metric(f"rule_comparison_{split_name}_accuracy", rule_acc)
 
-            print(f"\n[gbt] split_scenario={split_name}: n={len(split_df)}")
+            print(f"\n[gbt] split_design_v2={split_name}: n={len(split_df)}")
             print(f"  GBT accuracy:  {acc:.3f}")
             print(f"  rule accuracy: {rule_acc:.3f}  (same clips, for direct comparison)")
+            log_overall_metrics(mlflow, split_df["intent"].values, preds, all_classes,
+                                 split_name, print_prefix=f"[gbt]   {split_name}")
+
+            scoreable_mask = split_df["scoreable"].values == "TRUE"
+            if scoreable_mask.any():
+                acc_scoreable = (preds[scoreable_mask] == split_df["intent"].values[scoreable_mask]).mean()
+                mlflow.log_metric(f"{split_name}_accuracy_scoreable_only", acc_scoreable)
+                print(f"  GBT accuracy (scoreable-only, n={scoreable_mask.sum()}): {acc_scoreable:.3f}")
+                log_overall_metrics(mlflow, split_df["intent"].values[scoreable_mask], preds[scoreable_mask],
+                                     all_classes, f"{split_name}_scoreable_only",
+                                     print_prefix=f"[gbt]   {split_name} scoreable-only")
 
             if split_name == "test":
                 print("\n[gbt] per-class recall (test):")

@@ -19,8 +19,8 @@ Usage:
     # batch mode: loads the model ONCE, loops every clip in clips.csv
     # (subprocess-per-clip is impractical at 1200+ clips -- see run_cue_models.py)
     .venvs/emotion/Scripts/python.exe runners/emotion_runner.py \
-        --manifest Data/Dataset/hri-multimodal-intent-v1.0.0/annotations/clips.csv \
-        --clips-root Data/Dataset/hri-multimodal-intent-v1.0.0 \
+        --manifest Data/Dataset/hri-multimodal-intent-v2.0.0/annotations/clips.csv \
+        --clips-root Data/Dataset/hri-multimodal-intent-v2.0.0/raw/clips \
         --out data/measured/emotion_frame_cues.jsonl
 """
 import argparse
@@ -30,7 +30,7 @@ import time
 
 RUNNERS_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, RUNNERS_DIR)
-sys.path.insert(0, os.path.join(os.path.dirname(RUNNERS_DIR), "Emotion Repo"))
+sys.path.insert(0, os.path.join(os.path.dirname(RUNNERS_DIR), "Emotion Repo", "inference"))
 
 from common.schema import NormalisedFrameCue, write_jsonl, append_batch, read_manifest  # noqa: E402
 from common.constants import CONFIDENCE_FLOOR  # noqa: E402

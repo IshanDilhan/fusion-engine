@@ -1,7 +1,17 @@
 """
-Standalone Context runner. Imports the Context Repo's own (rewritten,
-self-contained) video.py for model construction/loading/preprocessing, then
-runs its own headless per-frame loop and emits NormalisedFrameCue records.
+Standalone Context runner. Uses the context modality's own scene-classification
+sub-model (zero-shot CLIP image-text matching, replacing the earlier trained
+CNN -- see modalities/context/scene_classification/src/zero_shot.py's own
+docstring: 99.5% vs 82.2% on the captured clips) for model construction and
+per-frame inference, then emits NormalisedFrameCue records.
+
+The scene modality now ships a 5-class deployed vocabulary (classroom/
+kitchen/hospital/cloth_store/museum, for the broader jetson deployment
+project) -- restricted here to just classroom/kitchen via create_scene_
+classifier(classes=...), matching this dataset's actual 2 environments and
+pipeline/aggregate.py's CONTEXT_CLASSES. The classifier does its own internal
+temporal smoothing (a probability-history deque) -- reset() per clip so it
+never leaks state across videos, same as the other runners' stateful trackers.
 
 Correctness fixes applied here (see Integration_API.md #2.4):
   - native "uncertain" label -> canonical "Unknown"
@@ -10,8 +20,11 @@ Correctness fixes applied here (see Integration_API.md #2.4):
     anywhere in the repo) -> hardcoded documented placeholders, not fabricated
     values.
 
-Run inside .venvs/context (torch, torchvision, opencv-python, pillow, numpy
--- see Integration_API.md #4).
+Run inside .venvs/context (torch, torchvision, opencv-python, pillow, numpy,
+open_clip_torch -- see Integration_API.md #4). Needs HF_HOME pointed at the
+modality's pre-downloaded CLIP weights (see JETSON_SETUP_GUIDE.md on the
+external drive) -- set below, before importing open_clip, so this script
+works without the caller remembering to export it.
 
 Usage:
     # single clip
@@ -19,51 +32,55 @@ Usage:
 
     # batch mode: loads the model ONCE, loops every clip in clips.csv
     .venvs/context/Scripts/python.exe runners/context_runner.py \
-        --manifest Data/Dataset/hri-multimodal-intent-v1.0.0/annotations/clips.csv \
-        --clips-root Data/Dataset/hri-multimodal-intent-v1.0.0 \
+        --manifest Data/Dataset/hri-multimodal-intent-v2.0.0/annotations/clips.csv \
+        --clips-root Data/Dataset/hri-multimodal-intent-v2.0.0/raw/clips \
         --out data/measured/context_frame_cues.jsonl
 """
 import argparse
 import os
 import sys
 import time
-from collections import deque
+
+# Pre-downloaded CLIP/SmolVLM2 weights live here (external drive) -- must be
+# set before open_clip is imported (by scene_classification/src/zero_shot.py)
+# so it never tries to hit the network. See JETSON_SETUP_GUIDE.md.
+MODALITIES_ROOT = "/media/hri_multimodal/KINGSTON_KG/hri-jetson"
+os.environ.setdefault("HF_HOME", os.path.join(MODALITIES_ROOT, "hf_cache"))
+os.environ.setdefault("HF_HUB_OFFLINE", "1")
+os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 
 RUNNERS_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, RUNNERS_DIR)
-sys.path.insert(0, os.path.join(os.path.dirname(RUNNERS_DIR), "Context Repo", "scene classification"))
+# scene_classification/ has no __init__.py (a sys.path root, not a proper
+# subpackage) -- classifier.py bootstraps its own local `config`/`src`
+# imports once this directory is on sys.path, same shape as the old
+# "Context Repo/scene classification" + `import video` pattern this replaces.
+sys.path.insert(0, os.path.join(MODALITIES_ROOT, "modalities", "context", "scene_classification"))
 
 from common.schema import NormalisedFrameCue, write_jsonl, append_batch, read_manifest  # noqa: E402
 from common.constants import CONFIDENCE_FLOOR  # noqa: E402
 
 import cv2  # noqa: E402
-import numpy as np  # noqa: E402
-import torch  # noqa: E402
-import video as ctx_video  # noqa: E402  (Context Repo's own module, unmodified)
+from src.classifier import create_scene_classifier  # noqa: E402
 
 CUE = "context"
 FLOOR = CONFIDENCE_FLOOR[CUE]
+SCENE_CLASSES = ["classroom", "kitchen"]  # this dataset's only 2 environments
 
 # Structurally absent from this model -- see Integration_API.md #2.4.
 NOT_MEASURED_EXTRA = {"activity": None, "engaged": None, "n_objects": 0}
 
 
-def load_model(device=None):
-    device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    ckpt = ctx_video.resolve_weights(ctx_video.DEFAULT_WEIGHTS)
-    model = ctx_video.build_model()
-    model.load_state_dict(torch.load(ckpt, map_location=device, weights_only=True))
-    model.to(device).eval()
-    transform = ctx_video.get_transform()
-    return model, transform, device
+def load_model():
+    return create_scene_classifier(backend="clip", classes=SCENE_CLASSES)
 
 
-def process_clip(clip_path: str, model, transform, device):
+def process_clip(clip_path: str, classifier):
     cap = cv2.VideoCapture(clip_path)
     if not cap.isOpened():
         raise RuntimeError(f"Cannot open clip: {clip_path}")
 
-    prob_history = deque(maxlen=ctx_video.SMOOTH_WINDOW)
+    classifier.reset()
     records = []
     frame_idx = -1
     while True:
@@ -71,22 +88,15 @@ def process_clip(clip_path: str, model, transform, device):
         if not ret:
             break
         frame_idx += 1
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        tensor = transform(rgb).unsqueeze(0).to(device)
-        with torch.no_grad():
-            probs_vec = torch.softmax(model(tensor), dim=1)[0].cpu().numpy()
-        prob_history.append(probs_vec)
-        avg = np.mean(prob_history, axis=0)
-        idx = int(avg.argmax())
-        conf = float(avg[idx])
+        result = classifier.predict(frame)
 
-        native_label = ctx_video.SCENE_LABELS[idx] if conf >= ctx_video.CONF_THRESHOLD else "uncertain"
+        native_label = result["label"]
         label = "Unknown" if native_label == "uncertain" else native_label
-        probs = {lbl: float(p) for lbl, p in zip(ctx_video.SCENE_LABELS, avg)}
+        conf = result["confidence"]
 
         records.append(NormalisedFrameCue(
             cue=CUE, frame_idx=frame_idx, label=label, confidence=conf,
-            probs=probs, valid=(conf >= FLOOR and label != "Unknown"),
+            probs=result["probs"], valid=(conf >= FLOOR and label != "Unknown"),
             extra=dict(NOT_MEASURED_EXTRA)))
 
     cap.release()
@@ -94,8 +104,8 @@ def process_clip(clip_path: str, model, transform, device):
 
 
 def run_single(clip_path: str, out_path: str):
-    model, transform, device = load_model()
-    records = process_clip(clip_path, model, transform, device)
+    classifier = load_model()
+    records = process_clip(clip_path, classifier)
     write_jsonl(records, out_path)
     print(f"[context_runner] {len(records)} frames -> {out_path}")
 
@@ -118,7 +128,7 @@ def run_batch(manifest_csv: str, clips_root: str, out_path: str, limit=None, res
     else:
         mode = "w"
 
-    model, transform, device = load_model()
+    classifier = load_model()
 
     t0 = time.time()
     n_done = 0
@@ -129,7 +139,7 @@ def run_batch(manifest_csv: str, clips_root: str, out_path: str, limit=None, res
                 continue
             clip_path = os.path.join(clips_root, row["filepath"])
             try:
-                records = process_clip(clip_path, model, transform, device)
+                records = process_clip(clip_path, classifier)
             except Exception as e:
                 print(f"[context_runner] ERROR on {clip_id} ({clip_path}): {e}")
                 continue
