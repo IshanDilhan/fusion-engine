@@ -1,6 +1,7 @@
 # Isolated per-model venvs -- 7.5GB+, platform-specific, recreate on target
 # machine from the pip install commands in Integration_API.md #4.
 .venvs/
+.venv/
 
 # Dataset video clips -- 2.5GB, brought over manually per-machine.
 # Only raw/ (the actual mp4s) is excluded; annotations/ (scenarios.csv,
