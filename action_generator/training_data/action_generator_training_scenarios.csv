@@ -1,0 +1,63 @@
+scenario_id,split,context,emotion,gesture,motion,direction,missing_cues,intent,intent_name,action,action_description,target_v,target_omega,target_d
+1,train,classroom,happy,wave,walk,toward_robot,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
+2,train,classroom,happy,thumbs_up,sit,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
+3,train,classroom,surprise,both_hands_up,stand,stationary,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
+4,train,classroom,fear,both_hands_up,step_back,away_from_robot,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
+5,train,classroom,neutral,beckoning,sit,stationary,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
+6,train,classroom,neutral,beckoning,sit,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
+7,train,classroom,neutral,raise_hand,sit,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
+8,train,classroom,sad,thumbs_down,sit,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
+9,train,classroom,sad,MISSING,sit,stationary,gesture,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
+10,train,classroom,neutral,point,sit,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
+11,train,classroom,happy,raise_hand,sit,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
+12,train,classroom,neutral,MISSING,walk,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
+13,train,classroom,angry,wave,stand,stationary,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
+14,train,classroom,angry,both_hands_up,stand,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
+15,train,classroom,angry,thumbs_down,sit,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
+16,train,classroom,disgust,thumbs_down,step_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
+17,train,classroom,disgust,thumbs_down,sit,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
+18,train,classroom,happy,wave,walk,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
+19,train,classroom,neutral,wave,walk,toward_exit,,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
+20,train,classroom,sad,none,sit,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
+21,train,classroom,sad,none,stand,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
+22,test,classroom,MISSING,wave,walk,toward_robot,emotion,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
+23,test,classroom,fear,MISSING,run,toward_exit,gesture,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
+24,test,classroom,neutral,beckoning,walk,toward_object,context,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
+25,test,classroom,MISSING,raise_hand,lean_forward,stationary,emotion,F04,Help request,A15,Ask clarifying question,0.0,0.0,1.0
+26,test,classroom,neutral,both_hands_up,sit,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
+27,test,classroom,angry,point,walk,toward_robot,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
+28,test,classroom,angry,thumbs_up,sit,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
+29,test,classroom,disgust,thumbs_up,sit,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
+30,test,classroom,MISSING,wave,walk,toward_exit,emotion,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
+31,test,classroom,sad,none,stand,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
+32,train,kitchen,happy,thumbs_up,stand,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
+33,train,kitchen,happy,thumbs_down,stand,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
+34,train,kitchen,fear,both_hands_up,run,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
+35,train,kitchen,surprise,both_hands_up,step_back,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
+36,train,kitchen,neutral,beckoning,walk,toward_object,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
+37,train,kitchen,neutral,point,walk,toward_object,,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
+38,train,kitchen,sad,thumbs_down,sit,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
+39,train,kitchen,sad,beckoning,stand,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
+40,train,kitchen,neutral,none,stand,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
+41,train,kitchen,neutral,none,stand,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
+42,train,kitchen,disgust,point,step_back,away_from_robot,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
+43,train,kitchen,neutral,MISSING,walk,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
+44,train,kitchen,angry,both_hands_up,stand,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
+45,train,kitchen,angry,point,stand,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
+46,train,kitchen,disgust,thumbs_down,step_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
+47,train,kitchen,disgust,thumbs_down,stand,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
+48,train,kitchen,happy,wave,walk,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
+49,train,kitchen,MISSING,wave,walk,toward_exit,emotion,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
+50,train,kitchen,sad,none,sit,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
+51,train,kitchen,sad,none,stand,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
+52,test,kitchen,happy,raise_hand,sit,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
+53,test,kitchen,fear,MISSING,run,toward_exit,gesture,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
+54,test,kitchen,fear,none,stand,stationary,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
+55,test,kitchen,happy,point,walk,toward_object,,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
+56,test,kitchen,sad,beckoning,stand,stationary,context,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
+57,test,kitchen,MISSING,MISSING,stand,stationary,"emotion,gesture",F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
+58,test,kitchen,MISSING,MISSING,walk,toward_robot,"emotion,gesture",F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
+59,test,kitchen,angry,thumbs_up,stand,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
+60,test,kitchen,disgust,thumbs_down,sit,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
+61,test,kitchen,sad,wave,walk,toward_exit,,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
+62,test,kitchen,sad,none,lean_forward,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
