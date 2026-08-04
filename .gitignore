@@ -3,6 +3,9 @@
 .venvs/
 .venv/
 
+# Ignore PDF reference documents
+*.pdf
+
 # Dataset video clips -- 2.5GB, brought over manually per-machine.
 # Only raw/ (the actual mp4s) is excluded; annotations/ (scenarios.csv,
 # clips.csv, splits.csv -- ~450KB total) is a sibling folder, not matched by
