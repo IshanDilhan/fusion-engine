@@ -41,13 +41,28 @@
                         ▼  Bottleneck Features h₂ ∈ ℝ⁶⁴
              ┌──────────┴──────────┐
              ▼                     ▼
- ┌──────────────────────┐  ┌──────────────────────┐
- │ Head 1: Action Class │  │ Head 2: Motion Ctrl  │
- │ Linear(64 ──▶ 15)    │  │ Linear(64 ──▶ 3)     │
- │                      │  │                      │
- │ Output: Logits       │  │ Output: Continuous   │
- │   Softmax ──▶ P(Aᵢ)  │  │   [v, ω, d]          │
- └──────────────────────┘  └──────────────────────┘
+  ┌──────────────────────┐  ┌──────────────────────┐
+  │ Head 1: Action Class │  │ Head 2: Motion Ctrl  │
+  │ Linear(64 ──▶ 15)    │  │ Linear(64 ──▶ 3)     │
+  │                      │  │                      │
+  │ Output: Logits       │  │ Output: Continuous   │
+  │   Softmax ──▶ P(Aᵢ)  │  │   [v, ω, d]          │
+  └──────────┬───────────┘  └──────────┬───────────┘
+             │                         │
+             └────────────┬────────────┘
+                          │
+                          ▼
+        ┌───────────────────────────────────┐
+        │   INTERNAL PHYSICAL SAFETY GATE   │
+        │ 1. Emergency Bypass (A02/A14)     │
+        │ 2. Proximity Yield (v = -0.2 m/s) │
+        └─────────────────┬─────────────────┘
+                          │
+                          ▼
+             Final ActionResult Output
+               Action : "A05" (Preserved!)
+               Speed  : -0.2 m/s (Yield Step)
+               Dist   : 1.5 m
 ```
 
 ---

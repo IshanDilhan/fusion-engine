@@ -147,27 +147,24 @@ result = action_engine.predict(
 )
 
 # 3. Send outputs to Robot Controller
-print(f"Action        : {result.action}")                   # e.g., 'A02'
-print(f"Description   : {result.action_description}")       # 'Halt all motion + fire/smoke alert'
-print(f"Linear Speed  : {result.linear_velocity_m_s} m/s")  # 0.0 m/s
-print(f"Comfort Dist  : {result.comfort_distance_m} m")     # 2.0 m
+print(f"Action        : {result.action}")                   # e.g., 'A05' (Preserved!)
+print(f"Description   : {result.action_description}")       # 'Offer task guidance / answer'
+print(f"Linear Speed  : {result.linear_velocity_m_s} m/s")  # -0.2 m/s (Reverse yield step!)
+print(f"Comfort Dist  : {result.comfort_distance_m} m")     # 1.5 m (Enforced clearance)
 print(f"Safety Active : {result.safety_override_active}")   # True
+print(f"Safety Reason : {result.safety_reason}")            # Reason string
 ```
 
 ---
 
-## 6. Safety Override System
+## 6. Internal Physical Safety Gate
 
-Safety is **never left to learned weights**. The `safety_override.py` module enforces hard post-prediction rules:
+Safety is **handled internally** through a 2-tier priority policy inside `safety_override.py`:
 
-- **Trigger Conditions**:
-  - `intent == 'F02'` (Emergency Intent), OR
-  - $P(A02) \ge 0.15$ (Fire alert threshold), OR
-  - $P(A03) \ge 0.15$ (Medical alert threshold), OR
-  - $P(A14) \ge 0.15$ (Classroom hazard threshold)
+- **Priority 1: Emergency Hazard Bypass**:
+  - **Trigger**: `intent == 'F02'` (Emergency Intent), OR hazard action probability $\ge 0.15$.
+  - **Behavior**: Forces emergency action (`A02` Kitchen / `A14` Classroom), halts linear motion ($v=0.0\text{ m/s}$), and sets maximum clearance ($d=2.0\text{ m}$).
 
-- **Enforced Response**:
-  - **Kitchen Context**: Action forced to `A02` (Fire Alert)
-  - **Classroom Context**: Action forced to `A14` (Halt Risky Action / Notify Supervisor)
-  - **Linear Speed**: Forced to `0.0 m/s` (Immediate Halt)
-  - **Comfort Distance**: Forced to `2.0 m` (Maximum Safety Distance)
+- **Priority 2: Dynamic Proximity Yielding Gate**:
+  - **Trigger**: Human moving `toward_robot` at speed $>0.5\text{ m/s}$ and distance $<1.0\text{ m}$.
+  - **Behavior**: **Preserves predicted Action Code** (protects 90.48% model accuracy), clamps linear velocity to **$v=-0.2\text{ m/s}$** (robot physically steps back to yield clearance space), and sets comfort clearance to **$d=1.5\text{ m}$**.

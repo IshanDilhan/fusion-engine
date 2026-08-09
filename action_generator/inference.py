@@ -3,7 +3,7 @@ inference.py
 
 Runtime inference wrapper for the Action Generator module.
 Loads trained PyTorch model, converts real-time string inputs to tensors,
-runs forward pass under torch.no_grad(), and applies post-prediction safety overrides.
+runs forward pass under torch.no_grad(), and applies internal physical safety gate.
 """
 
 import os
@@ -28,14 +28,15 @@ from safety_override import apply_safety_override
 @dataclass
 class ActionResult:
     """Result container from Action Generator inference."""
-    action: str                        # e.g. 'A02' or 'A14'
-    action_description: str            # e.g. 'Halt risky action; check surroundings'
+    action: str                        # e.g. 'A05' or 'A02'
+    action_description: str            # e.g. 'Offer task guidance / answer'
     confidence: float                  # Top-1 softmax probability (0.0 to 1.0)
     probabilities: Dict[str, float]    # Full A01-A15 probability dictionary
-    linear_velocity_m_s: float         # Speed target (m/s)
+    linear_velocity_m_s: float         # Speed target (m/s) — negative if yielding
     angular_velocity_rad_s: float      # Turning rate target (rad/s)
     comfort_distance_m: float          # Personal safety clearance (m)
-    safety_override_active: bool       # True if emergency halt override was triggered
+    safety_override_active: bool       # True if safety gate or emergency filter triggered
+    safety_reason: str = ""            # Explanation of physical safety intervention
 
     def to_dict(self) -> dict:
         """Converts result to JSON-serializable dictionary."""
@@ -48,6 +49,7 @@ class ActionResult:
             "angular_velocity_rad_s": round(self.angular_velocity_rad_s, 3),
             "comfort_distance_m": round(self.comfort_distance_m, 3),
             "safety_override_active": self.safety_override_active,
+            "safety_reason": self.safety_reason,
         }
 
 
@@ -59,14 +61,16 @@ class ActionInference:
     Usage:
         engine = ActionInference('checkpoints/best_action_generator.pt')
         result = engine.predict(
-            intent='F02',
+            intent='F04',
             intent_confidence=0.95,
-            motion_state='step_back',
-            direction='away_from_robot',
+            motion_state='walking',
+            direction='toward_robot',
             velocity=0.8,
-            context='classroom'
+            context='classroom',
+            current_distance=0.7
         )
-        print(result.action)  # 'A14'
+        print(result.action)                # 'A05' (Preserved for accuracy!)
+        print(result.linear_velocity_m_s)   # -0.2 (Reverse yield step!)
     """
 
     def __init__(self, checkpoint_path: str, device: str = 'cpu'):
@@ -91,9 +95,10 @@ class ActionInference:
         motion_state: str,
         direction: str,
         velocity: float,
-        context: str
+        context: str,
+        current_distance: float = 1.5
     ) -> ActionResult:
-        """Runs model prediction + safety override for real-time input."""
+        """Runs model prediction + internal physical safety gate for real-time input."""
         
         # Step A: Convert input string tokens to integer indices
         i_idx = torch.tensor([intent_to_idx(intent)], dtype=torch.long, device=self.device)
@@ -118,18 +123,34 @@ class ActionInference:
         predicted_action = ACTIONS[top_idx]
         confidence = float(probs_tensor[top_idx].item())
 
-        lin_vel = float(ctrl_tensor[0].item())
-        ang_vel = float(ctrl_tensor[1].item())
-        comf_dist = float(ctrl_tensor[2].item())
+        pred_v = float(ctrl_tensor[0].item())
+        pred_omega = float(ctrl_tensor[1].item())
+        pred_d = float(ctrl_tensor[2].item())
 
-        # Step E: Apply post-prediction Safety Override filter
-        override_res = apply_safety_override(intent, action_probs, context)
+        # Step E: Apply Internal Physical Safety Gate
+        override_res = apply_safety_override(
+            intent=intent,
+            action_probs=action_probs,
+            context=context,
+            direction=direction,
+            velocity=velocity,
+            current_distance=current_distance,
+            pred_v=pred_v,
+            pred_omega=pred_omega,
+            pred_d=pred_d
+        )
+
         override_active = override_res['override_active']
+        forced_action = override_res['forced_action']
+        
+        # If Priority 1 Emergency forced an action, update it; otherwise keep predicted_action (A05)
+        if forced_action is not None:
+            predicted_action = forced_action
 
-        if override_active:
-            predicted_action = override_res['forced_action']
-            lin_vel = override_res['forced_velocity']
-            comf_dist = override_res['forced_comfort_distance']
+        lin_vel = override_res['final_v']
+        ang_vel = override_res['final_omega']
+        comf_dist = override_res['final_d']
+        safety_reason = override_res['safety_reason']
 
         action_desc = ACTION_DESCRIPTIONS.get(predicted_action, "Custom Robot Action")
 
@@ -141,7 +162,8 @@ class ActionInference:
             linear_velocity_m_s=lin_vel,
             angular_velocity_rad_s=ang_vel,
             comfort_distance_m=comf_dist,
-            safety_override_active=override_active
+            safety_override_active=override_active,
+            safety_reason=safety_reason
         )
 
     def reset(self):

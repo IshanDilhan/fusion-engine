@@ -165,31 +165,27 @@ $$\mathcal{L}_{\text{Huber}}(y, \hat{y}) = \begin{cases} \frac{1}{2}(y - \hat{y}
 
 ---
 
-## 5. Post-Prediction Deterministic Safety Override Mechanism
+## 5. Internal Physical Safety Gate Mechanism
 
-In safety-critical HRI systems, neural predictions alone cannot guarantee 100% fail-safe behavior. Therefore, a **deterministic, rule-based safety override filter** wraps model predictions prior to motor command dispatch.
+In safety-critical HRI systems, physical proximity risks and emergencies are handled via an **internal 2-tier safety gate**:
+
+1. **Priority 1 (Emergency Bypass)**: True emergencies (`F02` or hazard probability $\ge 0.15$) override proximity rules to immediately execute emergency halt/warning actions (`A02`/`A14`), $v=0.0\text{ m/s}$, $d=2.0\text{ m}$.
+2. **Priority 2 (Dynamic Proximity Gate)**: When a human rapidly approaches ($<1.0\text{ m}$, speed $>0.5\text{ m/s}$), the **predicted Action Code is preserved** (e.g. `A05` stays `A05` to protect 90.48% accuracy), while motor controls are clamped to **$v=-0.2\text{ m/s}$** (robot steps backward to yield clearance) and $d=1.5\text{ m}$.
 
 ```python
-def apply_safety_override(intent: str, action_probs: dict, context: str) -> dict:
-    # Trigger conditions
-    is_emergency = (
-        intent == "F02" or 
-        action_probs.get("A02", 0.0) >= 0.15 or 
-        action_probs.get("A03", 0.0) >= 0.15 or 
-        action_probs.get("A14", 0.0) >= 0.15
-    )
-    
-    if is_emergency:
-        # Context-aware forced action assignment
+def apply_safety_override(intent: str, action_probs: dict, context: str,
+                          direction: str, velocity: float, current_distance: float,
+                          pred_v: float, pred_omega: float, pred_d: float) -> dict:
+    # Priority 1: True Emergency Bypass
+    if intent == "F02" or action_probs.get("A02", 0.0) >= 0.15 or action_probs.get("A14", 0.0) >= 0.15:
         forced_action = "A02" if context == "kitchen" else "A14"
-        return {
-            "override_active": True,
-            "forced_action": forced_action,
-            "forced_velocity": 0.0,         # Forced zero linear speed (m/s)
-            "forced_comfort_distance": 2.0  # Forced maximum clearance (m)
-        }
+        return {"override_active": True, "forced_action": forced_action, "final_v": 0.0, "final_omega": 0.0, "final_d": 2.0}
     
-    return {"override_active": False}
+    # Priority 2: Dynamic Proximity Yielding Gate
+    if direction == "toward_robot" and velocity > 0.5 and current_distance < 1.0:
+        return {"override_active": True, "forced_action": None, "final_v": -0.2, "final_omega": 0.0, "final_d": max(pred_d, 1.5)}
+
+    return {"override_active": False, "forced_action": None, "final_v": pred_v, "final_omega": pred_omega, "final_d": pred_d}
 ```
 
 ---

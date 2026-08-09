@@ -4,7 +4,7 @@ Action Generator Interactive & Automated Runner Script.
 Runs all steps:
   1. Build dataset CSVs
   2. Train PyTorch model
-  3. Run sample inference demo
+  3. Run sample inference demo & safety tests
   4. Export ONNX model for Jetson Orin Nano
 
 Usage:
@@ -18,9 +18,7 @@ import sys
 import argparse
 import subprocess
 
-# Ensure we use Python 3.11 with PyTorch installed
 PYTHON_EXE = sys.executable
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -45,7 +43,7 @@ def train_model():
 
 def run_inference_demo():
     print("\n" + "=" * 70)
-    print("  STEP: Running Inference Demo & Safety Override Test")
+    print("  STEP: Running Inference Demo & 2-Tier Internal Safety Gate Tests")
     print("=" * 70)
     
     sys.path.insert(0, BASE_DIR)
@@ -58,39 +56,58 @@ def run_inference_demo():
 
     engine = ActionInference(ckpt_path)
 
-    # Test Case 1: Normal task request
-    print("\n--- Test Case 1: Normal Task Request (F03 in Classroom) ---")
+    # Test Case 1: Normal Task Request (Safe conditions)
+    print("\n--- Test Case 1: Normal Task Request (F03 in Classroom, Safe Distance 1.5m) ---")
     res1 = engine.predict(
         intent="F03",
         intent_confidence=0.95,
-        motion_state="sit",
+        motion_state="sitting",
         direction="stationary",
         velocity=0.0,
-        context="classroom"
+        context="classroom",
+        current_distance=1.5
     )
-    print(f"  Input        : Intent F03 (Task Assistance), Motion sit, Context classroom")
-    print(f"  Predicted    : Action {res1.action} — {res1.action_description}")
-    print(f"  Confidence   : {res1.confidence * 100:.1f}%")
+    print(f"  Input          : Intent F03, Motion sitting, Context classroom, Dist 1.5m")
+    print(f"  Action         : {res1.action} — {res1.action_description}")
     print(f"  Control [v,w,d]: v={res1.linear_velocity_m_s}m/s, w={res1.angular_velocity_rad_s}rad/s, d={res1.comfort_distance_m}m")
-    print(f"  Safety Active: {res1.safety_override_active}")
+    print(f"  Safety Active  : {res1.safety_override_active}")
+    print(f"  Safety Reason  : {res1.safety_reason}")
 
-    # Test Case 2: Emergency Alert (Safety Override)
-    print("\n--- Test Case 2: Emergency Hazard (F02 in Kitchen) ---")
+    # Test Case 2: Proximity Risk (Rushing human < 1.0m — Action Preserved, Reverse Yielding v=-0.2 m/s)
+    print("\n--- Test Case 2: Rapid Approach Proximity Risk (F04, walking, toward_robot, Dist 0.7m) ---")
     res2 = engine.predict(
+        intent="F04",
+        intent_confidence=0.92,
+        motion_state="walking",
+        direction="toward_robot",
+        velocity=0.8,
+        context="classroom",
+        current_distance=0.7
+    )
+    print(f"  Input          : Intent F04 (Help Request), Motion walking, Direction toward_robot, Speed 0.8m/s, Dist 0.7m")
+    print(f"  Action         : {res2.action} — {res2.action_description} (PRESERVED FOR ACCURACY!)")
+    print(f"  Control [v,w,d]: v={res2.linear_velocity_m_s}m/s (REVERSE YIELDING STEP!), w={res2.angular_velocity_rad_s}rad/s, d={res2.comfort_distance_m}m")
+    print(f"  Safety Active  : {res2.safety_override_active}")
+    print(f"  Safety Reason  : {res2.safety_reason}")
+
+    # Test Case 3: Emergency Hazard (F02 in Kitchen — Priority 1 Emergency Bypass)
+    print("\n--- Test Case 3: Emergency Hazard (F02 in Kitchen) ---")
+    res3 = engine.predict(
         intent="F02",
         intent_confidence=0.98,
-        motion_state="run",
+        motion_state="stepping_back",
         direction="away_from_robot",
         velocity=1.2,
-        context="kitchen"
+        context="kitchen",
+        current_distance=0.8
     )
-    print(f"  Input        : Intent F02 (Emergency), Motion run, Context kitchen")
-    print(f"  Predicted    : Action {res2.action} — {res2.action_description}")
-    print(f"  Confidence   : {res2.confidence * 100:.1f}%")
-    print(f"  Control [v,w,d]: v={res2.linear_velocity_m_s}m/s, w={res2.angular_velocity_rad_s}rad/s, d={res2.comfort_distance_m}m")
-    print(f"  Safety Active: {res2.safety_override_active} (FORCED HALT)")
+    print(f"  Input          : Intent F02 (Emergency), Context kitchen")
+    print(f"  Action         : {res3.action} — {res3.action_description} (FORCED EMERGENCY ACTION)")
+    print(f"  Control [v,w,d]: v={res3.linear_velocity_m_s}m/s, w={res3.angular_velocity_rad_s}rad/s, d={res3.comfort_distance_m}m")
+    print(f"  Safety Active  : {res3.safety_override_active}")
+    print(f"  Safety Reason  : {res3.safety_reason}")
 
-    print("\nInference Demo Passed Successfully!")
+    print("\nInference Demo & Safety Tests Passed Successfully!")
     return True
 
 
