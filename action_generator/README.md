@@ -4,7 +4,7 @@
 > **Module**: Action Generator (`MultimodalActionGenerator`)  
 > **Target Hardware**: NVIDIA Jetson Orin Nano (8GB)  
 > **Latency**: < 1.8 ms  
-> **Model Footprint**: 16,922 parameters (72 KB ONNX)
+> **Model Footprint**: 16,890 parameters (~72 KB ONNX)
 
 ---
 
@@ -14,7 +14,7 @@ In the Adaptive Multimodal HRI Framework, perception modalities (Emotion, Gestur
 
 The **Action Generator** is the downstream neural policy module. It takes **four inputs**:
 1. **Intent Code** ($F01–F10$) + Confidence (from Fusion Engine)
-2. **Motion State** (`sit`, `stand`, `walk`, `run`, `step_back`, `lean_forward`) (direct branch from Motion Runner)
+2. **Motion State** (`sitting`, `standing`, `walking`, `stepping_back`) (direct branch from Motion Runner)
 3. **Motion Direction** (`toward_robot`, `away_from_robot`, `toward_object`, `toward_exit`, `lateral`, `stationary`)
 4. **Context Scene** (`classroom`, `kitchen`, `offline`) (direct branch from Context Runner)
 
@@ -140,7 +140,7 @@ action_engine = ActionInference('action_generator/checkpoints/best_action_genera
 result = action_engine.predict(
     intent='F02',                   # From Fusion Engine
     intent_confidence=0.95,          # From Fusion Engine
-    motion_state='step_back',        # Direct from Motion Runner
+    motion_state='stepping_back',        # Direct from Motion Runner
     direction='away_from_robot',     # Direct from Motion Runner
     velocity=0.8,                    # Human speed (m/s)
     context='kitchen'                # Direct from Context Runner

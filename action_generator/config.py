@@ -25,14 +25,12 @@ INTENTS = [
     "F10",  # Discouraged / giving up
 ]
 
-# Motion States (6 classes from V3 dataset)
+# Motion States (4 classes — must match Motion Repo output exactly)
 MOTIONS = [
-    "sit",
-    "stand",
-    "walk",
-    "run",
-    "step_back",
-    "lean_forward"
+    "sitting",
+    "standing",
+    "walking",
+    "stepping_back",
 ]
 
 # Direction Values
@@ -131,7 +129,7 @@ F02_SAFETY_THRESHOLD = 0.15
 # Vocabulary Sizes
 # -----------------------------------------------------------------------------
 NUM_INTENTS = len(INTENTS)        # 10
-NUM_MOTIONS = len(MOTIONS)        # 6
+NUM_MOTIONS = len(MOTIONS)        # 4
 NUM_DIRECTIONS = len(DIRECTIONS)  # 6
 NUM_CONTEXTS = len(CONTEXTS)      # 3
 NUM_ACTIONS = len(ACTIONS)        # 15

@@ -11,12 +11,12 @@ class MultimodalActionGenerator(nn.Module):
     and predicts Robot Actions (A01-A15) with motion control signals.
     
     Architecture:
-    - 4 embedding tables (intent:10->16, motion:6->16, direction:6->8, context:3->8)
+    - 4 embedding tables (intent:10->16, motion:4->16, direction:6->8, context:3->8)
     - 2-layer Dense Fusion Core (52->128->64 with LayerNorm + GELU + Dropout)
     - Head 1: Action classifier (64->15, Softmax)
     - Head 2: Motion controller (64->3, [v, ω, d])
     
-    Total parameters: ~26K
+    Total parameters: ~16K
     Inference: <1.8ms on Jetson Orin Nano
     """
     def __init__(self):
@@ -24,7 +24,7 @@ class MultimodalActionGenerator(nn.Module):
         
         # 1. Embeddings
         self.intent_embedding = nn.Embedding(10, 16)
-        self.motion_embedding = nn.Embedding(6, 16)
+        self.motion_embedding = nn.Embedding(4, 16)   # 4 classes: sitting/standing/walking/stepping_back
         self.direction_embedding = nn.Embedding(6, 8)
         self.context_embedding = nn.Embedding(3, 8)
         

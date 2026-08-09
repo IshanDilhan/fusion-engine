@@ -3,8 +3,8 @@
 > **Technical Architecture Specification & Mathematical Formulation**  
 > **Model Name**: `MultimodalActionGenerator`  
 > **Framework**: PyTorch (`nn.Module`) / ONNX Runtime  
-> **Total Parameters**: 16,922 (~17K)  
-> **Model Checkpoint Size**: 72.2 KB (.pt) / 72.0 KB (.onnx)
+> **Total Parameters**: 16,890 (~17K)  
+> **Model Checkpoint Size**: 72.1 KB (.pt) / ~72 KB (.onnx)
 
 ---
 
@@ -15,7 +15,7 @@
  ┌──────────────────────────────────────────────┐
  │ 1. Intent Index    (0..9)  ──▶ Embed(10, 16) │──┐ (16D)
  │ 2. Intent Conf     (0..1)  ──▶ Scalar        │──┼──▶ (1D)
- │ 3. Motion Index    (0..5)  ──▶ Embed(6, 16)  │──┼──▶ (16D)
+ │ 3. Motion Index    (0..3)  ──▶ Embed(4, 16)  │──┼──▶ (16D)
  │ 4. Direction Index (0..5)  ──▶ Embed(6, 8)   │──┼──▶ (8D)
  │ 5. Velocity Vector [v,a,m] ──▶ Continuous    │──┼──▶ (3D)
  │ 6. Context Index   (0..2)  ──▶ Embed(3, 8)   │──┘ (8D)
@@ -61,7 +61,7 @@ $$\mathbf{x} = [\mathbf{e}_{\text{intent}} \,\|\, c_{\text{intent}} \,\|\, \math
 Where:
 - $\mathbf{e}_{\text{intent}} \in \mathbb{R}^{16}$: Learnable embedding for Intent $F01–F10$ ($\text{Vocabulary}=10$)
 - $c_{\text{intent}} \in \mathbb{R}^{1}$: Continuous Intent confidence score $[0.0, 1.0]$ from Fusion Engine
-- $\mathbf{e}_{\text{motion}} \in \mathbb{R}^{16}$: Learnable embedding for Motion state (`sit`, `stand`, `walk`, `run`, `step_back`, `lean_forward`) ($\text{Vocabulary}=6$)
+- $\mathbf{e}_{\text{motion}} \in \mathbb{R}^{16}$: Learnable embedding for Motion state (`sitting`, `standing`, `walking`, `stepping_back`) ($\text{Vocabulary}=4$)
 - $\mathbf{e}_{\text{direction}} \in \mathbb{R}^{8}$: Learnable embedding for Motion Direction (`toward_robot`, `away_from_robot`, `toward_object`, `toward_exit`, `lateral`, `stationary`) ($\text{Vocabulary}=6$)
 - $\mathbf{v}_{\text{human}} \in \mathbb{R}^{3}$: Continuous human movement vector $[\text{speed (m/s)}, \text{acceleration placeholder}, \text{is\_moving\_flag}]$
 - $\mathbf{e}_{\text{context}} \in \mathbb{R}^{8}$: Learnable embedding for Context Scene (`classroom`, `kitchen`, `offline`) ($\text{Vocabulary}=3$)
@@ -123,4 +123,4 @@ Where $p_t$ is the model's estimated probability for the true ground-truth class
 | `MODALITY_DROPOUT_P` | 0.15 | 15% probability of context sensor masking |
 | `EPOCHS` | 100 | Training duration (~30 seconds execution time) |
 | `BATCH_SIZE` | 32 | Mini-batch size |
-| `PARAM_COUNT` | 16,922 | Total trainable parameter count |
+| `PARAM_COUNT` | 16,890 | Total trainable parameter count |
