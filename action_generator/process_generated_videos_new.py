@@ -2,9 +2,10 @@
 process_generated_videos_new.py
 
 Batch processor for Generated_Videos_new folder.
-Iterates over folders (1, 2, 4, 5, 6), selects up to 3 video files per folder,
-runs live_video_demo with the assigned intent, context, and expected action,
-and saves rendered output videos with HUD overlays.
+Iterates over all scenario folders (1, 2, 4, 5, 6, 23, 26, 53, 54, 61),
+selects up to 3 raw MP4 video files per folder, runs live_video_demo with
+the assigned intent, context, and expected action, and saves rendered output
+videos with HUD overlays (<video_name>_hud.mp4).
 """
 
 import os
@@ -17,19 +18,27 @@ ACTION_GEN_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(ACTION_GEN_DIR)
 GEN_VIDEOS_NEW_DIR = os.path.join(ROOT_DIR, "Generated_Videos_new")
 
-# Scenario Map for Generated_Videos_new
+# Comprehensive Scenario Map for Generated_Videos_new
 SCENARIO_MAP = {
-    "1": {"intent": "F01", "action": "A01", "context": "classroom"},
-    "2": {"intent": "F01", "action": "A01", "context": "classroom"},
-    "4": {"intent": "F02", "action": "A02", "context": "classroom"},
-    "5": {"intent": "F01", "action": "A09", "context": "classroom"},
-    "6": {"intent": "F02", "action": "A02", "context": "classroom"},
+    # Standard foldered scenarios
+    "1":  {"intent": "F01", "action": "A01", "context": "classroom"},
+    "2":  {"intent": "F01", "action": "A01", "context": "classroom"},
+    "4":  {"intent": "F02", "action": "A14", "context": "classroom"},
+    "5":  {"intent": "F01", "action": "A09", "context": "classroom"},
+    "6":  {"intent": "F02", "action": "A02", "context": "classroom"},
+
+    # 73-Scenario Dataset IDs
+    "23": {"intent": "F02", "action": "A02", "context": "classroom"},
+    "26": {"intent": "F05", "action": "A06", "context": "classroom"},
+    "53": {"intent": "F02", "action": "A02", "context": "classroom"},
+    "54": {"intent": "F02", "action": "A03", "context": "classroom"},
+    "61": {"intent": "F01", "action": "A10", "context": "classroom"},
 }
 
 
 def process_all_folders(max_videos_per_folder=3):
     print("=" * 80)
-    print("  GENERATED_VIDEOS_NEW BATCH PROCESSOR")
+    print("  GENERATED_VIDEOS_NEW BATCH PROCESSOR (All Test Scenarios)")
     print(f"  Target Directory: {GEN_VIDEOS_NEW_DIR}")
     print(f"  Max Videos per Folder: {max_videos_per_folder}")
     print("=" * 80)
