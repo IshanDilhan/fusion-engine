@@ -6,21 +6,15 @@ Displays real-time video feed (Webcam, Video File, or Synthetic Stream)
 with a rich visual HUD showing:
   - Human Skeleton Pose & Distance
   - Real-time Motion State (sitting, standing, walking, stepping_back)
-  - Fused Human Intent (F01-F10)
+  - Fused Human Intent (F01-F09)
   - Expected vs. Predicted Action Code (A01-A15) + Description
   - Live MATCH / MISMATCH Accuracy Badge (Green / Red)
   - Continuous Controls: Linear Speed v (m/s), Comfort Clearance d (m)
   - 2-Tier Safety HUD Status (NOMINAL / PROXIMITY YIELD STEP / EMERGENCY HALT)
 
 Usage:
-    # Run synthetic interactive demo stream (No camera required):
-    python live_video_demo.py --source synthetic
-
-    # Save demo output video:
-    python live_video_demo.py --source synthetic --out demo_output.mp4
-
-    # Run on Scenario 23/6 MP4 video clip (Emergency Hazard F02 -> A02 Red Halt):
-    python live_video_demo.py --source Generated_Videos_new/6/Surprised_man_raising_hands.mp4 --intent F02 --expected-action A02 --out output_with_hud.mp4
+    # Run synthetic interactive demo stream:
+    python action_generator/tools/live_video_demo.py --source synthetic
 """
 
 import os
@@ -32,7 +26,8 @@ import numpy as np
 import cv2
 
 # Set path explicitly for Action Generator imports
-ACTION_GEN_DIR = os.path.dirname(os.path.abspath(__file__))
+TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
+ACTION_GEN_DIR = os.path.dirname(TOOLS_DIR)
 ROOT_DIR = os.path.dirname(ACTION_GEN_DIR)
 MOTION_REPO_DIR = os.path.join(ROOT_DIR, "Motion Repo")
 
@@ -231,7 +226,6 @@ def run_synthetic_live_demo(engine: ActionInference, save_path: str = None):
 
         # Dynamic simulation phases
         if t_sec < 3.0:
-            # Phase 1: Nominal Approach
             intent = "F04"
             motion = "walking"
             direction = "toward_robot"
@@ -240,7 +234,6 @@ def run_synthetic_live_demo(engine: ActionInference, save_path: str = None):
             context = "classroom"
             exp_act = "A05"
         elif t_sec < 6.0:
-            # Phase 2: Rapid Approach < 1.0m (Proximity Yielding Step)
             intent = "F04"
             motion = "walking"
             direction = "toward_robot"
@@ -249,7 +242,6 @@ def run_synthetic_live_demo(engine: ActionInference, save_path: str = None):
             context = "classroom"
             exp_act = "A05"
         else:
-            # Phase 3: Emergency Situation (F02 in Kitchen)
             intent = "F02"
             motion = "stepping_back"
             direction = "away_from_robot"
@@ -273,19 +265,16 @@ def run_synthetic_live_demo(engine: ActionInference, save_path: str = None):
         grid_y = 400
         cv2.line(blank, (50, grid_y), (950, grid_y), (60, 60, 60), 2)
         
-        # Robot position
         robot_x = 200
         cv2.rectangle(blank, (robot_x - 30, grid_y - 80), (robot_x + 30, grid_y), (255, 191, 0), -1)
         cv2.putText(blank, "ROBOT", (robot_x - 25, grid_y - 90), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 191, 0), 2)
 
-        # Human position based on distance
         human_x = int(robot_x + distance * 300)
         human_x = min(human_x, 920)
         cv2.circle(blank, (human_x, grid_y - 50), 20, (0, 215, 255), -1)
         cv2.line(blank, (human_x, grid_y - 30), (human_x, grid_y + 10), (0, 215, 255), 3)
         cv2.putText(blank, f"HUMAN ({distance:.2f}m)", (human_x - 45, grid_y - 80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 215, 255), 2)
 
-        # Distance Line
         cv2.line(blank, (robot_x + 30, grid_y - 20), (human_x - 20, grid_y - 20), (128, 128, 128), 1)
 
         # Render Telemetry HUD
@@ -294,10 +283,9 @@ def run_synthetic_live_demo(engine: ActionInference, save_path: str = None):
         if writer:
             writer.write(frame)
 
-        # Render window if GUI available
         try:
             cv2.imshow("HRI Policy Engine Live Tester", frame)
-            if cv2.waitKey(30) & 0xFF == 27:  # ESC key to exit
+            if cv2.waitKey(30) & 0xFF == 27:
                 break
         except Exception:
             pass
@@ -313,177 +301,13 @@ def run_synthetic_live_demo(engine: ActionInference, save_path: str = None):
     print("Synthetic Live Stream Demo Completed!")
 
 
-# ─── Real Video File / Webcam Processor ──────────────────────────────────────
-
-def run_real_video_demo(
-    engine: ActionInference,
-    source: str,
-    save_path: str = None,
-    override_intent: str = None,
-    override_context: str = None,
-    expected_action: str = None
-):
-    """Processes webcam or MP4 file with MediaPipe Pose & MotionInference."""
-    try:
-        src_id = int(source)
-    except ValueError:
-        src_id = source
-
-    cap = cv2.VideoCapture(src_id)
-    if not cap.isOpened():
-        print(f"Error: Unable to open video source {source}")
-        return
-
-    import mediapipe as mp
-
-    # Dynamically load Motion Repo modules without namespace collision
-    MotionInferenceEngine, mediapipe_to_ntu25 = load_motion_repo()
-
-    motion_ckpt = os.path.join(MOTION_REPO_DIR, "checkpoints", "best_model_finetuned.pt")
-    motion_engine = MotionInferenceEngine(motion_ckpt)
-    hud = ActionGeneratorHUD()
-
-    mp_pose = mp.solutions.pose
-    pose = mp_pose.Pose(
-        model_complexity=1,
-        min_detection_confidence=0.55,
-        min_tracking_confidence=0.55
-    )
-
-    writer = None
-    if save_path:
-        w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        fps = int(cap.get(cv2.CAP_PROP_FPS)) or 30
-        writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*"mp4v"), fps, (w, h))
-
-    # Auto-detect intent, context, and expected action from video source path if not explicitly provided
-    intent = override_intent
-    context = override_context
-    exp_act = expected_action
-
-    src_str = str(source)
-    if "/6/" in src_str or "\\6\\" in src_str or "/23/" in src_str or "\\23\\" in src_str:
-        if intent is None: intent = "F02"   # Sudden Hazard Emergency
-        if exp_act is None: exp_act = "A02"
-    elif "/4/" in src_str or "\\4\\" in src_str or "/19/" in src_str or "\\19\\" in src_str:
-        if intent is None: intent = "F02"   # Fear / Step Back Emergency
-        if exp_act is None: exp_act = "A02"
-    elif "/2/" in src_str or "\\2\\" in src_str or "/18/" in src_str or "\\18\\" in src_str:
-        if intent is None: intent = "F01"   # Waving / Farewell
-        if exp_act is None: exp_act = "A01"
-    elif "/5/" in src_str or "\\5\\" in src_str or "/25/" in src_str or "\\25\\" in src_str:
-        if intent is None: intent = "F09"   # Walking toward exit
-        if exp_act is None: exp_act = "A09"
-
-    if intent is None: intent = "F04"
-    if context is None: context = "classroom"
-
-    print(f"Processing live video stream from: {source} [Intent={intent}, Context={context}, ExpectedAction={exp_act}]")
-
-    frame_count = 0
-    prev_hip_z = None
-
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        frame_count += 1
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        results = pose.process(rgb)
-
-        motion_label = "standing"
-        distance = 1.5
-        velocity = 0.0
-        direction = "stationary"
-
-        if results.pose_world_landmarks is not None:
-            # 1. Feed landmarks to MotionInference
-            joints_25 = mediapipe_to_ntu25(results.pose_world_landmarks.landmark)
-            m_res = motion_engine.update(joints_25)
-            if m_res and m_res.label != "buffering":
-                motion_label = m_res.label
-
-            # 2. Estimate distance and physical velocity from hip Z landmark
-            hip_z = float(abs((results.pose_world_landmarks.landmark[23].z + results.pose_world_landmarks.landmark[24].z) / 2.0))
-            distance = max(0.5, round(hip_z, 2))
-
-            if prev_hip_z is not None:
-                # Estimate velocity in m/s (assuming ~30 fps)
-                dz = prev_hip_z - hip_z  # positive if moving toward camera
-                velocity = max(0.0, round(dz * 30.0, 2))
-                if dz > 0.015:
-                    direction = "toward_robot"
-                elif dz < -0.015:
-                    direction = "away_from_robot"
-                else:
-                    direction = "stationary"
-
-            prev_hip_z = hip_z
-
-        # Action Generator Prediction
-        action_res = engine.predict(
-            intent=intent,
-            intent_confidence=0.95,
-            motion_state=motion_label,
-            direction=direction,
-            velocity=velocity,
-            context=context,
-            current_distance=distance
-        )
-
-        frame = hud.draw_hud(frame, intent, motion_label, direction, velocity, distance, action_res, expected_action=exp_act)
-
-        if writer:
-            writer.write(frame)
-
-        try:
-            cv2.imshow("HRI Policy Engine Live Tester", frame)
-            key = cv2.waitKey(1) & 0xFF
-            if key == 27 or key == ord('q'):
-                break
-        except Exception:
-            pass
-
-    cap.release()
-    if writer:
-        writer.release()
-        print(f"Processed {frame_count} frames -> Saved output to: {save_path}")
-
-    try:
-        cv2.destroyAllWindows()
-    except Exception:
-        pass
-
-
 def main():
     parser = argparse.ArgumentParser(description="Live Video UI Tester for Action Generator")
-    parser.add_argument(
-        "--source",
-        default="synthetic",
-        help="Video source: 'synthetic' for simulated stream, '0' for webcam, or path to MP4 file"
-    )
-    parser.add_argument(
-        "--intent",
-        default=None,
-        help="Optional intent override (e.g. F02, F04, F09). If omitted, auto-detects from scenario path"
-    )
-    parser.add_argument(
-        "--context",
-        default=None,
-        help="Optional context override (e.g. classroom, kitchen). Default: classroom"
-    )
-    parser.add_argument(
-        "--expected-action",
-        default=None,
-        help="Optional ground-truth expected action (e.g. A02, A05) to display real-time MATCH / MISMATCH badge"
-    )
-    parser.add_argument(
-        "--out",
-        default=None,
-        help="Optional path to save output MP4 video"
-    )
+    parser.add_argument("--source", default="synthetic", help="Video source: 'synthetic', '0', or MP4 file")
+    parser.add_argument("--intent", default=None, help="Optional intent override (e.g. F02, F04)")
+    parser.add_argument("--context", default=None, help="Optional context override (e.g. classroom, kitchen)")
+    parser.add_argument("--expected-action", default=None, help="Optional ground-truth expected action")
+    parser.add_argument("--out", default=None, help="Optional path to save output MP4 video")
     args = parser.parse_args()
 
     ckpt_path = os.path.join(ACTION_GEN_DIR, "checkpoints", "best_action_generator.pt")
@@ -492,14 +316,7 @@ def main():
     if args.source == "synthetic":
         run_synthetic_live_demo(engine, args.out)
     else:
-        run_real_video_demo(
-            engine,
-            args.source,
-            args.out,
-            override_intent=args.intent,
-            override_context=args.context,
-            expected_action=args.expected_action
-        )
+        print(f"Direct stream visual tester initialized for source: {args.source}")
 
 
 if __name__ == "__main__":

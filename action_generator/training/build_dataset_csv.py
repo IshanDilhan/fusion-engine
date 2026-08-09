@@ -2,13 +2,13 @@
 build_dataset_csv.py
 
 Generates the machine-readable dataset CSV files for the Action Generator.
-Reads all 73 multimodal scenarios from the HRI Multimodal Intent Dataset,
+Reads all 73 multimodal scenarios from the HRI Multimodal Intent Dataset V3.5,
 maps text tokens to canonical vocabulary indices, and writes:
-  1. action_generator_training_scenarios.csv (73 base scenarios)
-  2. action_generator_augmented_training.csv  (400+ augmented scenarios with Modality Dropout)
+  1. action_generator_training_scenarios.csv (72 base scenarios)
+  2. action_generator_augmented_training.csv  (318 augmented scenarios with Modality Dropout)
 
 Usage:
-    python build_dataset_csv.py
+    python action_generator/training/build_dataset_csv.py
 """
 
 import os
@@ -16,14 +16,18 @@ import sys
 import random
 import pandas as pd
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Add parent directory to sys.path to import config
+ACTION_GEN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if ACTION_GEN_DIR not in sys.path:
+    sys.path.insert(0, ACTION_GEN_DIR)
+
 from config import (
     INTENTS, MOTIONS, DIRECTIONS, CONTEXTS, ACTIONS,
     intent_to_idx, motion_to_idx, direction_to_idx, context_to_idx, action_to_idx,
     DEFAULT_CONTROLS
 )
 
-OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "training_data")
+OUTPUT_DIR = os.path.join(ACTION_GEN_DIR, "training_data")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 BASE_CSV_PATH = os.path.join(OUTPUT_DIR, "action_generator_training_scenarios.csv")
@@ -170,7 +174,7 @@ def build_scenario_dataframe():
 def augment_dataframe(df_base, samples_per_scenario=6):
     """Applies Modality Dropout to generate augmented training samples."""
     augmented_rows = []
-    
+
     # Include base rows for test split as well
     test_df = df_base[df_base['split'] == 'test']
     for _, row in test_df.iterrows():

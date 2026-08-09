@@ -1,3 +1,10 @@
+"""
+dataset.py
+
+Loads action generator training data from CSV files and prepares PyTorch tensors
+for MultimodalActionGenerator training.
+"""
+
 import torch
 from torch.utils.data import Dataset
 import pandas as pd
