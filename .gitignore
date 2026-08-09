@@ -34,3 +34,4 @@ __pycache__/
 # Scratch/temp
 .smoke_batch/
 .test_output/
+*.mp4
