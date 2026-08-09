@@ -1,432 +1,319 @@
-scenario_id,split,context,emotion,gesture,motion,direction,missing_cues,intent,intent_name,action,action_description,target_v,target_omega,target_d
-aug_1,train,classroom,happy,wave,walking,toward_robot,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_2,train,offline,happy,wave,walking,toward_robot,context,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_3,train,classroom,happy,wave,walking,toward_robot,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_4,train,classroom,happy,wave,walking,toward_robot,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_5,train,classroom,happy,wave,walking,toward_robot,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_6,train,classroom,happy,wave,walking,toward_robot,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_7,train,classroom,happy,wave,walking,toward_robot,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_8,train,offline,happy,wave,walking,toward_robot,context,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_9,train,classroom,happy,wave,walking,toward_robot,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_10,train,offline,happy,wave,walking,toward_robot,context,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_11,train,classroom,happy,thumbs_up,sitting,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_12,train,classroom,happy,thumbs_up,sitting,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_13,train,offline,happy,thumbs_up,sitting,stationary,context,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_14,train,classroom,happy,thumbs_up,sitting,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_15,train,classroom,happy,thumbs_up,sitting,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_16,train,classroom,happy,thumbs_up,sitting,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_17,train,classroom,happy,thumbs_up,sitting,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_18,train,classroom,happy,thumbs_up,sitting,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_19,train,classroom,happy,thumbs_up,sitting,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_20,train,offline,happy,thumbs_up,sitting,stationary,context,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_21,train,classroom,surprise,both_hands_up,standing,stationary,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_22,train,classroom,surprise,both_hands_up,standing,stationary,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_23,train,classroom,surprise,both_hands_up,standing,stationary,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_24,train,classroom,surprise,both_hands_up,standing,stationary,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_25,train,classroom,surprise,both_hands_up,standing,stationary,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_26,train,classroom,surprise,both_hands_up,standing,stationary,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_27,train,offline,surprise,both_hands_up,standing,stationary,context,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_28,train,offline,surprise,both_hands_up,standing,stationary,context,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_29,train,classroom,surprise,both_hands_up,standing,stationary,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_30,train,classroom,surprise,both_hands_up,standing,stationary,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_31,train,classroom,fear,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_32,train,classroom,fear,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_33,train,classroom,fear,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_34,train,classroom,fear,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_35,train,classroom,fear,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_36,train,classroom,fear,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_37,train,classroom,fear,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_38,train,classroom,fear,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_39,train,classroom,fear,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_40,train,classroom,fear,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-aug_41,train,classroom,neutral,beckoning,sitting,stationary,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_42,train,offline,neutral,beckoning,sitting,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_43,train,classroom,neutral,beckoning,sitting,stationary,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_44,train,classroom,neutral,beckoning,sitting,stationary,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_45,train,offline,neutral,beckoning,sitting,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_46,train,classroom,neutral,beckoning,sitting,stationary,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_47,train,offline,neutral,beckoning,sitting,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_48,train,classroom,neutral,beckoning,sitting,stationary,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_49,train,classroom,neutral,beckoning,sitting,stationary,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_50,train,classroom,neutral,beckoning,sitting,stationary,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_51,train,classroom,neutral,beckoning,sitting,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_52,train,classroom,neutral,beckoning,sitting,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_53,train,classroom,neutral,beckoning,sitting,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_54,train,classroom,neutral,beckoning,sitting,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_55,train,classroom,neutral,beckoning,sitting,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_56,train,classroom,neutral,beckoning,sitting,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_57,train,classroom,neutral,beckoning,sitting,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_58,train,classroom,neutral,beckoning,sitting,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_59,train,classroom,neutral,beckoning,sitting,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_60,train,classroom,neutral,beckoning,sitting,stationary,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_61,train,classroom,neutral,raise_hand,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_62,train,classroom,neutral,raise_hand,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_63,train,classroom,neutral,raise_hand,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_64,train,classroom,neutral,raise_hand,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_65,train,classroom,neutral,raise_hand,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_66,train,classroom,neutral,raise_hand,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_67,train,classroom,neutral,raise_hand,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_68,train,offline,neutral,raise_hand,sitting,stationary,context,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_69,train,classroom,neutral,raise_hand,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_70,train,classroom,neutral,raise_hand,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_71,train,classroom,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_72,train,classroom,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_73,train,classroom,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_74,train,classroom,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_75,train,classroom,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_76,train,classroom,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_77,train,classroom,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_78,train,classroom,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_79,train,classroom,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_80,train,classroom,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_81,train,classroom,sad,MISSING,sitting,stationary,gesture,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_82,train,classroom,sad,MISSING,sitting,stationary,gesture,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_83,train,classroom,sad,MISSING,sitting,stationary,gesture,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_84,train,classroom,sad,MISSING,sitting,stationary,gesture,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_85,train,classroom,sad,MISSING,sitting,stationary,gesture,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_86,train,classroom,sad,MISSING,sitting,stationary,gesture,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_87,train,classroom,sad,MISSING,sitting,stationary,gesture,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_88,train,classroom,sad,MISSING,sitting,stationary,gesture,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_89,train,offline,sad,MISSING,sitting,stationary,"gesture,context",F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_90,train,offline,sad,MISSING,sitting,stationary,"gesture,context",F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_91,train,offline,neutral,point,sitting,stationary,context,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_92,train,classroom,neutral,point,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_93,train,classroom,neutral,point,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_94,train,classroom,neutral,point,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_95,train,offline,neutral,point,sitting,stationary,context,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_96,train,classroom,neutral,point,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_97,train,classroom,neutral,point,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_98,train,classroom,neutral,point,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_99,train,classroom,neutral,point,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_100,train,classroom,neutral,point,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_101,train,offline,happy,raise_hand,sitting,stationary,context,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_102,train,classroom,happy,raise_hand,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_103,train,classroom,happy,raise_hand,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_104,train,classroom,happy,raise_hand,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_105,train,classroom,happy,raise_hand,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_106,train,classroom,happy,raise_hand,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_107,train,offline,happy,raise_hand,sitting,stationary,context,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_108,train,classroom,happy,raise_hand,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_109,train,classroom,happy,raise_hand,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_110,train,classroom,happy,raise_hand,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_111,train,classroom,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_112,train,classroom,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_113,train,classroom,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_114,train,classroom,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_115,train,classroom,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_116,train,classroom,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_117,train,classroom,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_118,train,classroom,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_119,train,classroom,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_120,train,classroom,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_121,train,classroom,angry,wave,standing,stationary,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_122,train,classroom,angry,wave,standing,stationary,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_123,train,classroom,angry,wave,standing,stationary,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_124,train,classroom,angry,wave,standing,stationary,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_125,train,offline,angry,wave,standing,stationary,context,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_126,train,classroom,angry,wave,standing,stationary,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_127,train,offline,angry,wave,standing,stationary,context,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_128,train,classroom,angry,wave,standing,stationary,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_129,train,classroom,angry,wave,standing,stationary,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_130,train,classroom,angry,wave,standing,stationary,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_131,train,classroom,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_132,train,offline,angry,both_hands_up,standing,stationary,context,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_133,train,classroom,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_134,train,classroom,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_135,train,offline,angry,both_hands_up,standing,stationary,context,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_136,train,classroom,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_137,train,offline,angry,both_hands_up,standing,stationary,context,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_138,train,classroom,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_139,train,classroom,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_140,train,offline,angry,both_hands_up,standing,stationary,context,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_141,train,classroom,angry,thumbs_down,sitting,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_142,train,classroom,angry,thumbs_down,sitting,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_143,train,classroom,angry,thumbs_down,sitting,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_144,train,classroom,angry,thumbs_down,sitting,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_145,train,classroom,angry,thumbs_down,sitting,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_146,train,classroom,angry,thumbs_down,sitting,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_147,train,classroom,angry,thumbs_down,sitting,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_148,train,classroom,angry,thumbs_down,sitting,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_149,train,classroom,angry,thumbs_down,sitting,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_150,train,classroom,angry,thumbs_down,sitting,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_151,train,classroom,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_152,train,classroom,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_153,train,classroom,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_154,train,classroom,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_155,train,offline,disgust,thumbs_down,stepping_back,away_from_robot,context,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_156,train,classroom,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_157,train,classroom,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_158,train,classroom,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_159,train,classroom,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_160,train,classroom,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_161,train,offline,disgust,thumbs_down,sitting,stationary,context,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_162,train,classroom,disgust,thumbs_down,sitting,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_163,train,classroom,disgust,thumbs_down,sitting,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_164,train,classroom,disgust,thumbs_down,sitting,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_165,train,classroom,disgust,thumbs_down,sitting,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_166,train,offline,disgust,thumbs_down,sitting,stationary,context,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_167,train,classroom,disgust,thumbs_down,sitting,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_168,train,classroom,disgust,thumbs_down,sitting,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_169,train,classroom,disgust,thumbs_down,sitting,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_170,train,offline,disgust,thumbs_down,sitting,stationary,context,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_171,train,classroom,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_172,train,classroom,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_173,train,classroom,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_174,train,classroom,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_175,train,classroom,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_176,train,classroom,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_177,train,offline,happy,wave,walking,toward_exit,context,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_178,train,classroom,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_179,train,classroom,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_180,train,classroom,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_181,train,classroom,neutral,wave,walking,toward_exit,,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_182,train,classroom,neutral,wave,walking,toward_exit,,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_183,train,classroom,neutral,wave,walking,toward_exit,,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_184,train,offline,neutral,wave,walking,toward_exit,context,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_185,train,classroom,neutral,wave,walking,toward_exit,,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_186,train,classroom,neutral,wave,walking,toward_exit,,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_187,train,classroom,neutral,wave,walking,toward_exit,,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_188,train,classroom,neutral,wave,walking,toward_exit,,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_189,train,classroom,neutral,wave,walking,toward_exit,,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_190,train,classroom,neutral,wave,walking,toward_exit,,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_191,train,classroom,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_192,train,classroom,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_193,train,classroom,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_194,train,classroom,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_195,train,classroom,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_196,train,classroom,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_197,train,classroom,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_198,train,offline,sad,none,sitting,stationary,context,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_199,train,classroom,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_200,train,classroom,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_201,train,classroom,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_202,train,classroom,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_203,train,classroom,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_204,train,classroom,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_205,train,classroom,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_206,train,classroom,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_207,train,classroom,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_208,train,offline,sad,none,standing,stationary,context,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_209,train,classroom,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_210,train,classroom,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-22,test,classroom,MISSING,wave,walking,toward_robot,emotion,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-23,test,classroom,fear,MISSING,walking,toward_exit,gesture,F02,Emergency / danger,A14,Halt risky action; check surroundings; notify supervisor,0.0,0.1,1.8
-24,test,classroom,neutral,beckoning,walking,toward_object,context,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
-25,test,classroom,MISSING,raise_hand,standing,stationary,emotion,F04,Help request,A15,Ask clarifying question,0.0,0.0,1.0
-26,test,classroom,neutral,both_hands_up,sitting,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-27,test,classroom,angry,point,walking,toward_robot,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-28,test,classroom,angry,thumbs_up,sitting,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-29,test,classroom,disgust,thumbs_up,sitting,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-30,test,classroom,MISSING,wave,walking,toward_exit,emotion,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-31,test,classroom,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_211,train,kitchen,happy,thumbs_up,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_212,train,kitchen,happy,thumbs_up,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_213,train,kitchen,happy,thumbs_up,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_214,train,kitchen,happy,thumbs_up,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_215,train,kitchen,happy,thumbs_up,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_216,train,kitchen,happy,thumbs_up,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_217,train,kitchen,happy,thumbs_up,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_218,train,kitchen,happy,thumbs_up,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_219,train,kitchen,happy,thumbs_up,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_220,train,kitchen,happy,thumbs_up,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_221,train,kitchen,happy,thumbs_down,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_222,train,kitchen,happy,thumbs_down,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_223,train,kitchen,happy,thumbs_down,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_224,train,kitchen,happy,thumbs_down,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_225,train,offline,happy,thumbs_down,standing,stationary,context,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_226,train,kitchen,happy,thumbs_down,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_227,train,kitchen,happy,thumbs_down,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_228,train,kitchen,happy,thumbs_down,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_229,train,kitchen,happy,thumbs_down,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_230,train,kitchen,happy,thumbs_down,standing,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-aug_231,train,offline,fear,both_hands_up,walking,away_from_robot,context,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_232,train,kitchen,fear,both_hands_up,walking,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_233,train,kitchen,fear,both_hands_up,walking,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_234,train,kitchen,fear,both_hands_up,walking,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_235,train,kitchen,fear,both_hands_up,walking,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_236,train,offline,fear,both_hands_up,walking,away_from_robot,context,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_237,train,kitchen,fear,both_hands_up,walking,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_238,train,kitchen,fear,both_hands_up,walking,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_239,train,kitchen,fear,both_hands_up,walking,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_240,train,kitchen,fear,both_hands_up,walking,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_241,train,kitchen,surprise,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_242,train,kitchen,surprise,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_243,train,kitchen,surprise,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_244,train,kitchen,surprise,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_245,train,kitchen,surprise,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_246,train,kitchen,surprise,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_247,train,kitchen,surprise,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_248,train,kitchen,surprise,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_249,train,kitchen,surprise,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_250,train,kitchen,surprise,both_hands_up,stepping_back,away_from_robot,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-aug_251,train,kitchen,neutral,beckoning,walking,toward_object,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_252,train,kitchen,neutral,beckoning,walking,toward_object,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_253,train,offline,neutral,beckoning,walking,toward_object,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_254,train,kitchen,neutral,beckoning,walking,toward_object,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_255,train,kitchen,neutral,beckoning,walking,toward_object,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_256,train,kitchen,neutral,beckoning,walking,toward_object,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_257,train,offline,neutral,beckoning,walking,toward_object,context,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_258,train,kitchen,neutral,beckoning,walking,toward_object,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_259,train,kitchen,neutral,beckoning,walking,toward_object,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_260,train,kitchen,neutral,beckoning,walking,toward_object,,F03,Task assistance request,A04,Approach/follow to indicated spot; await instruction,0.3,0.2,0.8
-aug_261,train,kitchen,neutral,point,walking,toward_object,,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
-aug_262,train,kitchen,neutral,point,walking,toward_object,,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
-aug_263,train,kitchen,neutral,point,walking,toward_object,,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
-aug_264,train,kitchen,neutral,point,walking,toward_object,,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
-aug_265,train,kitchen,neutral,point,walking,toward_object,,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
-aug_266,train,kitchen,neutral,point,walking,toward_object,,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
-aug_267,train,kitchen,neutral,point,walking,toward_object,,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
-aug_268,train,kitchen,neutral,point,walking,toward_object,,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
-aug_269,train,kitchen,neutral,point,walking,toward_object,,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
-aug_270,train,offline,neutral,point,walking,toward_object,context,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
-aug_271,train,kitchen,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_272,train,kitchen,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_273,train,kitchen,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_274,train,kitchen,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_275,train,offline,sad,thumbs_down,sitting,stationary,context,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_276,train,offline,sad,thumbs_down,sitting,stationary,context,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_277,train,offline,sad,thumbs_down,sitting,stationary,context,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_278,train,kitchen,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_279,train,kitchen,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_280,train,kitchen,sad,thumbs_down,sitting,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_281,train,kitchen,sad,beckoning,standing,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_282,train,kitchen,sad,beckoning,standing,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_283,train,kitchen,sad,beckoning,standing,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_284,train,kitchen,sad,beckoning,standing,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_285,train,kitchen,sad,beckoning,standing,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_286,train,kitchen,sad,beckoning,standing,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_287,train,kitchen,sad,beckoning,standing,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_288,train,offline,sad,beckoning,standing,stationary,context,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_289,train,kitchen,sad,beckoning,standing,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_290,train,kitchen,sad,beckoning,standing,stationary,,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-aug_291,train,offline,neutral,none,standing,stationary,context,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_292,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_293,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_294,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_295,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_296,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_297,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_298,train,offline,neutral,none,standing,stationary,context,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_299,train,offline,neutral,none,standing,stationary,context,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_300,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_301,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_302,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_303,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_304,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_305,train,offline,neutral,none,standing,stationary,context,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_306,train,offline,neutral,none,standing,stationary,context,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_307,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_308,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_309,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_310,train,kitchen,neutral,none,standing,stationary,,F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-aug_311,train,kitchen,disgust,point,stepping_back,away_from_robot,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_312,train,kitchen,disgust,point,stepping_back,away_from_robot,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_313,train,kitchen,disgust,point,stepping_back,away_from_robot,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_314,train,offline,disgust,point,stepping_back,away_from_robot,context,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_315,train,kitchen,disgust,point,stepping_back,away_from_robot,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_316,train,kitchen,disgust,point,stepping_back,away_from_robot,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_317,train,kitchen,disgust,point,stepping_back,away_from_robot,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_318,train,kitchen,disgust,point,stepping_back,away_from_robot,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_319,train,kitchen,disgust,point,stepping_back,away_from_robot,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_320,train,kitchen,disgust,point,stepping_back,away_from_robot,,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_321,train,kitchen,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_322,train,kitchen,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_323,train,kitchen,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_324,train,kitchen,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_325,train,offline,neutral,MISSING,walking,toward_robot,"gesture,context",F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_326,train,kitchen,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_327,train,kitchen,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_328,train,kitchen,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_329,train,kitchen,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_330,train,kitchen,neutral,MISSING,walking,toward_robot,gesture,F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-aug_331,train,kitchen,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_332,train,kitchen,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_333,train,kitchen,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_334,train,offline,angry,both_hands_up,standing,stationary,context,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_335,train,kitchen,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_336,train,kitchen,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_337,train,kitchen,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_338,train,kitchen,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_339,train,kitchen,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_340,train,kitchen,angry,both_hands_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_341,train,kitchen,angry,point,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_342,train,kitchen,angry,point,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_343,train,offline,angry,point,standing,stationary,context,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_344,train,kitchen,angry,point,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_345,train,kitchen,angry,point,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_346,train,kitchen,angry,point,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_347,train,kitchen,angry,point,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_348,train,kitchen,angry,point,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_349,train,kitchen,angry,point,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_350,train,kitchen,angry,point,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-aug_351,train,kitchen,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_352,train,kitchen,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_353,train,kitchen,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_354,train,offline,disgust,thumbs_down,stepping_back,away_from_robot,context,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_355,train,kitchen,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_356,train,kitchen,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_357,train,kitchen,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_358,train,kitchen,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_359,train,offline,disgust,thumbs_down,stepping_back,away_from_robot,context,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_360,train,kitchen,disgust,thumbs_down,stepping_back,away_from_robot,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_361,train,kitchen,disgust,thumbs_down,standing,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_362,train,kitchen,disgust,thumbs_down,standing,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_363,train,kitchen,disgust,thumbs_down,standing,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_364,train,kitchen,disgust,thumbs_down,standing,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_365,train,kitchen,disgust,thumbs_down,standing,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_366,train,kitchen,disgust,thumbs_down,standing,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_367,train,kitchen,disgust,thumbs_down,standing,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_368,train,kitchen,disgust,thumbs_down,standing,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_369,train,offline,disgust,thumbs_down,standing,stationary,context,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_370,train,kitchen,disgust,thumbs_down,standing,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-aug_371,train,kitchen,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_372,train,kitchen,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_373,train,kitchen,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_374,train,kitchen,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_375,train,kitchen,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_376,train,offline,happy,wave,walking,toward_exit,context,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_377,train,kitchen,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_378,train,kitchen,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_379,train,kitchen,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_380,train,kitchen,happy,wave,walking,toward_exit,,F09,Farewell,A09,Wave back; do not follow,0.0,0.0,1.5
-aug_381,train,kitchen,MISSING,wave,walking,toward_exit,emotion,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_382,train,kitchen,MISSING,wave,walking,toward_exit,emotion,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_383,train,kitchen,MISSING,wave,walking,toward_exit,emotion,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_384,train,kitchen,MISSING,wave,walking,toward_exit,emotion,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_385,train,kitchen,MISSING,wave,walking,toward_exit,emotion,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_386,train,kitchen,MISSING,wave,walking,toward_exit,emotion,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_387,train,offline,MISSING,wave,walking,toward_exit,"emotion,context",F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_388,train,kitchen,MISSING,wave,walking,toward_exit,emotion,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_389,train,kitchen,MISSING,wave,walking,toward_exit,emotion,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_390,train,kitchen,MISSING,wave,walking,toward_exit,emotion,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-aug_391,train,kitchen,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_392,train,kitchen,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_393,train,kitchen,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_394,train,kitchen,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_395,train,offline,sad,none,sitting,stationary,context,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_396,train,kitchen,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_397,train,kitchen,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_398,train,kitchen,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_399,train,kitchen,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_400,train,kitchen,sad,none,sitting,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_401,train,kitchen,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_402,train,kitchen,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_403,train,kitchen,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_404,train,kitchen,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_405,train,kitchen,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_406,train,kitchen,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_407,train,offline,sad,none,standing,stationary,context,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_408,train,kitchen,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_409,train,kitchen,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-aug_410,train,kitchen,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
-52,test,kitchen,happy,raise_hand,sitting,stationary,,F01,Greeting / positive acknowledgment,A01,Positive acknowledgment; prompt/prepare next task,0.0,0.0,1.0
-53,test,kitchen,fear,MISSING,walking,toward_exit,gesture,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-54,test,kitchen,fear,none,standing,stationary,,F02,Emergency / danger,A02,Halt all motion + fire/smoke alert,0.0,0.0,2.0
-55,test,kitchen,happy,point,walking,toward_object,,F03,Task assistance request,A13,Follow; offer to fetch/carry,0.4,0.2,1.0
-56,test,kitchen,sad,beckoning,standing,stationary,context,F04,Help request,A05,"Offer task guidance / answer, supportive tone",0.0,0.1,1.0
-57,test,kitchen,MISSING,MISSING,standing,stationary,"emotion,gesture",F05,Engaged / busy - no interaction needed,A06,Hold position; do not interrupt; stay aware,0.0,0.0,1.5
-58,test,kitchen,MISSING,MISSING,walking,toward_robot,"emotion,gesture",F06,Requests passage / space,A11,Move aside promptly; clear path,0.3,0.5,0.5
-59,test,kitchen,angry,thumbs_up,standing,stationary,,F07,Frustration / agitation,A08,"Calm assistance, soft tone (de-escalation)",0.0,0.05,1.5
-60,test,kitchen,disgust,thumbs_down,sitting,stationary,,F08,Break / relief request,A07,Acknowledge; suggest break/alternative activity,0.0,0.0,1.2
-61,test,kitchen,sad,wave,walking,toward_exit,,F09,Farewell,A10,Acknowledge farewell; hold position,0.0,0.0,1.5
-62,test,kitchen,sad,none,standing,stationary,,F10,Discouraged / giving up,A12,Encourage; suggest alternative approach,0.0,0.0,1.0
+scenario_id,split,context,description,emotion,gesture,motion,direction,missing_cues,intent,intent_code,action,action_code,intent_idx,intent_confidence,motion_idx,direction_idx,human_speed,human_is_moving,context_idx,action_idx,target_v,target_omega,target_d,target_linear_v,target_angular_w,target_comfort_d
+18,test,classroom,Student waves goodbye with happy face while walking to the door at dismissal,happy,wave,walking,toward_exit,,F01,F01,A09,A09,0,0.95,2,3,0.8,1.0,0,8,0.0,0.0,1.5,0.0,0.0,1.5
+22,test,classroom,Student waves while walking toward robot face occluded by a held book emotion not captured,MISSING,wave,walking,toward_robot,emotion,F01,F01,A01,A01,0,0.95,2,0,0.8,1.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
+23,test,classroom,Visitor standing in a hospital waiting area gasps in surprise raising both hands as fixture detaches,surprise,both_hands_up,standing,stationary,,F02,F02,A02,A02,1,0.95,1,5,0.0,0.0,0,1,0.0,0.0,2.0,0.0,0.0,2.0
+24,test,classroom,Student beckons robot while walking toward the supply shelf room-identity sensor offline,neutral,beckoning,walking,toward_object,context,F03,F03,A13,A13,2,0.95,2,2,0.8,1.0,0,12,0.4,0.2,1.0,0.4,0.2,1.0
+25,test,classroom,Student raises hand leaning forward emotion sensor occluded,MISSING,raise_hand,stepping_back,stationary,emotion,F04,F04,A15,A15,3,0.95,3,5,0.5,1.0,0,14,0.0,0.0,1.0,0.0,0.0,1.0
+26,test,classroom,Visitor seated on gallery bench focused on sketching artwork with neutral expression,neutral,none,sitting,stationary,,F05,F05,A06,A06,4,0.95,0,5,0.0,0.0,0,5,0.0,0.0,1.5,0.0,0.0,1.5
+27,test,classroom,Student stands up angrily points at robot stepping toward it,angry,point,walking,toward_robot,,F06,F06,A11,A11,5,0.95,2,0,0.8,1.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+28,test,classroom,Student scowls angrily while giving an exaggerated thumbs up after being corrected seated,angry,thumbs_up,sitting,stationary,,F07,F07,A08,A08,6,0.95,0,5,0.0,0.0,0,7,0.0,0.05,1.5,0.0,0.05,1.5
+29,test,classroom,Student gives thumbs up with disgusted face after finishing a disliked task seated,disgust,thumbs_up,sitting,stationary,,F08,F08,A07,A07,7,0.95,0,5,0.0,0.0,0,6,0.0,0.0,1.2,0.0,0.0,1.2
+31,test,classroom,Student drops the crumpled quiz on desk and stands turned away sad arms slack no gesture,sad,none,stepping_back,stationary,,F10,F10,A12,A12,9,0.95,3,5,0.5,1.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+53,test,kitchen,Visitor fleeing exhibit hall after fire alarm waves both arms frantic running to exit,fear,both_hands_up,walking,toward_exit,,F02,F02,A02,A02,1,0.95,2,3,0.8,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+54,test,kitchen,Patient standing in corridor clutching chest in acute distress raises both hands fearful,fear,both_hands_up,standing,stationary,,F02,F02,A03,A03,1,0.95,1,5,0.0,0.0,1,2,0.0,0.0,2.0,0.0,0.0,2.0
+55,test,kitchen,Nurse approaching equipment station points directly at IV pole with focused neutral face,happy,point,walking,toward_object,,F03,F03,A13,A13,2,0.95,2,2,0.8,1.0,1,12,0.4,0.2,1.0,0.4,0.2,1.0
+56,test,kitchen,Person beckons robot with sad face standing room-identity sensor offline,sad,beckoning,standing,stationary,context,F04,F04,A05,A05,3,0.95,1,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+57,test,kitchen,Person slowly stirs pot with content neutral expression deeply focused,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.95,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+58,test,kitchen,Person carrying stacked trays walks toward robot hands occupied face hidden,MISSING,MISSING,walking,toward_robot,"emotion,gesture",F06,F06,A11,A11,5,0.95,2,0,0.8,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+59,test,kitchen,Person gives thumbs up with angry face after being told to redo recipe standing,angry,thumbs_up,standing,stationary,,F07,F07,A08,A08,6,0.95,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+60,test,kitchen,Person pushes plate away at table disgusted thumbs down seated,disgust,thumbs_down,sitting,stationary,,F08,F08,A07,A07,7,0.95,0,5,0.0,0.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+61,test,kitchen,Visitor walking toward museum entrance waves goodbye to robot guide smiling,happy,wave,walking,toward_exit,,F01,F01,A10,A10,0,0.95,2,3,0.8,1.0,1,9,0.0,0.0,1.5,0.0,0.0,1.5
+62,test,kitchen,Person slumps forward over counter head down over failed dish sad no gesture,sad,none,stepping_back,stationary,,F10,F10,A12,A12,9,0.95,3,5,0.5,1.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+63,test,kitchen,Person sits down looking sad slow movement staring at failed dish,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.95,0,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+64,test,kitchen,Museum curator carrying heavy display box walks quickly toward robot neutral,neutral,none,walking,toward_robot,,F06,F06,A11,A11,5,0.95,2,0,0.8,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+65,test,kitchen,Visitor gives exaggerated thumbs up with angry scowl after warning standing,angry,thumbs_up,standing,stationary,,F07,F07,A08,A08,6,0.95,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+66,test,kitchen,Nurse beckons robot while walking toward IV pole with neutral expression,neutral,beckoning,walking,toward_object,,F03,F03,A13,A13,2,0.95,2,2,0.8,1.0,1,12,0.4,0.2,1.0,0.4,0.2,1.0
+67,test,kitchen,Recovering patient in bed grimaces disgusted while giving thumbs up seated,disgust,thumbs_up,sitting,stationary,,F08,F08,A07,A07,7,0.95,0,5,0.0,0.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+68,test,kitchen,Visitor flees exhibit hall in terror after alarm gesture blur,fear,MISSING,walking,toward_exit,gesture,F02,F02,A02,A02,1,0.95,2,3,0.8,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+69,test,kitchen,Paramedic pushing gurney points sternly down hallway angry stepping to robot,angry,point,walking,toward_robot,,F06,F06,A11,A11,5,0.95,2,0,0.8,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+70,test,kitchen,Visitor inspecting disturbing art gives thumbs down disgusted stepping back,disgust,thumbs_down,sitting,stationary,,F08,F08,A07,A07,7,0.95,0,5,0.0,0.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+71,test,kitchen,Paramedic pushing gurney walks rapidly down corridor toward robot waving aside,neutral,wave,walking,toward_robot,,F06,F06,A11,A11,5,0.95,2,0,0.8,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+72,test,kitchen,Paramedic pushing gurney walks rapidly down corridor toward robot neutral waving aside,sad,none,sitting,stationary,,F10,F10,A11,A11,9,0.95,0,5,0.0,0.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+73,test,kitchen,Paramedic pushing gurney walks rapidly down corridor toward robot neutral waving aside,sad,none,sitting,stationary,,F10,F10,A11,A11,9,0.95,0,5,0.0,0.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+1,train,classroom,Student waves at robot with happy face while walking toward it,happy,wave,walking,toward_robot,,F01,F01,A01,A01,0,0.95,2,0,0.8,1.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
+1,train,classroom,Student waves at robot with happy face while walking toward it,happy,wave,walking,toward_robot,context,F01,F01,A01,A01,0,0.77,2,0,0.81,1.0,2,0,0.0,0.0,1.0,0.0,0.0,1.0
+1,train,classroom,Student waves at robot with happy face while walking toward it,happy,wave,walking,toward_robot,context,F01,F01,A01,A01,0,0.81,2,0,0.71,1.0,2,0,0.0,0.0,1.0,0.0,0.0,1.0
+1,train,classroom,Student waves at robot with happy face while walking toward it,happy,wave,walking,toward_robot,,F01,F01,A01,A01,0,0.76,2,0,0.82,1.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
+1,train,classroom,Student waves at robot with happy face while walking toward it,happy,wave,walking,toward_robot,,F01,F01,A01,A01,0,0.86,2,0,0.83,1.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
+1,train,classroom,Student waves at robot with happy face while walking toward it,happy,wave,walking,toward_robot,,F01,F01,A01,A01,0,0.66,2,0,0.85,1.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
+1,train,classroom,Student waves at robot with happy face while walking toward it,happy,wave,walking,toward_robot,,F01,F01,A01,A01,0,0.68,2,0,0.81,1.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
+2,train,classroom,Student gives thumbs up with happy face while sitting,happy,thumbs_up,sitting,stationary,,F01,F01,A01,A01,0,0.95,0,5,0.0,0.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
+2,train,classroom,Student gives thumbs up with happy face while sitting,happy,thumbs_up,sitting,stationary,,F01,F01,A01,A01,0,0.88,0,5,0.0,0.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
+2,train,classroom,Student gives thumbs up with happy face while sitting,happy,thumbs_up,sitting,stationary,,F01,F01,A01,A01,0,0.95,0,5,0.0,0.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
+2,train,classroom,Student gives thumbs up with happy face while sitting,happy,thumbs_up,sitting,stationary,,F01,F01,A01,A01,0,0.95,0,5,0.0,0.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
+2,train,classroom,Student gives thumbs up with happy face while sitting,happy,thumbs_up,sitting,stationary,,F01,F01,A01,A01,0,0.92,0,5,0.0,0.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
+2,train,classroom,Student gives thumbs up with happy face while sitting,happy,thumbs_up,sitting,stationary,,F01,F01,A01,A01,0,0.93,0,5,0.0,0.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
+2,train,classroom,Student gives thumbs up with happy face while sitting,happy,thumbs_up,sitting,stationary,,F01,F01,A01,A01,0,0.87,0,5,0.0,0.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
+3,train,classroom,Student suddenly stands up from chair startled throwing both hands up,surprise,both_hands_up,standing,stationary,,F02,F02,A14,A14,1,0.95,1,5,0.0,0.0,0,13,0.0,0.1,1.8,0.0,0.1,1.8
+3,train,classroom,Student suddenly stands up from chair startled throwing both hands up,surprise,both_hands_up,standing,stationary,context,F02,F02,A14,A14,1,0.91,1,5,0.0,0.0,2,13,0.0,0.1,1.8,0.0,0.1,1.8
+3,train,classroom,Student suddenly stands up from chair startled throwing both hands up,surprise,both_hands_up,standing,stationary,,F02,F02,A14,A14,1,0.76,1,5,0.0,0.0,0,13,0.0,0.1,1.8,0.0,0.1,1.8
+3,train,classroom,Student suddenly stands up from chair startled throwing both hands up,surprise,both_hands_up,standing,stationary,,F02,F02,A14,A14,1,0.86,1,5,0.0,0.0,0,13,0.0,0.1,1.8,0.0,0.1,1.8
+3,train,classroom,Student suddenly stands up from chair startled throwing both hands up,surprise,both_hands_up,standing,stationary,,F02,F02,A14,A14,1,0.67,1,5,0.0,0.0,0,13,0.0,0.1,1.8,0.0,0.1,1.8
+3,train,classroom,Student suddenly stands up from chair startled throwing both hands up,surprise,both_hands_up,standing,stationary,,F02,F02,A14,A14,1,0.66,1,5,0.0,0.0,0,13,0.0,0.1,1.8,0.0,0.1,1.8
+3,train,classroom,Student suddenly stands up from chair startled throwing both hands up,surprise,both_hands_up,standing,stationary,,F02,F02,A14,A14,1,0.77,1,5,0.0,0.0,0,13,0.0,0.1,1.8,0.0,0.1,1.8
+4,train,classroom,Student jumps back from a desk frightened both hands up,fear,both_hands_up,stepping_back,away_from_robot,,F02,F02,A14,A14,1,0.95,3,1,0.5,1.0,0,13,0.0,0.1,1.8,0.0,0.1,1.8
+4,train,classroom,Student jumps back from a desk frightened both hands up,fear,both_hands_up,stepping_back,away_from_robot,,F02,F02,A14,A14,1,0.83,3,1,0.43,1.0,0,13,0.0,0.1,1.8,0.0,0.1,1.8
+4,train,classroom,Student jumps back from a desk frightened both hands up,fear,both_hands_up,stepping_back,away_from_robot,,F02,F02,A14,A14,1,0.89,3,1,0.43,1.0,0,13,0.0,0.1,1.8,0.0,0.1,1.8
+4,train,classroom,Student jumps back from a desk frightened both hands up,fear,both_hands_up,stepping_back,away_from_robot,,F02,F02,A14,A14,1,0.95,3,1,0.63,1.0,0,13,0.0,0.1,1.8,0.0,0.1,1.8
+4,train,classroom,Student jumps back from a desk frightened both hands up,fear,both_hands_up,stepping_back,away_from_robot,context,F02,F02,A14,A14,1,0.98,3,1,0.63,1.0,2,13,0.0,0.1,1.8,0.0,0.1,1.8
+4,train,classroom,Student jumps back from a desk frightened both hands up,fear,both_hands_up,stepping_back,away_from_robot,,F02,F02,A14,A14,1,0.85,3,1,0.56,1.0,0,13,0.0,0.1,1.8,0.0,0.1,1.8
+4,train,classroom,Student jumps back from a desk frightened both hands up,fear,both_hands_up,stepping_back,away_from_robot,,F02,F02,A14,A14,1,0.89,3,1,0.37,1.0,0,13,0.0,0.1,1.8,0.0,0.1,1.8
+5,train,classroom,Student beckons robot over with neutral face while sitting,neutral,beckoning,sitting,stationary,,F03,F03,A04,A04,2,0.95,0,5,0.0,0.0,0,3,0.3,0.2,0.8,0.3,0.2,0.8
+5,train,classroom,Student beckons robot over with neutral face while sitting,neutral,beckoning,sitting,stationary,,F03,F03,A04,A04,2,0.65,0,5,0.0,0.0,0,3,0.3,0.2,0.8,0.3,0.2,0.8
+5,train,classroom,Student beckons robot over with neutral face while sitting,neutral,beckoning,sitting,stationary,context,F03,F03,A04,A04,2,0.87,0,5,0.0,0.0,2,3,0.3,0.2,0.8,0.3,0.2,0.8
+5,train,classroom,Student beckons robot over with neutral face while sitting,neutral,beckoning,sitting,stationary,,F03,F03,A04,A04,2,0.65,0,5,0.0,0.0,0,3,0.3,0.2,0.8,0.3,0.2,0.8
+5,train,classroom,Student beckons robot over with neutral face while sitting,neutral,beckoning,sitting,stationary,,F03,F03,A04,A04,2,0.94,0,5,0.0,0.0,0,3,0.3,0.2,0.8,0.3,0.2,0.8
+5,train,classroom,Student beckons robot over with neutral face while sitting,neutral,beckoning,sitting,stationary,context,F03,F03,A04,A04,2,0.92,0,5,0.0,0.0,2,3,0.3,0.2,0.8,0.3,0.2,0.8
+5,train,classroom,Student beckons robot over with neutral face while sitting,neutral,beckoning,sitting,stationary,,F03,F03,A04,A04,2,0.71,0,5,0.0,0.0,0,3,0.3,0.2,0.8,0.3,0.2,0.8
+6,train,classroom,Student beckons the robot to their desk with neutral face seated context sensor offline,neutral,beckoning,sitting,stationary,context,F03,F03,A04,A04,2,0.95,0,5,0.0,0.0,0,3,0.3,0.2,0.8,0.3,0.2,0.8
+6,train,classroom,Student beckons the robot to their desk with neutral face seated context sensor offline,neutral,beckoning,sitting,stationary,context,F03,F03,A04,A04,2,0.9,0,5,0.0,0.0,0,3,0.3,0.2,0.8,0.3,0.2,0.8
+6,train,classroom,Student beckons the robot to their desk with neutral face seated context sensor offline,neutral,beckoning,sitting,stationary,context,F03,F03,A04,A04,2,0.66,0,5,0.0,0.0,0,3,0.3,0.2,0.8,0.3,0.2,0.8
+6,train,classroom,Student beckons the robot to their desk with neutral face seated context sensor offline,neutral,beckoning,sitting,stationary,context,F03,F03,A04,A04,2,0.94,0,5,0.0,0.0,0,3,0.3,0.2,0.8,0.3,0.2,0.8
+6,train,classroom,Student beckons the robot to their desk with neutral face seated context sensor offline,neutral,beckoning,sitting,stationary,context,F03,F03,A04,A04,2,0.9,0,5,0.0,0.0,0,3,0.3,0.2,0.8,0.3,0.2,0.8
+6,train,classroom,Student beckons the robot to their desk with neutral face seated context sensor offline,neutral,beckoning,sitting,stationary,context,F03,F03,A04,A04,2,0.87,0,5,0.0,0.0,0,3,0.3,0.2,0.8,0.3,0.2,0.8
+6,train,classroom,Student beckons the robot to their desk with neutral face seated context sensor offline,neutral,beckoning,sitting,stationary,context,F03,F03,A04,A04,2,0.83,0,5,0.0,0.0,0,3,0.3,0.2,0.8,0.3,0.2,0.8
+7,train,classroom,Student raises hand with neutral face while sitting at desk,neutral,raise_hand,sitting,stationary,,F04,F04,A05,A05,3,0.95,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+7,train,classroom,Student raises hand with neutral face while sitting at desk,neutral,raise_hand,sitting,stationary,,F04,F04,A05,A05,3,0.83,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+7,train,classroom,Student raises hand with neutral face while sitting at desk,neutral,raise_hand,sitting,stationary,,F04,F04,A05,A05,3,0.88,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+7,train,classroom,Student raises hand with neutral face while sitting at desk,neutral,raise_hand,sitting,stationary,,F04,F04,A05,A05,3,0.91,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+7,train,classroom,Student raises hand with neutral face while sitting at desk,neutral,raise_hand,sitting,stationary,,F04,F04,A05,A05,3,0.73,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+7,train,classroom,Student raises hand with neutral face while sitting at desk,neutral,raise_hand,sitting,stationary,context,F04,F04,A05,A05,3,0.88,0,5,0.0,0.0,2,4,0.0,0.1,1.0,0.0,0.1,1.0
+7,train,classroom,Student raises hand with neutral face while sitting at desk,neutral,raise_hand,sitting,stationary,,F04,F04,A05,A05,3,0.8,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+8,train,classroom,Student with sad face gives thumbs down toward own worksheet barely moving seated,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.95,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+8,train,classroom,Student with sad face gives thumbs down toward own worksheet barely moving seated,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.9,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+8,train,classroom,Student with sad face gives thumbs down toward own worksheet barely moving seated,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.84,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+8,train,classroom,Student with sad face gives thumbs down toward own worksheet barely moving seated,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.66,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+8,train,classroom,Student with sad face gives thumbs down toward own worksheet barely moving seated,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.7,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+8,train,classroom,Student with sad face gives thumbs down toward own worksheet barely moving seated,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.97,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+8,train,classroom,Student with sad face gives thumbs down toward own worksheet barely moving seated,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.71,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+9,train,classroom,Student slumped and sad staring down hands below desk no gesture captured,sad,none,sitting,stationary,gesture,F04,F04,A05,A05,3,0.95,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+9,train,classroom,Student slumped and sad staring down hands below desk no gesture captured,sad,none,sitting,stationary,gesture,F04,F04,A05,A05,3,0.69,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+9,train,classroom,Student slumped and sad staring down hands below desk no gesture captured,sad,none,sitting,stationary,gesture,F04,F04,A05,A05,3,0.91,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+9,train,classroom,Student slumped and sad staring down hands below desk no gesture captured,sad,none,sitting,stationary,context,F04,F04,A05,A05,3,0.85,0,5,0.0,0.0,2,4,0.0,0.1,1.0,0.0,0.1,1.0
+9,train,classroom,Student slumped and sad staring down hands below desk no gesture captured,sad,none,sitting,stationary,gesture,F04,F04,A05,A05,3,0.74,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+9,train,classroom,Student slumped and sad staring down hands below desk no gesture captured,sad,none,sitting,stationary,gesture,F04,F04,A05,A05,3,0.83,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+9,train,classroom,Student slumped and sad staring down hands below desk no gesture captured,sad,none,sitting,stationary,gesture,F04,F04,A05,A05,3,0.82,0,5,0.0,0.0,0,4,0.0,0.1,1.0,0.0,0.1,1.0
+10,train,classroom,Student writes notes during lecture occasionally pointing at the notebook neutral face,neutral,none,sitting,stationary,,F05,F05,A06,A06,4,0.95,0,5,0.0,0.0,0,5,0.0,0.0,1.5,0.0,0.0,1.5
+10,train,classroom,Student writes notes during lecture occasionally pointing at the notebook neutral face,neutral,none,sitting,stationary,,F05,F05,A06,A06,4,0.85,0,5,0.0,0.0,0,5,0.0,0.0,1.5,0.0,0.0,1.5
+10,train,classroom,Student writes notes during lecture occasionally pointing at the notebook neutral face,neutral,none,sitting,stationary,,F05,F05,A06,A06,4,0.74,0,5,0.0,0.0,0,5,0.0,0.0,1.5,0.0,0.0,1.5
+10,train,classroom,Student writes notes during lecture occasionally pointing at the notebook neutral face,neutral,none,sitting,stationary,,F05,F05,A06,A06,4,0.69,0,5,0.0,0.0,0,5,0.0,0.0,1.5,0.0,0.0,1.5
+10,train,classroom,Student writes notes during lecture occasionally pointing at the notebook neutral face,neutral,none,sitting,stationary,context,F05,F05,A06,A06,4,0.72,0,5,0.0,0.0,2,5,0.0,0.0,1.5,0.0,0.0,1.5
+10,train,classroom,Student writes notes during lecture occasionally pointing at the notebook neutral face,neutral,none,sitting,stationary,context,F05,F05,A06,A06,4,0.87,0,5,0.0,0.0,2,5,0.0,0.0,1.5,0.0,0.0,1.5
+10,train,classroom,Student writes notes during lecture occasionally pointing at the notebook neutral face,neutral,none,sitting,stationary,,F05,F05,A06,A06,4,0.72,0,5,0.0,0.0,0,5,0.0,0.0,1.5,0.0,0.0,1.5
+11,train,classroom,Student smiles and raises hand while sitting volunteering to answer the teacher,happy,raise_hand,sitting,stationary,,F05,F05,A06,A06,4,0.95,0,5,0.0,0.0,0,5,0.0,0.0,1.5,0.0,0.0,1.5
+11,train,classroom,Student smiles and raises hand while sitting volunteering to answer the teacher,happy,raise_hand,sitting,stationary,,F05,F05,A06,A06,4,0.83,0,5,0.0,0.0,0,5,0.0,0.0,1.5,0.0,0.0,1.5
+11,train,classroom,Student smiles and raises hand while sitting volunteering to answer the teacher,happy,raise_hand,sitting,stationary,,F05,F05,A06,A06,4,0.89,0,5,0.0,0.0,0,5,0.0,0.0,1.5,0.0,0.0,1.5
+11,train,classroom,Student smiles and raises hand while sitting volunteering to answer the teacher,happy,raise_hand,sitting,stationary,,F05,F05,A06,A06,4,0.7,0,5,0.0,0.0,0,5,0.0,0.0,1.5,0.0,0.0,1.5
+11,train,classroom,Student smiles and raises hand while sitting volunteering to answer the teacher,happy,raise_hand,sitting,stationary,,F05,F05,A06,A06,4,0.75,0,5,0.0,0.0,0,5,0.0,0.0,1.5,0.0,0.0,1.5
+11,train,classroom,Student smiles and raises hand while sitting volunteering to answer the teacher,happy,raise_hand,sitting,stationary,,F05,F05,A06,A06,4,0.94,0,5,0.0,0.0,0,5,0.0,0.0,1.5,0.0,0.0,1.5
+11,train,classroom,Student smiles and raises hand while sitting volunteering to answer the teacher,happy,raise_hand,sitting,stationary,,F05,F05,A06,A06,4,0.89,0,5,0.0,0.0,0,5,0.0,0.0,1.5,0.0,0.0,1.5
+12,train,classroom,Student walks toward robot in a narrow aisle carrying books hands occupied gesture not captured,neutral,MISSING,walking,toward_robot,gesture,F06,F06,A11,A11,5,0.95,2,0,0.8,1.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+12,train,classroom,Student walks toward robot in a narrow aisle carrying books hands occupied gesture not captured,neutral,MISSING,walking,toward_robot,gesture,F06,F06,A11,A11,5,0.86,2,0,0.8,1.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+12,train,classroom,Student walks toward robot in a narrow aisle carrying books hands occupied gesture not captured,neutral,MISSING,walking,toward_robot,gesture,F06,F06,A11,A11,5,0.9,2,0,0.8,1.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+12,train,classroom,Student walks toward robot in a narrow aisle carrying books hands occupied gesture not captured,neutral,MISSING,walking,toward_robot,gesture,F06,F06,A11,A11,5,0.84,2,0,0.68,1.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+12,train,classroom,Student walks toward robot in a narrow aisle carrying books hands occupied gesture not captured,neutral,MISSING,walking,toward_robot,gesture,F06,F06,A11,A11,5,0.72,2,0,0.73,1.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+12,train,classroom,Student walks toward robot in a narrow aisle carrying books hands occupied gesture not captured,neutral,MISSING,walking,toward_robot,gesture,F06,F06,A11,A11,5,0.7,2,0,0.93,1.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+12,train,classroom,Student walks toward robot in a narrow aisle carrying books hands occupied gesture not captured,neutral,MISSING,walking,toward_robot,gesture,F06,F06,A11,A11,5,0.97,2,0,0.85,1.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+13,train,classroom,Student annoyed by the robot hovering waves it away with angry face standing,angry,wave,standing,stationary,,F06,F06,A11,A11,5,0.95,1,5,0.0,0.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+13,train,classroom,Student annoyed by the robot hovering waves it away with angry face standing,angry,wave,standing,stationary,,F06,F06,A11,A11,5,0.98,1,5,0.0,0.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+13,train,classroom,Student annoyed by the robot hovering waves it away with angry face standing,angry,wave,standing,stationary,,F06,F06,A11,A11,5,0.68,1,5,0.0,0.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+13,train,classroom,Student annoyed by the robot hovering waves it away with angry face standing,angry,wave,standing,stationary,,F06,F06,A11,A11,5,0.89,1,5,0.0,0.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+13,train,classroom,Student annoyed by the robot hovering waves it away with angry face standing,angry,wave,standing,stationary,context,F06,F06,A11,A11,5,0.83,1,5,0.0,0.0,2,10,0.3,0.5,0.5,0.3,0.5,0.5
+13,train,classroom,Student annoyed by the robot hovering waves it away with angry face standing,angry,wave,standing,stationary,,F06,F06,A11,A11,5,0.98,1,5,0.0,0.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+13,train,classroom,Student annoyed by the robot hovering waves it away with angry face standing,angry,wave,standing,stationary,,F06,F06,A11,A11,5,0.68,1,5,0.0,0.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
+14,train,classroom,Student raises both hands in frustration rigid posture standing,angry,both_hands_up,standing,stationary,,F07,F07,A08,A08,6,0.95,1,5,0.0,0.0,0,7,0.0,0.05,1.5,0.0,0.05,1.5
+14,train,classroom,Student raises both hands in frustration rigid posture standing,angry,both_hands_up,standing,stationary,context,F07,F07,A08,A08,6,0.7,1,5,0.0,0.0,2,7,0.0,0.05,1.5,0.0,0.05,1.5
+14,train,classroom,Student raises both hands in frustration rigid posture standing,angry,both_hands_up,standing,stationary,,F07,F07,A08,A08,6,0.7,1,5,0.0,0.0,0,7,0.0,0.05,1.5,0.0,0.05,1.5
+14,train,classroom,Student raises both hands in frustration rigid posture standing,angry,both_hands_up,standing,stationary,context,F07,F07,A08,A08,6,0.74,1,5,0.0,0.0,2,7,0.0,0.05,1.5,0.0,0.05,1.5
+14,train,classroom,Student raises both hands in frustration rigid posture standing,angry,both_hands_up,standing,stationary,,F07,F07,A08,A08,6,0.96,1,5,0.0,0.0,0,7,0.0,0.05,1.5,0.0,0.05,1.5
+14,train,classroom,Student raises both hands in frustration rigid posture standing,angry,both_hands_up,standing,stationary,,F07,F07,A08,A08,6,0.91,1,5,0.0,0.0,0,7,0.0,0.05,1.5,0.0,0.05,1.5
+14,train,classroom,Student raises both hands in frustration rigid posture standing,angry,both_hands_up,standing,stationary,,F07,F07,A08,A08,6,0.72,1,5,0.0,0.0,0,7,0.0,0.05,1.5,0.0,0.05,1.5
+15,train,classroom,Student crumples a worksheet and gives thumbs down with angry face seated,angry,thumbs_down,sitting,stationary,,F07,F07,A08,A08,6,0.95,0,5,0.0,0.0,0,7,0.0,0.05,1.5,0.0,0.05,1.5
+15,train,classroom,Student crumples a worksheet and gives thumbs down with angry face seated,angry,thumbs_down,sitting,stationary,context,F07,F07,A08,A08,6,0.67,0,5,0.0,0.0,2,7,0.0,0.05,1.5,0.0,0.05,1.5
+15,train,classroom,Student crumples a worksheet and gives thumbs down with angry face seated,angry,thumbs_down,sitting,stationary,,F07,F07,A08,A08,6,0.7,0,5,0.0,0.0,0,7,0.0,0.05,1.5,0.0,0.05,1.5
+15,train,classroom,Student crumples a worksheet and gives thumbs down with angry face seated,angry,thumbs_down,sitting,stationary,,F07,F07,A08,A08,6,0.88,0,5,0.0,0.0,0,7,0.0,0.05,1.5,0.0,0.05,1.5
+15,train,classroom,Student crumples a worksheet and gives thumbs down with angry face seated,angry,thumbs_down,sitting,stationary,,F07,F07,A08,A08,6,0.94,0,5,0.0,0.0,0,7,0.0,0.05,1.5,0.0,0.05,1.5
+15,train,classroom,Student crumples a worksheet and gives thumbs down with angry face seated,angry,thumbs_down,sitting,stationary,,F07,F07,A08,A08,6,0.65,0,5,0.0,0.0,0,7,0.0,0.05,1.5,0.0,0.05,1.5
+15,train,classroom,Student crumples a worksheet and gives thumbs down with angry face seated,angry,thumbs_down,sitting,stationary,context,F07,F07,A08,A08,6,0.68,0,5,0.0,0.0,2,7,0.0,0.05,1.5,0.0,0.05,1.5
+16,train,classroom,Student pushes worksheet away gives thumbs down with disgusted face stepping back from desk,disgust,thumbs_down,stepping_back,away_from_robot,,F08,F08,A07,A07,7,0.95,3,1,0.5,1.0,0,6,0.0,0.0,1.2,0.0,0.0,1.2
+16,train,classroom,Student pushes worksheet away gives thumbs down with disgusted face stepping back from desk,disgust,thumbs_down,stepping_back,away_from_robot,,F08,F08,A07,A07,7,0.76,3,1,0.46,1.0,0,6,0.0,0.0,1.2,0.0,0.0,1.2
+16,train,classroom,Student pushes worksheet away gives thumbs down with disgusted face stepping back from desk,disgust,thumbs_down,stepping_back,away_from_robot,,F08,F08,A07,A07,7,0.78,3,1,0.49,1.0,0,6,0.0,0.0,1.2,0.0,0.0,1.2
+16,train,classroom,Student pushes worksheet away gives thumbs down with disgusted face stepping back from desk,disgust,thumbs_down,stepping_back,away_from_robot,context,F08,F08,A07,A07,7,0.83,3,1,0.58,1.0,2,6,0.0,0.0,1.2,0.0,0.0,1.2
+16,train,classroom,Student pushes worksheet away gives thumbs down with disgusted face stepping back from desk,disgust,thumbs_down,stepping_back,away_from_robot,,F08,F08,A07,A07,7,0.92,3,1,0.45,1.0,0,6,0.0,0.0,1.2,0.0,0.0,1.2
+16,train,classroom,Student pushes worksheet away gives thumbs down with disgusted face stepping back from desk,disgust,thumbs_down,stepping_back,away_from_robot,context,F08,F08,A07,A07,7,0.85,3,1,0.42,1.0,2,6,0.0,0.0,1.2,0.0,0.0,1.2
+16,train,classroom,Student pushes worksheet away gives thumbs down with disgusted face stepping back from desk,disgust,thumbs_down,stepping_back,away_from_robot,,F08,F08,A07,A07,7,0.77,3,1,0.37,1.0,0,6,0.0,0.0,1.2,0.0,0.0,1.2
+17,train,classroom,Student grimaces at a long assignment gives thumbs down slumping back in chair,disgust,thumbs_down,sitting,stationary,,F08,F08,A07,A07,7,0.95,0,5,0.0,0.0,0,6,0.0,0.0,1.2,0.0,0.0,1.2
+17,train,classroom,Student grimaces at a long assignment gives thumbs down slumping back in chair,disgust,thumbs_down,sitting,stationary,,F08,F08,A07,A07,7,0.89,0,5,0.0,0.0,0,6,0.0,0.0,1.2,0.0,0.0,1.2
+17,train,classroom,Student grimaces at a long assignment gives thumbs down slumping back in chair,disgust,thumbs_down,sitting,stationary,,F08,F08,A07,A07,7,0.73,0,5,0.0,0.0,0,6,0.0,0.0,1.2,0.0,0.0,1.2
+17,train,classroom,Student grimaces at a long assignment gives thumbs down slumping back in chair,disgust,thumbs_down,sitting,stationary,,F08,F08,A07,A07,7,0.84,0,5,0.0,0.0,0,6,0.0,0.0,1.2,0.0,0.0,1.2
+17,train,classroom,Student grimaces at a long assignment gives thumbs down slumping back in chair,disgust,thumbs_down,sitting,stationary,context,F08,F08,A07,A07,7,0.66,0,5,0.0,0.0,2,6,0.0,0.0,1.2,0.0,0.0,1.2
+17,train,classroom,Student grimaces at a long assignment gives thumbs down slumping back in chair,disgust,thumbs_down,sitting,stationary,,F08,F08,A07,A07,7,0.67,0,5,0.0,0.0,0,6,0.0,0.0,1.2,0.0,0.0,1.2
+17,train,classroom,Student grimaces at a long assignment gives thumbs down slumping back in chair,disgust,thumbs_down,sitting,stationary,context,F08,F08,A07,A07,7,0.81,0,5,0.0,0.0,2,6,0.0,0.0,1.2,0.0,0.0,1.2
+19,train,classroom,Student packs bag and waves briefly with neutral face heading toward the door,neutral,wave,walking,toward_exit,,F01,F01,A10,A10,0,0.95,2,3,0.8,1.0,0,9,0.0,0.0,1.5,0.0,0.0,1.5
+19,train,classroom,Student packs bag and waves briefly with neutral face heading toward the door,neutral,wave,walking,toward_exit,,F01,F01,A10,A10,0,0.77,2,3,0.78,1.0,0,9,0.0,0.0,1.5,0.0,0.0,1.5
+19,train,classroom,Student packs bag and waves briefly with neutral face heading toward the door,neutral,wave,walking,toward_exit,,F01,F01,A10,A10,0,0.9,2,3,0.76,1.0,0,9,0.0,0.0,1.5,0.0,0.0,1.5
+19,train,classroom,Student packs bag and waves briefly with neutral face heading toward the door,neutral,wave,walking,toward_exit,,F01,F01,A10,A10,0,0.84,2,3,0.88,1.0,0,9,0.0,0.0,1.5,0.0,0.0,1.5
+19,train,classroom,Student packs bag and waves briefly with neutral face heading toward the door,neutral,wave,walking,toward_exit,,F01,F01,A10,A10,0,0.8,2,3,0.87,1.0,0,9,0.0,0.0,1.5,0.0,0.0,1.5
+19,train,classroom,Student packs bag and waves briefly with neutral face heading toward the door,neutral,wave,walking,toward_exit,,F01,F01,A10,A10,0,0.88,2,3,0.8,1.0,0,9,0.0,0.0,1.5,0.0,0.0,1.5
+19,train,classroom,Student packs bag and waves briefly with neutral face heading toward the door,neutral,wave,walking,toward_exit,context,F01,F01,A10,A10,0,0.94,2,3,0.65,1.0,2,9,0.0,0.0,1.5,0.0,0.0,1.5
+20,train,classroom,Student pushes assignment aside and rests head on desk sad no gesture motionless,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.95,0,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+20,train,classroom,Student pushes assignment aside and rests head on desk sad no gesture motionless,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.8,0,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+20,train,classroom,Student pushes assignment aside and rests head on desk sad no gesture motionless,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.68,0,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+20,train,classroom,Student pushes assignment aside and rests head on desk sad no gesture motionless,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.88,0,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+20,train,classroom,Student pushes assignment aside and rests head on desk sad no gesture motionless,sad,none,sitting,stationary,context,F10,F10,A12,A12,9,0.87,0,5,0.0,0.0,2,11,0.0,0.0,1.0,0.0,0.0,1.0
+20,train,classroom,Student pushes assignment aside and rests head on desk sad no gesture motionless,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.98,0,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+20,train,classroom,Student pushes assignment aside and rests head on desk sad no gesture motionless,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.69,0,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+21,train,classroom,Student stands by desk staring at a failed test sad arms hanging no gesture,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.95,1,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+21,train,classroom,Student stands by desk staring at a failed test sad arms hanging no gesture,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.9,1,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+21,train,classroom,Student stands by desk staring at a failed test sad arms hanging no gesture,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.73,1,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+21,train,classroom,Student stands by desk staring at a failed test sad arms hanging no gesture,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.9,1,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+21,train,classroom,Student stands by desk staring at a failed test sad arms hanging no gesture,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.94,1,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+21,train,classroom,Student stands by desk staring at a failed test sad arms hanging no gesture,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.95,1,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+21,train,classroom,Student stands by desk staring at a failed test sad arms hanging no gesture,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.97,1,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+32,train,kitchen,Cook tastes finished dish smiles gives thumbs up standing still,happy,thumbs_up,standing,stationary,,F01,F01,A01,A01,0,0.95,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+32,train,kitchen,Cook tastes finished dish smiles gives thumbs up standing still,happy,thumbs_up,standing,stationary,,F01,F01,A01,A01,0,0.68,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+32,train,kitchen,Cook tastes finished dish smiles gives thumbs up standing still,happy,thumbs_up,standing,stationary,,F01,F01,A01,A01,0,0.92,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+32,train,kitchen,Cook tastes finished dish smiles gives thumbs up standing still,happy,thumbs_up,standing,stationary,,F01,F01,A01,A01,0,0.74,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+32,train,kitchen,Cook tastes finished dish smiles gives thumbs up standing still,happy,thumbs_up,standing,stationary,,F01,F01,A01,A01,0,0.99,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+32,train,kitchen,Cook tastes finished dish smiles gives thumbs up standing still,happy,thumbs_up,standing,stationary,,F01,F01,A01,A01,0,0.74,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+32,train,kitchen,Cook tastes finished dish smiles gives thumbs up standing still,happy,thumbs_up,standing,stationary,,F01,F01,A01,A01,0,0.78,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+33,train,kitchen,Person gives thumbs down while smiling and shaking head playfully family tasting game,happy,thumbs_down,standing,stationary,,F01,F01,A01,A01,0,0.95,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+33,train,kitchen,Person gives thumbs down while smiling and shaking head playfully family tasting game,happy,thumbs_down,standing,stationary,,F01,F01,A01,A01,0,0.92,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+33,train,kitchen,Person gives thumbs down while smiling and shaking head playfully family tasting game,happy,thumbs_down,standing,stationary,,F01,F01,A01,A01,0,0.73,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+33,train,kitchen,Person gives thumbs down while smiling and shaking head playfully family tasting game,happy,thumbs_down,standing,stationary,,F01,F01,A01,A01,0,0.68,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+33,train,kitchen,Person gives thumbs down while smiling and shaking head playfully family tasting game,happy,thumbs_down,standing,stationary,,F01,F01,A01,A01,0,0.93,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+33,train,kitchen,Person gives thumbs down while smiling and shaking head playfully family tasting game,happy,thumbs_down,standing,stationary,,F01,F01,A01,A01,0,0.9,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+33,train,kitchen,Person gives thumbs down while smiling and shaking head playfully family tasting game,happy,thumbs_down,standing,stationary,,F01,F01,A01,A01,0,0.91,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+34,train,kitchen,Person extends both hands out to signal stop and runs back from smoke at stove,fear,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.95,3,1,0.5,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+34,train,kitchen,Person extends both hands out to signal stop and runs back from smoke at stove,fear,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.75,3,1,0.6,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+34,train,kitchen,Person extends both hands out to signal stop and runs back from smoke at stove,fear,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.85,3,1,0.57,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+34,train,kitchen,Person extends both hands out to signal stop and runs back from smoke at stove,fear,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.93,3,1,0.63,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+34,train,kitchen,Person extends both hands out to signal stop and runs back from smoke at stove,fear,both_hands_up,stepping_back,away_from_robot,context,F02,F02,A02,A02,1,0.93,3,1,0.38,1.0,2,1,0.0,0.0,2.0,0.0,0.0,2.0
+34,train,kitchen,Person extends both hands out to signal stop and runs back from smoke at stove,fear,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.78,3,1,0.56,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+34,train,kitchen,Person extends both hands out to signal stop and runs back from smoke at stove,fear,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.81,3,1,0.56,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+35,train,kitchen,Person touches hot pan startled throws both hands up and steps back,surprise,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.95,3,1,0.5,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+35,train,kitchen,Person touches hot pan startled throws both hands up and steps back,surprise,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.92,3,1,0.63,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+35,train,kitchen,Person touches hot pan startled throws both hands up and steps back,surprise,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.7,3,1,0.57,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+35,train,kitchen,Person touches hot pan startled throws both hands up and steps back,surprise,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.83,3,1,0.54,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+35,train,kitchen,Person touches hot pan startled throws both hands up and steps back,surprise,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.86,3,1,0.53,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+35,train,kitchen,Person touches hot pan startled throws both hands up and steps back,surprise,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.74,3,1,0.62,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+35,train,kitchen,Person touches hot pan startled throws both hands up and steps back,surprise,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.96,3,1,0.55,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
+36,train,kitchen,Person beckons robot toward stove with neutral face while walking there,neutral,beckoning,walking,toward_object,,F03,F03,A04,A04,2,0.95,2,2,0.8,1.0,1,3,0.3,0.2,0.8,0.3,0.2,0.8
+36,train,kitchen,Person beckons robot toward stove with neutral face while walking there,neutral,beckoning,walking,toward_object,,F03,F03,A04,A04,2,0.98,2,2,0.86,1.0,1,3,0.3,0.2,0.8,0.3,0.2,0.8
+36,train,kitchen,Person beckons robot toward stove with neutral face while walking there,neutral,beckoning,walking,toward_object,context,F03,F03,A04,A04,2,0.82,2,2,0.71,1.0,2,3,0.3,0.2,0.8,0.3,0.2,0.8
+36,train,kitchen,Person beckons robot toward stove with neutral face while walking there,neutral,beckoning,walking,toward_object,,F03,F03,A04,A04,2,0.95,2,2,0.86,1.0,1,3,0.3,0.2,0.8,0.3,0.2,0.8
+36,train,kitchen,Person beckons robot toward stove with neutral face while walking there,neutral,beckoning,walking,toward_object,,F03,F03,A04,A04,2,0.91,2,2,0.86,1.0,1,3,0.3,0.2,0.8,0.3,0.2,0.8
+36,train,kitchen,Person beckons robot toward stove with neutral face while walking there,neutral,beckoning,walking,toward_object,,F03,F03,A04,A04,2,0.65,2,2,0.93,1.0,1,3,0.3,0.2,0.8,0.3,0.2,0.8
+36,train,kitchen,Person beckons robot toward stove with neutral face while walking there,neutral,beckoning,walking,toward_object,,F03,F03,A04,A04,2,0.96,2,2,0.86,1.0,1,3,0.3,0.2,0.8,0.3,0.2,0.8
+37,train,kitchen,Person points at a shelf while walking toward it neutral face,neutral,point,walking,toward_object,,F03,F03,A13,A13,2,0.95,2,2,0.8,1.0,1,12,0.4,0.2,1.0,0.4,0.2,1.0
+37,train,kitchen,Person points at a shelf while walking toward it neutral face,neutral,point,walking,toward_object,,F03,F03,A13,A13,2,0.87,2,2,0.87,1.0,1,12,0.4,0.2,1.0,0.4,0.2,1.0
+37,train,kitchen,Person points at a shelf while walking toward it neutral face,neutral,point,walking,toward_object,,F03,F03,A13,A13,2,0.88,2,2,0.91,1.0,1,12,0.4,0.2,1.0,0.4,0.2,1.0
+37,train,kitchen,Person points at a shelf while walking toward it neutral face,neutral,point,walking,toward_object,,F03,F03,A13,A13,2,0.75,2,2,0.65,1.0,1,12,0.4,0.2,1.0,0.4,0.2,1.0
+37,train,kitchen,Person points at a shelf while walking toward it neutral face,neutral,point,walking,toward_object,,F03,F03,A13,A13,2,0.93,2,2,0.8,1.0,1,12,0.4,0.2,1.0,0.4,0.2,1.0
+37,train,kitchen,Person points at a shelf while walking toward it neutral face,neutral,point,walking,toward_object,,F03,F03,A13,A13,2,0.83,2,2,0.9,1.0,1,12,0.4,0.2,1.0,0.4,0.2,1.0
+37,train,kitchen,Person points at a shelf while walking toward it neutral face,neutral,point,walking,toward_object,,F03,F03,A13,A13,2,0.85,2,2,0.83,1.0,1,12,0.4,0.2,1.0,0.4,0.2,1.0
+38,train,kitchen,Person slumped against counter sad barely moving gives weak thumbs down,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.95,0,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+38,train,kitchen,Person slumped against counter sad barely moving gives weak thumbs down,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.89,0,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+38,train,kitchen,Person slumped against counter sad barely moving gives weak thumbs down,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.93,0,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+38,train,kitchen,Person slumped against counter sad barely moving gives weak thumbs down,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.87,0,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+38,train,kitchen,Person slumped against counter sad barely moving gives weak thumbs down,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.83,0,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+38,train,kitchen,Person slumped against counter sad barely moving gives weak thumbs down,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.86,0,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+38,train,kitchen,Person slumped against counter sad barely moving gives weak thumbs down,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.79,0,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+39,train,kitchen,Person beckons robot with tired sad face while standing over dirty dishes,sad,beckoning,standing,stationary,,F04,F04,A05,A05,3,0.95,1,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+39,train,kitchen,Person beckons robot with tired sad face while standing over dirty dishes,sad,beckoning,standing,stationary,,F04,F04,A05,A05,3,0.77,1,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+39,train,kitchen,Person beckons robot with tired sad face while standing over dirty dishes,sad,beckoning,standing,stationary,,F04,F04,A05,A05,3,0.97,1,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+39,train,kitchen,Person beckons robot with tired sad face while standing over dirty dishes,sad,beckoning,standing,stationary,,F04,F04,A05,A05,3,0.97,1,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+39,train,kitchen,Person beckons robot with tired sad face while standing over dirty dishes,sad,beckoning,standing,stationary,,F04,F04,A05,A05,3,0.9,1,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+39,train,kitchen,Person beckons robot with tired sad face while standing over dirty dishes,sad,beckoning,standing,stationary,context,F04,F04,A05,A05,3,0.68,1,5,0.0,0.0,2,4,0.0,0.1,1.0,0.0,0.1,1.0
+39,train,kitchen,Person beckons robot with tired sad face while standing over dirty dishes,sad,beckoning,standing,stationary,,F04,F04,A05,A05,3,0.82,1,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
+40,train,kitchen,Person chops vegetables with neutral focus back to robot pointing at ingredients,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.95,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+40,train,kitchen,Person chops vegetables with neutral focus back to robot pointing at ingredients,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.82,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+40,train,kitchen,Person chops vegetables with neutral focus back to robot pointing at ingredients,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.8,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+40,train,kitchen,Person chops vegetables with neutral focus back to robot pointing at ingredients,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.78,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+40,train,kitchen,Person chops vegetables with neutral focus back to robot pointing at ingredients,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.89,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+40,train,kitchen,Person chops vegetables with neutral focus back to robot pointing at ingredients,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.84,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+40,train,kitchen,Person chops vegetables with neutral focus back to robot pointing at ingredients,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.81,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+41,train,kitchen,Person wipes hands on apron neutral glancing around transition between tasks,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.95,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+41,train,kitchen,Person wipes hands on apron neutral glancing around transition between tasks,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.85,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+41,train,kitchen,Person wipes hands on apron neutral glancing around transition between tasks,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.84,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+41,train,kitchen,Person wipes hands on apron neutral glancing around transition between tasks,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.74,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+41,train,kitchen,Person wipes hands on apron neutral glancing around transition between tasks,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.87,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+41,train,kitchen,Person wipes hands on apron neutral glancing around transition between tasks,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.78,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+41,train,kitchen,Person wipes hands on apron neutral glancing around transition between tasks,neutral,none,standing,stationary,,F05,F05,A06,A06,4,0.72,1,5,0.0,0.0,1,5,0.0,0.0,1.5,0.0,0.0,1.5
+42,train,kitchen,Person pushes robot aside with disgusted face pointing away stepping back,disgust,point,stepping_back,away_from_robot,,F06,F06,A11,A11,5,0.95,3,1,0.5,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+42,train,kitchen,Person pushes robot aside with disgusted face pointing away stepping back,disgust,point,stepping_back,away_from_robot,,F06,F06,A11,A11,5,0.91,3,1,0.64,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+42,train,kitchen,Person pushes robot aside with disgusted face pointing away stepping back,disgust,point,stepping_back,away_from_robot,,F06,F06,A11,A11,5,0.91,3,1,0.64,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+42,train,kitchen,Person pushes robot aside with disgusted face pointing away stepping back,disgust,point,stepping_back,away_from_robot,,F06,F06,A11,A11,5,0.75,3,1,0.36,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+42,train,kitchen,Person pushes robot aside with disgusted face pointing away stepping back,disgust,point,stepping_back,away_from_robot,,F06,F06,A11,A11,5,0.67,3,1,0.53,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+42,train,kitchen,Person pushes robot aside with disgusted face pointing away stepping back,disgust,point,stepping_back,away_from_robot,,F06,F06,A11,A11,5,0.78,3,1,0.6,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+42,train,kitchen,Person pushes robot aside with disgusted face pointing away stepping back,disgust,point,stepping_back,away_from_robot,,F06,F06,A11,A11,5,0.94,3,1,0.38,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+43,train,kitchen,Person carrying hot pot with both hands walks toward robot in galley aisle no gesture,neutral,MISSING,walking,toward_robot,gesture,F06,F06,A11,A11,5,0.95,2,0,0.8,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+43,train,kitchen,Person carrying hot pot with both hands walks toward robot in galley aisle no gesture,neutral,MISSING,walking,toward_robot,gesture,F06,F06,A11,A11,5,0.72,2,0,0.95,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+43,train,kitchen,Person carrying hot pot with both hands walks toward robot in galley aisle no gesture,neutral,MISSING,walking,toward_robot,gesture,F06,F06,A11,A11,5,0.71,2,0,0.76,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+43,train,kitchen,Person carrying hot pot with both hands walks toward robot in galley aisle no gesture,neutral,MISSING,walking,toward_robot,context,F06,F06,A11,A11,5,0.79,2,0,0.77,1.0,2,10,0.3,0.5,0.5,0.3,0.5,0.5
+43,train,kitchen,Person carrying hot pot with both hands walks toward robot in galley aisle no gesture,neutral,MISSING,walking,toward_robot,gesture,F06,F06,A11,A11,5,0.8,2,0,0.67,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+43,train,kitchen,Person carrying hot pot with both hands walks toward robot in galley aisle no gesture,neutral,MISSING,walking,toward_robot,gesture,F06,F06,A11,A11,5,0.67,2,0,0.76,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+43,train,kitchen,Person carrying hot pot with both hands walks toward robot in galley aisle no gesture,neutral,MISSING,walking,toward_robot,context,F06,F06,A11,A11,5,0.7,2,0,0.93,1.0,2,10,0.3,0.5,0.5,0.3,0.5,0.5
+44,train,kitchen,Person slams hand on counter then raises both hands angry rigid standing,angry,both_hands_up,standing,stationary,,F07,F07,A08,A08,6,0.95,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+44,train,kitchen,Person slams hand on counter then raises both hands angry rigid standing,angry,both_hands_up,standing,stationary,,F07,F07,A08,A08,6,0.81,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+44,train,kitchen,Person slams hand on counter then raises both hands angry rigid standing,angry,both_hands_up,standing,stationary,,F07,F07,A08,A08,6,0.85,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+44,train,kitchen,Person slams hand on counter then raises both hands angry rigid standing,angry,both_hands_up,standing,stationary,,F07,F07,A08,A08,6,0.77,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+44,train,kitchen,Person slams hand on counter then raises both hands angry rigid standing,angry,both_hands_up,standing,stationary,,F07,F07,A08,A08,6,0.78,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+44,train,kitchen,Person slams hand on counter then raises both hands angry rigid standing,angry,both_hands_up,standing,stationary,,F07,F07,A08,A08,6,0.89,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+44,train,kitchen,Person slams hand on counter then raises both hands angry rigid standing,angry,both_hands_up,standing,stationary,,F07,F07,A08,A08,6,0.79,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+45,train,kitchen,Person angrily points repeatedly at spilled food on floor standing,angry,point,standing,stationary,,F07,F07,A08,A08,6,0.95,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+45,train,kitchen,Person angrily points repeatedly at spilled food on floor standing,angry,point,standing,stationary,,F07,F07,A08,A08,6,0.94,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+45,train,kitchen,Person angrily points repeatedly at spilled food on floor standing,angry,point,standing,stationary,context,F07,F07,A08,A08,6,0.92,1,5,0.0,0.0,2,7,0.0,0.05,1.5,0.0,0.05,1.5
+45,train,kitchen,Person angrily points repeatedly at spilled food on floor standing,angry,point,standing,stationary,,F07,F07,A08,A08,6,0.95,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+45,train,kitchen,Person angrily points repeatedly at spilled food on floor standing,angry,point,standing,stationary,,F07,F07,A08,A08,6,0.91,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+45,train,kitchen,Person angrily points repeatedly at spilled food on floor standing,angry,point,standing,stationary,,F07,F07,A08,A08,6,0.92,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+45,train,kitchen,Person angrily points repeatedly at spilled food on floor standing,angry,point,standing,stationary,,F07,F07,A08,A08,6,0.92,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
+46,train,kitchen,Person recoils from refrigerator odor disgusted thumbs down stepping back,disgust,thumbs_down,stepping_back,away_from_robot,,F08,F08,A07,A07,7,0.95,3,1,0.5,1.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+46,train,kitchen,Person recoils from refrigerator odor disgusted thumbs down stepping back,disgust,thumbs_down,stepping_back,away_from_robot,,F08,F08,A07,A07,7,0.74,3,1,0.53,1.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+46,train,kitchen,Person recoils from refrigerator odor disgusted thumbs down stepping back,disgust,thumbs_down,stepping_back,away_from_robot,,F08,F08,A07,A07,7,0.79,3,1,0.47,1.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+46,train,kitchen,Person recoils from refrigerator odor disgusted thumbs down stepping back,disgust,thumbs_down,stepping_back,away_from_robot,,F08,F08,A07,A07,7,0.72,3,1,0.54,1.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+46,train,kitchen,Person recoils from refrigerator odor disgusted thumbs down stepping back,disgust,thumbs_down,stepping_back,away_from_robot,,F08,F08,A07,A07,7,0.95,3,1,0.56,1.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+46,train,kitchen,Person recoils from refrigerator odor disgusted thumbs down stepping back,disgust,thumbs_down,stepping_back,away_from_robot,,F08,F08,A07,A07,7,0.95,3,1,0.64,1.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+46,train,kitchen,Person recoils from refrigerator odor disgusted thumbs down stepping back,disgust,thumbs_down,stepping_back,away_from_robot,,F08,F08,A07,A07,7,0.81,3,1,0.6,1.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+47,train,kitchen,Person stands at sink grimacing at greasy pans gives thumbs down leaning away,disgust,thumbs_down,standing,stationary,,F08,F08,A07,A07,7,0.95,1,5,0.0,0.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+47,train,kitchen,Person stands at sink grimacing at greasy pans gives thumbs down leaning away,disgust,thumbs_down,standing,stationary,context,F08,F08,A07,A07,7,0.83,1,5,0.0,0.0,2,6,0.0,0.0,1.2,0.0,0.0,1.2
+47,train,kitchen,Person stands at sink grimacing at greasy pans gives thumbs down leaning away,disgust,thumbs_down,standing,stationary,,F08,F08,A07,A07,7,0.91,1,5,0.0,0.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+47,train,kitchen,Person stands at sink grimacing at greasy pans gives thumbs down leaning away,disgust,thumbs_down,standing,stationary,,F08,F08,A07,A07,7,0.72,1,5,0.0,0.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+47,train,kitchen,Person stands at sink grimacing at greasy pans gives thumbs down leaning away,disgust,thumbs_down,standing,stationary,,F08,F08,A07,A07,7,0.98,1,5,0.0,0.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+47,train,kitchen,Person stands at sink grimacing at greasy pans gives thumbs down leaning away,disgust,thumbs_down,standing,stationary,,F08,F08,A07,A07,7,0.86,1,5,0.0,0.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+47,train,kitchen,Person stands at sink grimacing at greasy pans gives thumbs down leaning away,disgust,thumbs_down,standing,stationary,,F08,F08,A07,A07,7,0.83,1,5,0.0,0.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
+48,train,kitchen,Person waves at robot with happy face while walking toward exit,happy,wave,walking,toward_exit,,F01,F01,A09,A09,0,0.95,2,3,0.8,1.0,1,8,0.0,0.0,1.5,0.0,0.0,1.5
+48,train,kitchen,Person waves at robot with happy face while walking toward exit,happy,wave,walking,toward_exit,,F01,F01,A09,A09,0,0.93,2,3,0.69,1.0,1,8,0.0,0.0,1.5,0.0,0.0,1.5
+48,train,kitchen,Person waves at robot with happy face while walking toward exit,happy,wave,walking,toward_exit,context,F01,F01,A09,A09,0,0.92,2,3,0.92,1.0,2,8,0.0,0.0,1.5,0.0,0.0,1.5
+48,train,kitchen,Person waves at robot with happy face while walking toward exit,happy,wave,walking,toward_exit,,F01,F01,A09,A09,0,0.85,2,3,0.73,1.0,1,8,0.0,0.0,1.5,0.0,0.0,1.5
+48,train,kitchen,Person waves at robot with happy face while walking toward exit,happy,wave,walking,toward_exit,,F01,F01,A09,A09,0,0.8,2,3,0.77,1.0,1,8,0.0,0.0,1.5,0.0,0.0,1.5
+48,train,kitchen,Person waves at robot with happy face while walking toward exit,happy,wave,walking,toward_exit,,F01,F01,A09,A09,0,0.94,2,3,0.94,1.0,1,8,0.0,0.0,1.5,0.0,0.0,1.5
+48,train,kitchen,Person waves at robot with happy face while walking toward exit,happy,wave,walking,toward_exit,,F01,F01,A09,A09,0,0.95,2,3,0.72,1.0,1,8,0.0,0.0,1.5,0.0,0.0,1.5
+49,train,kitchen,Person unties apron and waves while walking to door face turned away emotion missing,MISSING,wave,walking,toward_exit,emotion,F01,F01,A10,A10,0,0.95,2,3,0.8,1.0,1,9,0.0,0.0,1.5,0.0,0.0,1.5
+49,train,kitchen,Person unties apron and waves while walking to door face turned away emotion missing,MISSING,wave,walking,toward_exit,emotion,F01,F01,A10,A10,0,0.95,2,3,0.67,1.0,1,9,0.0,0.0,1.5,0.0,0.0,1.5
+49,train,kitchen,Person unties apron and waves while walking to door face turned away emotion missing,MISSING,wave,walking,toward_exit,context,F01,F01,A10,A10,0,0.92,2,3,0.95,1.0,2,9,0.0,0.0,1.5,0.0,0.0,1.5
+49,train,kitchen,Person unties apron and waves while walking to door face turned away emotion missing,MISSING,wave,walking,toward_exit,emotion,F01,F01,A10,A10,0,0.78,2,3,0.67,1.0,1,9,0.0,0.0,1.5,0.0,0.0,1.5
+49,train,kitchen,Person unties apron and waves while walking to door face turned away emotion missing,MISSING,wave,walking,toward_exit,emotion,F01,F01,A10,A10,0,0.8,2,3,0.76,1.0,1,9,0.0,0.0,1.5,0.0,0.0,1.5
+49,train,kitchen,Person unties apron and waves while walking to door face turned away emotion missing,MISSING,wave,walking,toward_exit,context,F01,F01,A10,A10,0,0.73,2,3,0.87,1.0,2,9,0.0,0.0,1.5,0.0,0.0,1.5
+49,train,kitchen,Person unties apron and waves while walking to door face turned away emotion missing,MISSING,wave,walking,toward_exit,emotion,F01,F01,A10,A10,0,0.94,2,3,0.79,1.0,1,9,0.0,0.0,1.5,0.0,0.0,1.5
+50,train,kitchen,Person sits down heavily sad staring at failed dish hands in lap no gesture,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.95,0,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+50,train,kitchen,Person sits down heavily sad staring at failed dish hands in lap no gesture,sad,none,sitting,stationary,context,F10,F10,A12,A12,9,0.78,0,5,0.0,0.0,2,11,0.0,0.0,1.0,0.0,0.0,1.0
+50,train,kitchen,Person sits down heavily sad staring at failed dish hands in lap no gesture,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.7,0,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+50,train,kitchen,Person sits down heavily sad staring at failed dish hands in lap no gesture,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.72,0,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+50,train,kitchen,Person sits down heavily sad staring at failed dish hands in lap no gesture,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.86,0,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+50,train,kitchen,Person sits down heavily sad staring at failed dish hands in lap no gesture,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.8,0,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+50,train,kitchen,Person sits down heavily sad staring at failed dish hands in lap no gesture,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.8,0,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+51,train,kitchen,Person stares at burnt cake shoulders dropped sad standing motionless,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.95,1,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+51,train,kitchen,Person stares at burnt cake shoulders dropped sad standing motionless,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.73,1,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+51,train,kitchen,Person stares at burnt cake shoulders dropped sad standing motionless,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.75,1,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+51,train,kitchen,Person stares at burnt cake shoulders dropped sad standing motionless,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.81,1,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+51,train,kitchen,Person stares at burnt cake shoulders dropped sad standing motionless,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.87,1,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+51,train,kitchen,Person stares at burnt cake shoulders dropped sad standing motionless,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.83,1,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+51,train,kitchen,Person stares at burnt cake shoulders dropped sad standing motionless,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.83,1,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+52,train,kitchen,Person raises hand and smiles while sitting at kitchen table after eating,happy,raise_hand,sitting,stationary,,F01,F01,A01,A01,0,0.95,0,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+52,train,kitchen,Person raises hand and smiles while sitting at kitchen table after eating,happy,raise_hand,sitting,stationary,,F01,F01,A01,A01,0,0.85,0,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+52,train,kitchen,Person raises hand and smiles while sitting at kitchen table after eating,happy,raise_hand,sitting,stationary,,F01,F01,A01,A01,0,0.67,0,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+52,train,kitchen,Person raises hand and smiles while sitting at kitchen table after eating,happy,raise_hand,sitting,stationary,,F01,F01,A01,A01,0,0.87,0,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+52,train,kitchen,Person raises hand and smiles while sitting at kitchen table after eating,happy,raise_hand,sitting,stationary,,F01,F01,A01,A01,0,0.96,0,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+52,train,kitchen,Person raises hand and smiles while sitting at kitchen table after eating,happy,raise_hand,sitting,stationary,,F01,F01,A01,A01,0,0.82,0,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
+52,train,kitchen,Person raises hand and smiles while sitting at kitchen table after eating,happy,raise_hand,sitting,stationary,,F01,F01,A01,A01,0,0.91,0,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0

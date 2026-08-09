@@ -47,7 +47,7 @@ def main():
     csv_path = os.path.join(
         os.path.dirname(__file__), 
         "training_data", 
-        "action_generator_training_scenarios.csv"
+        "action_generator_augmented_training.csv"
     )
     
     # Simple fallback if file doesn't exist for testability

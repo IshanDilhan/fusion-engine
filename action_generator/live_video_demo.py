@@ -7,7 +7,8 @@ with a rich visual HUD showing:
   - Human Skeleton Pose & Distance
   - Real-time Motion State (sitting, standing, walking, stepping_back)
   - Fused Human Intent (F01-F10)
-  - Predicted Action Code (A01-A15) + Description
+  - Expected vs. Predicted Action Code (A01-A15) + Description
+  - Live MATCH / MISMATCH Accuracy Badge (Green / Red)
   - Continuous Controls: Linear Speed v (m/s), Comfort Clearance d (m)
   - 2-Tier Safety HUD Status (NOMINAL / PROXIMITY YIELD STEP / EMERGENCY HALT)
 
@@ -18,17 +19,15 @@ Usage:
     # Save demo output video:
     python live_video_demo.py --source synthetic --out demo_output.mp4
 
-    # Run on webcam 0:
-    python live_video_demo.py --source 0
-
-    # Run on an MP4 video clip:
-    python live_video_demo.py --source path/to/video.mp4 --out output.mp4
+    # Run on Scenario 23/6 MP4 video clip (Emergency Hazard F02 -> A02 Red Halt):
+    python live_video_demo.py --source Generated_Videos_new/6/Surprised_man_raising_hands.mp4 --intent F02 --expected-action A02 --out output_with_hud.mp4
 """
 
 import os
 import sys
 import time
 import argparse
+import importlib.util
 import numpy as np
 import cv2
 
@@ -43,6 +42,41 @@ if ACTION_GEN_DIR not in sys.path:
 from inference import ActionInference
 
 
+# ─── Helper function to load Motion Repo modules dynamically ──────────────
+
+def load_motion_repo():
+    """Loads MotionInference & mediapipe_to_ntu25 dynamically from Motion Repo."""
+    original_path = list(sys.path)
+    old_sys_model = sys.modules.get("model")
+    try:
+        sys.path.insert(0, MOTION_REPO_DIR)
+        
+        # Load Motion Repo model module
+        model_spec = importlib.util.spec_from_file_location("motion_model", os.path.join(MOTION_REPO_DIR, "model.py"))
+        motion_model = importlib.util.module_from_spec(model_spec)
+        sys.modules["motion_model"] = motion_model
+        sys.modules["model"] = motion_model  # Temporarily override 'model' in sys.modules
+        model_spec.loader.exec_module(motion_model)
+        
+        # Load Motion Repo skeleton_utils module
+        skel_spec = importlib.util.spec_from_file_location("skeleton_utils", os.path.join(MOTION_REPO_DIR, "skeleton_utils.py"))
+        skel_utils = importlib.util.module_from_spec(skel_spec)
+        sys.modules["skeleton_utils"] = skel_utils
+        skel_spec.loader.exec_module(skel_utils)
+
+        # Load Motion Repo inference module
+        inf_spec = importlib.util.spec_from_file_location("motion_inference", os.path.join(MOTION_REPO_DIR, "inference.py"))
+        motion_inf = importlib.util.module_from_spec(inf_spec)
+        sys.modules["motion_inference"] = motion_inf
+        inf_spec.loader.exec_module(motion_inf)
+        
+        return motion_inf.MotionInference, skel_utils.mediapipe_to_ntu25
+    finally:
+        sys.path = original_path
+        if old_sys_model is not None:
+            sys.modules["model"] = old_sys_model
+
+
 # ─── HUD Visual Renderer Class ───────────────────────────────────────────────
 
 class ActionGeneratorHUD:
@@ -50,9 +84,9 @@ class ActionGeneratorHUD:
 
     def __init__(self):
         # Color palette (BGR)
-        self.COLOR_GREEN  = (50, 205, 50)    # Green (Nominal operation)
+        self.COLOR_GREEN  = (50, 205, 50)    # Green (Nominal operation / Match)
         self.COLOR_ORANGE = (30, 144, 255)   # Orange (Proximity Yield Step Back)
-        self.COLOR_RED    = (50, 50, 255)    # Red (Emergency Halt)
+        self.COLOR_RED    = (50, 50, 255)    # Red (Emergency Halt / Mismatch)
         self.COLOR_BG     = (20, 20, 20)     # Dark Gray (Card BG)
         self.COLOR_WHITE  = (255, 255, 255)
         self.COLOR_TEXT_DIM = (180, 180, 180)
@@ -65,7 +99,8 @@ class ActionGeneratorHUD:
         direction: str,
         velocity: float,
         distance: float,
-        action_res
+        action_res,
+        expected_action: str = None
     ) -> np.ndarray:
         h, w = frame.shape[:2]
         canvas = frame.copy()
@@ -82,7 +117,7 @@ class ActionGeneratorHUD:
             status_title = "EMERGENCY HALT OVERRIDE"
 
         # ── 1. Top Telemetry Card ────────────────────────────────────────────
-        card_w, card_h = min(640, w - 40), 220
+        card_w, card_h = min(680, w - 40), 245
         card_x, card_y = 20, 20
 
         # Draw semi-transparent background box
@@ -92,60 +127,78 @@ class ActionGeneratorHUD:
         cv2.rectangle(canvas, (card_x, card_y), (card_x + card_w, card_y + card_h), status_color, 2)
 
         # Header Bar
-        cv2.rectangle(canvas, (card_x, card_y), (card_x + card_w, card_y + 36), status_color, -1)
+        cv2.rectangle(canvas, (card_x, card_y), (card_x + card_w, card_y + 34), status_color, -1)
         cv2.putText(
             canvas, f"HRI ACTION GENERATOR POLICY LAYER  |  [{status_title}]",
-            (card_x + 12, card_y + 24), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 0, 0), 2, cv2.LINE_AA
+            (card_x + 12, card_y + 22), cv2.FONT_HERSHEY_SIMPLEX, 0.52, (0, 0, 0), 2, cv2.LINE_AA
         )
 
-        # Left Column: Inputs
+        # Left Column: Perception Inputs
         col1_x = card_x + 15
-        cv2.putText(canvas, "PERCEPTION INPUTS", (col1_x, card_y + 60), cv2.FONT_HERSHEY_SIMPLEX, 0.45, self.COLOR_TEXT_DIM, 1)
-        cv2.putText(canvas, f"Intent Code : {intent}", (col1_x, card_y + 85), cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.COLOR_WHITE, 1)
-        cv2.putText(canvas, f"Motion State: {motion}", (col1_x, card_y + 105), cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.COLOR_WHITE, 1)
-        cv2.putText(canvas, f"Direction   : {direction}", (col1_x, card_y + 125), cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.COLOR_WHITE, 1)
-        cv2.putText(canvas, f"Human Speed : {velocity:.2f} m/s", (col1_x, card_y + 145), cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.COLOR_WHITE, 1)
-        cv2.putText(canvas, f"Distance    : {distance:.2f} m", (col1_x, card_y + 165), cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.COLOR_WHITE, 1)
+        cv2.putText(canvas, "PERCEPTION INPUTS", (col1_x, card_y + 55), cv2.FONT_HERSHEY_SIMPLEX, 0.45, self.COLOR_TEXT_DIM, 1)
+        cv2.putText(canvas, f"Intent Code : {intent}", (col1_x, card_y + 78), cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.COLOR_WHITE, 1)
+        cv2.putText(canvas, f"Motion State: {motion}", (col1_x, card_y + 98), cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.COLOR_WHITE, 1)
+        cv2.putText(canvas, f"Direction   : {direction}", (col1_x, card_y + 118), cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.COLOR_WHITE, 1)
+        cv2.putText(canvas, f"Human Speed : {velocity:.2f} m/s", (col1_x, card_y + 138), cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.COLOR_WHITE, 1)
+        cv2.putText(canvas, f"Distance    : {distance:.2f} m", (col1_x, card_y + 158), cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.COLOR_WHITE, 1)
 
         # Divider Line
         div_x = card_x + 280
-        cv2.line(canvas, (div_x, card_y + 45), (div_x, card_y + card_h - 15), (70, 70, 70), 1)
+        cv2.line(canvas, (div_x, card_y + 42), (div_x, card_y + card_h - 45), (70, 70, 70), 1)
 
         # Right Column: Policy Outputs & Controls
         col2_x = div_x + 15
-        cv2.putText(canvas, "ROBOT POLICY OUTPUT", (col2_x, card_y + 60), cv2.FONT_HERSHEY_SIMPLEX, 0.45, self.COLOR_TEXT_DIM, 1)
+        cv2.putText(canvas, "ROBOT POLICY OUTPUT", (col2_x, card_y + 55), cv2.FONT_HERSHEY_SIMPLEX, 0.45, self.COLOR_TEXT_DIM, 1)
         cv2.putText(
             canvas, f"Action Code : {action_res.action} ({action_res.confidence * 100:.1f}%)",
-            (col2_x, card_y + 85), cv2.FONT_HERSHEY_SIMPLEX, 0.6, status_color, 2
+            (col2_x, card_y + 78), cv2.FONT_HERSHEY_SIMPLEX, 0.6, status_color, 2
         )
         
         # Wrapped action description
         desc = action_res.action_description
         if len(desc) > 35:
             desc = desc[:32] + "..."
-        cv2.putText(canvas, f"Goal: {desc}", (col2_x, card_y + 108), cv2.FONT_HERSHEY_SIMPLEX, 0.42, self.COLOR_WHITE, 1)
+        cv2.putText(canvas, f"Goal: {desc}", (col2_x, card_y + 98), cv2.FONT_HERSHEY_SIMPLEX, 0.42, self.COLOR_WHITE, 1)
 
         # Motor Controls Output
         cv2.putText(
             canvas, f"Motor Speed (v) : {action_res.linear_velocity_m_s:+.2f} m/s",
-            (col2_x, card_y + 135), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-            self.COLOR_ORANGE if action_res.linear_velocity_m_s < 0 else self.COLOR_WHITE, 2 if action_res.linear_velocity_m_s < 0 else 1
+            (col2_x, card_y + 120), cv2.FONT_HERSHEY_SIMPLEX, 0.48,
+            self.COLOR_ORANGE if (action_res.safety_override_active and action_res.linear_velocity_m_s < 0) else self.COLOR_WHITE,
+            2 if (action_res.safety_override_active and action_res.linear_velocity_m_s < 0) else 1
         )
         cv2.putText(
             canvas, f"Turn Rate (w)   : {action_res.angular_velocity_rad_s:.2f} rad/s",
-            (col2_x, card_y + 155), cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.COLOR_WHITE, 1
+            (col2_x, card_y + 138), cv2.FONT_HERSHEY_SIMPLEX, 0.48, self.COLOR_WHITE, 1
         )
         cv2.putText(
             canvas, f"Clearance (d)   : {action_res.comfort_distance_m:.2f} meters",
-            (col2_x, card_y + 175), cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.COLOR_WHITE, 1
+            (col2_x, card_y + 158), cv2.FONT_HERSHEY_SIMPLEX, 0.48, self.COLOR_WHITE, 1
         )
 
-        # Bottom Safety Status Bar
-        if action_res.safety_reason:
+        # ── 2. Live Expected vs. Predicted Evaluation Card (Bottom Section) ──
+        eval_y = card_y + 180
+        cv2.line(canvas, (card_x + 10, eval_y), (card_x + card_w - 10, eval_y), (70, 70, 70), 1)
+
+        if expected_action:
+            is_match = (action_res.action == expected_action)
+            match_color = self.COLOR_GREEN if is_match else self.COLOR_RED
+            match_badge = "[ MATCH: CORRECT ]" if is_match else "[ MISMATCH: INCORRECT ]"
+
             cv2.putText(
-                canvas, f"Safety Log: {action_res.safety_reason[:75]}",
-                (card_x + 12, card_y + card_h - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.38, status_color, 1
+                canvas, f"EXPECTED: {expected_action}  |  GOT: {action_res.action}",
+                (card_x + 15, eval_y + 20), cv2.FONT_HERSHEY_SIMPLEX, 0.48, self.COLOR_WHITE, 1
             )
+            cv2.putText(
+                canvas, f"{match_badge}",
+                (card_x + 350, eval_y + 20), cv2.FONT_HERSHEY_SIMPLEX, 0.55, match_color, 2
+            )
+        else:
+            if action_res.safety_reason:
+                cv2.putText(
+                    canvas, f"Safety Log: {action_res.safety_reason[:75]}",
+                    (card_x + 15, eval_y + 20), cv2.FONT_HERSHEY_SIMPLEX, 0.38, status_color, 1
+                )
 
         return canvas
 
@@ -185,6 +238,7 @@ def run_synthetic_live_demo(engine: ActionInference, save_path: str = None):
             velocity = 0.4
             distance = 1.6 - 0.2 * t_sec
             context = "classroom"
+            exp_act = "A05"
         elif t_sec < 6.0:
             # Phase 2: Rapid Approach < 1.0m (Proximity Yielding Step)
             intent = "F04"
@@ -193,6 +247,7 @@ def run_synthetic_live_demo(engine: ActionInference, save_path: str = None):
             velocity = 0.95
             distance = 0.85 - 0.05 * (t_sec - 3.0)
             context = "classroom"
+            exp_act = "A05"
         else:
             # Phase 3: Emergency Situation (F02 in Kitchen)
             intent = "F02"
@@ -201,6 +256,7 @@ def run_synthetic_live_demo(engine: ActionInference, save_path: str = None):
             velocity = 1.1
             distance = 0.75
             context = "kitchen"
+            exp_act = "A02"
 
         # Model Inference
         result = engine.predict(
@@ -214,7 +270,7 @@ def run_synthetic_live_demo(engine: ActionInference, save_path: str = None):
         )
 
         # Draw 3D Spatial Grid Visualization
-        grid_y = 380
+        grid_y = 400
         cv2.line(blank, (50, grid_y), (950, grid_y), (60, 60, 60), 2)
         
         # Robot position
@@ -233,12 +289,12 @@ def run_synthetic_live_demo(engine: ActionInference, save_path: str = None):
         cv2.line(blank, (robot_x + 30, grid_y - 20), (human_x - 20, grid_y - 20), (128, 128, 128), 1)
 
         # Render Telemetry HUD
-        frame = hud.draw_hud(blank, intent, motion, direction, velocity, distance, result)
+        frame = hud.draw_hud(blank, intent, motion, direction, velocity, distance, result, expected_action=exp_act)
 
         if writer:
             writer.write(frame)
 
-        # Render window if GUI available (catch headless errors silently)
+        # Render window if GUI available
         try:
             cv2.imshow("HRI Policy Engine Live Tester", frame)
             if cv2.waitKey(30) & 0xFF == 27:  # ESC key to exit
@@ -259,7 +315,14 @@ def run_synthetic_live_demo(engine: ActionInference, save_path: str = None):
 
 # ─── Real Video File / Webcam Processor ──────────────────────────────────────
 
-def run_real_video_demo(engine: ActionInference, source: str, save_path: str = None):
+def run_real_video_demo(
+    engine: ActionInference,
+    source: str,
+    save_path: str = None,
+    override_intent: str = None,
+    override_context: str = None,
+    expected_action: str = None
+):
     """Processes webcam or MP4 file with MediaPipe Pose & MotionInference."""
     try:
         src_id = int(source)
@@ -272,21 +335,12 @@ def run_real_video_demo(engine: ActionInference, source: str, save_path: str = N
         return
 
     import mediapipe as mp
-    
-    # Import MotionInference dynamically from Motion Repo to avoid scope collision
-    import importlib.util
-    motion_inf_path = os.path.join(MOTION_REPO_DIR, "inference.py")
-    spec = importlib.util.spec_from_file_location("motion_repo_inference", motion_inf_path)
-    motion_mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(motion_mod)
 
-    skel_path = os.path.join(MOTION_REPO_DIR, "skeleton_utils.py")
-    spec_skel = importlib.util.spec_from_file_location("motion_repo_skel", skel_path)
-    skel_mod = importlib.util.module_from_spec(spec_skel)
-    spec_skel.loader.exec_module(skel_mod)
+    # Dynamically load Motion Repo modules without namespace collision
+    MotionInferenceEngine, mediapipe_to_ntu25 = load_motion_repo()
 
     motion_ckpt = os.path.join(MOTION_REPO_DIR, "checkpoints", "best_model_finetuned.pt")
-    motion_engine = motion_mod.MotionInference(motion_ckpt)
+    motion_engine = MotionInferenceEngine(motion_ckpt)
     hud = ActionGeneratorHUD()
 
     mp_pose = mp.solutions.pose
@@ -303,13 +357,39 @@ def run_real_video_demo(engine: ActionInference, source: str, save_path: str = N
         fps = int(cap.get(cv2.CAP_PROP_FPS)) or 30
         writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*"mp4v"), fps, (w, h))
 
-    print(f"Processing live video stream from: {source}. Press ESC or 'q' to quit.")
+    # Auto-detect intent, context, and expected action from video source path if not explicitly provided
+    intent = override_intent
+    context = override_context
+    exp_act = expected_action
+
+    src_str = str(source)
+    if "/6/" in src_str or "\\6\\" in src_str or "/23/" in src_str or "\\23\\" in src_str:
+        if intent is None: intent = "F02"   # Sudden Hazard Emergency
+        if exp_act is None: exp_act = "A02"
+    elif "/4/" in src_str or "\\4\\" in src_str or "/19/" in src_str or "\\19\\" in src_str:
+        if intent is None: intent = "F02"   # Fear / Step Back Emergency
+        if exp_act is None: exp_act = "A02"
+    elif "/2/" in src_str or "\\2\\" in src_str or "/18/" in src_str or "\\18\\" in src_str:
+        if intent is None: intent = "F01"   # Waving / Farewell
+        if exp_act is None: exp_act = "A01"
+    elif "/5/" in src_str or "\\5\\" in src_str or "/25/" in src_str or "\\25\\" in src_str:
+        if intent is None: intent = "F09"   # Walking toward exit
+        if exp_act is None: exp_act = "A09"
+
+    if intent is None: intent = "F04"
+    if context is None: context = "classroom"
+
+    print(f"Processing live video stream from: {source} [Intent={intent}, Context={context}, ExpectedAction={exp_act}]")
+
+    frame_count = 0
+    prev_hip_z = None
 
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
 
+        frame_count += 1
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         results = pose.process(rgb)
 
@@ -320,23 +400,32 @@ def run_real_video_demo(engine: ActionInference, source: str, save_path: str = N
 
         if results.pose_world_landmarks is not None:
             # 1. Feed landmarks to MotionInference
-            joints_25 = skel_mod.mediapipe_to_ntu25(results.pose_world_landmarks.landmark)
+            joints_25 = mediapipe_to_ntu25(results.pose_world_landmarks.landmark)
             m_res = motion_engine.update(joints_25)
             if m_res and m_res.label != "buffering":
                 motion_label = m_res.label
 
-            # Approximate distance from torso z
-            hip_z = (results.pose_world_landmarks.landmark[23].z + results.pose_world_landmarks.landmark[24].z) / 2.0
-            distance = max(0.5, abs(hip_z))
+            # 2. Estimate distance and physical velocity from hip Z landmark
+            hip_z = float(abs((results.pose_world_landmarks.landmark[23].z + results.pose_world_landmarks.landmark[24].z) / 2.0))
+            distance = max(0.5, round(hip_z, 2))
 
-        # Default intent for live webcam testing
-        intent = "F04"
-        context = "classroom"
+            if prev_hip_z is not None:
+                # Estimate velocity in m/s (assuming ~30 fps)
+                dz = prev_hip_z - hip_z  # positive if moving toward camera
+                velocity = max(0.0, round(dz * 30.0, 2))
+                if dz > 0.015:
+                    direction = "toward_robot"
+                elif dz < -0.015:
+                    direction = "away_from_robot"
+                else:
+                    direction = "stationary"
+
+            prev_hip_z = hip_z
 
         # Action Generator Prediction
         action_res = engine.predict(
             intent=intent,
-            intent_confidence=0.90,
+            intent_confidence=0.95,
             motion_state=motion_label,
             direction=direction,
             velocity=velocity,
@@ -344,7 +433,7 @@ def run_real_video_demo(engine: ActionInference, source: str, save_path: str = N
             current_distance=distance
         )
 
-        frame = hud.draw_hud(frame, intent, motion_label, direction, velocity, distance, action_res)
+        frame = hud.draw_hud(frame, intent, motion_label, direction, velocity, distance, action_res, expected_action=exp_act)
 
         if writer:
             writer.write(frame)
@@ -360,6 +449,8 @@ def run_real_video_demo(engine: ActionInference, source: str, save_path: str = N
     cap.release()
     if writer:
         writer.release()
+        print(f"Processed {frame_count} frames -> Saved output to: {save_path}")
+
     try:
         cv2.destroyAllWindows()
     except Exception:
@@ -374,6 +465,21 @@ def main():
         help="Video source: 'synthetic' for simulated stream, '0' for webcam, or path to MP4 file"
     )
     parser.add_argument(
+        "--intent",
+        default=None,
+        help="Optional intent override (e.g. F02, F04, F09). If omitted, auto-detects from scenario path"
+    )
+    parser.add_argument(
+        "--context",
+        default=None,
+        help="Optional context override (e.g. classroom, kitchen). Default: classroom"
+    )
+    parser.add_argument(
+        "--expected-action",
+        default=None,
+        help="Optional ground-truth expected action (e.g. A02, A05) to display real-time MATCH / MISMATCH badge"
+    )
+    parser.add_argument(
         "--out",
         default=None,
         help="Optional path to save output MP4 video"
@@ -386,7 +492,14 @@ def main():
     if args.source == "synthetic":
         run_synthetic_live_demo(engine, args.out)
     else:
-        run_real_video_demo(engine, args.source, args.out)
+        run_real_video_demo(
+            engine,
+            args.source,
+            args.out,
+            override_intent=args.intent,
+            override_context=args.context,
+            expected_action=args.expected_action
+        )
 
 
 if __name__ == "__main__":
