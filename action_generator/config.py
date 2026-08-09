@@ -11,18 +11,17 @@ from typing import Tuple, Dict
 # Vocabularies
 # -----------------------------------------------------------------------------
 
-# Intents (F01-F10)
+# Intents (F01-F09 — Table A.1 Specification)
 INTENTS = [
     "F01",  # Greeting / positive acknowledgment
     "F02",  # Emergency / danger
     "F03",  # Task assistance request
     "F04",  # Help request
-    "F05",  # Engaged / busy - no interaction needed
+    "F05",  # Engaged / busy — no interaction needed
     "F06",  # Requests passage / space
     "F07",  # Frustration / agitation
     "F08",  # Break / relief request
-    "F09",  # Farewell
-    "F10",  # Discouraged / giving up
+    "F09",  # Discouraged / giving up
 ]
 
 # Motion States (4 classes — must match Motion Repo output exactly)

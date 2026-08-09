@@ -22,7 +22,7 @@ SCENARIO_MAP = {
     "1": {"intent": "F01", "action": "A01", "context": "classroom"},
     "2": {"intent": "F01", "action": "A01", "context": "classroom"},
     "4": {"intent": "F02", "action": "A02", "context": "classroom"},
-    "5": {"intent": "F09", "action": "A09", "context": "classroom"},
+    "5": {"intent": "F01", "action": "A09", "context": "classroom"},
     "6": {"intent": "F02", "action": "A02", "context": "classroom"},
 }
 

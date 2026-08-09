@@ -23,7 +23,7 @@ class MultimodalActionGenerator(nn.Module):
         super().__init__()
         
         # 1. Embeddings
-        self.intent_embedding = nn.Embedding(10, 16)
+        self.intent_embedding = nn.Embedding(9, 16)   # 9 classes: F01-F09 (Table A.1)
         self.motion_embedding = nn.Embedding(4, 16)   # 4 classes: sitting/standing/walking/stepping_back
         self.direction_embedding = nn.Embedding(6, 8)
         self.context_embedding = nn.Embedding(3, 8)

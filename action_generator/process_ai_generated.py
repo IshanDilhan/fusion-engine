@@ -42,7 +42,7 @@ SCENARIO_MAP = {
     "Kitchen/22": {"intent": "F05", "action": "A06", "context": "kitchen"},
     "Kitchen/23": {"intent": "F06", "action": "A11", "context": "kitchen"},
     "Kitchen/24": {"intent": "F07", "action": "A08", "context": "kitchen"},
-    "Kitchen/25": {"intent": "F09", "action": "A09", "context": "kitchen"},
+    "Kitchen/25": {"intent": "F01", "action": "A09", "context": "kitchen"},
     "Kitchen/26": {"intent": "F02", "action": "A02", "context": "kitchen"},
 }
 

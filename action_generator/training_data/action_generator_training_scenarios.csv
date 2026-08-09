@@ -18,8 +18,8 @@ scenario_id,split,context,description,emotion,gesture,motion,direction,missing_c
 17,train,classroom,Student grimaces at a long assignment gives thumbs down slumping back in chair,disgust,thumbs_down,sitting,stationary,,F08,F08,A07,A07,7,0.95,0,5,0.0,0.0,0,6,0.0,0.0,1.2,0.0,0.0,1.2
 18,test,classroom,Student waves goodbye with happy face while walking to the door at dismissal,happy,wave,walking,toward_exit,,F01,F01,A09,A09,0,0.95,2,3,0.8,1.0,0,8,0.0,0.0,1.5,0.0,0.0,1.5
 19,train,classroom,Student packs bag and waves briefly with neutral face heading toward the door,neutral,wave,walking,toward_exit,,F01,F01,A10,A10,0,0.95,2,3,0.8,1.0,0,9,0.0,0.0,1.5,0.0,0.0,1.5
-20,train,classroom,Student pushes assignment aside and rests head on desk sad no gesture motionless,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.95,0,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
-21,train,classroom,Student stands by desk staring at a failed test sad arms hanging no gesture,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.95,1,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+20,train,classroom,Student pushes assignment aside and rests head on desk sad no gesture motionless,sad,none,sitting,stationary,,F09,F09,A12,A12,8,0.95,0,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+21,train,classroom,Student stands by desk staring at a failed test sad arms hanging no gesture,sad,none,standing,stationary,,F09,F09,A12,A12,8,0.95,1,5,0.0,0.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
 22,test,classroom,Student waves while walking toward robot face occluded by a held book emotion not captured,MISSING,wave,walking,toward_robot,emotion,F01,F01,A01,A01,0,0.95,2,0,0.8,1.0,0,0,0.0,0.0,1.0,0.0,0.0,1.0
 23,test,classroom,Visitor standing in a hospital waiting area gasps in surprise raising both hands as fixture detaches,surprise,both_hands_up,standing,stationary,,F02,F02,A02,A02,1,0.95,1,5,0.0,0.0,0,1,0.0,0.0,2.0,0.0,0.0,2.0
 24,test,classroom,Student beckons robot while walking toward the supply shelf room-identity sensor offline,neutral,beckoning,walking,toward_object,context,F03,F03,A13,A13,2,0.95,2,2,0.8,1.0,0,12,0.4,0.2,1.0,0.4,0.2,1.0
@@ -28,7 +28,7 @@ scenario_id,split,context,description,emotion,gesture,motion,direction,missing_c
 27,test,classroom,Student stands up angrily points at robot stepping toward it,angry,point,walking,toward_robot,,F06,F06,A11,A11,5,0.95,2,0,0.8,1.0,0,10,0.3,0.5,0.5,0.3,0.5,0.5
 28,test,classroom,Student scowls angrily while giving an exaggerated thumbs up after being corrected seated,angry,thumbs_up,sitting,stationary,,F07,F07,A08,A08,6,0.95,0,5,0.0,0.0,0,7,0.0,0.05,1.5,0.0,0.05,1.5
 29,test,classroom,Student gives thumbs up with disgusted face after finishing a disliked task seated,disgust,thumbs_up,sitting,stationary,,F08,F08,A07,A07,7,0.95,0,5,0.0,0.0,0,6,0.0,0.0,1.2,0.0,0.0,1.2
-31,test,classroom,Student drops the crumpled quiz on desk and stands turned away sad arms slack no gesture,sad,none,stepping_back,stationary,,F10,F10,A12,A12,9,0.95,3,5,0.5,1.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
+31,test,classroom,Student drops the crumpled quiz on desk and stands turned away sad arms slack no gesture,sad,none,stepping_back,stationary,,F09,F09,A12,A12,8,0.95,3,5,0.5,1.0,0,11,0.0,0.0,1.0,0.0,0.0,1.0
 32,train,kitchen,Cook tastes finished dish smiles gives thumbs up standing still,happy,thumbs_up,standing,stationary,,F01,F01,A01,A01,0,0.95,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
 33,train,kitchen,Person gives thumbs down while smiling and shaking head playfully family tasting game,happy,thumbs_down,standing,stationary,,F01,F01,A01,A01,0,0.95,1,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
 34,train,kitchen,Person extends both hands out to signal stop and runs back from smoke at stove,fear,both_hands_up,stepping_back,away_from_robot,,F02,F02,A02,A02,1,0.95,3,1,0.5,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
@@ -47,8 +47,8 @@ scenario_id,split,context,description,emotion,gesture,motion,direction,missing_c
 47,train,kitchen,Person stands at sink grimacing at greasy pans gives thumbs down leaning away,disgust,thumbs_down,standing,stationary,,F08,F08,A07,A07,7,0.95,1,5,0.0,0.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
 48,train,kitchen,Person waves at robot with happy face while walking toward exit,happy,wave,walking,toward_exit,,F01,F01,A09,A09,0,0.95,2,3,0.8,1.0,1,8,0.0,0.0,1.5,0.0,0.0,1.5
 49,train,kitchen,Person unties apron and waves while walking to door face turned away emotion missing,MISSING,wave,walking,toward_exit,emotion,F01,F01,A10,A10,0,0.95,2,3,0.8,1.0,1,9,0.0,0.0,1.5,0.0,0.0,1.5
-50,train,kitchen,Person sits down heavily sad staring at failed dish hands in lap no gesture,sad,none,sitting,stationary,,F10,F10,A12,A12,9,0.95,0,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
-51,train,kitchen,Person stares at burnt cake shoulders dropped sad standing motionless,sad,none,standing,stationary,,F10,F10,A12,A12,9,0.95,1,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+50,train,kitchen,Person sits down heavily sad staring at failed dish hands in lap no gesture,sad,none,sitting,stationary,,F09,F09,A12,A12,8,0.95,0,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+51,train,kitchen,Person stares at burnt cake shoulders dropped sad standing motionless,sad,none,standing,stationary,,F09,F09,A12,A12,8,0.95,1,5,0.0,0.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
 52,train,kitchen,Person raises hand and smiles while sitting at kitchen table after eating,happy,raise_hand,sitting,stationary,,F01,F01,A01,A01,0,0.95,0,5,0.0,0.0,1,0,0.0,0.0,1.0,0.0,0.0,1.0
 53,test,kitchen,Visitor fleeing exhibit hall after fire alarm waves both arms frantic running to exit,fear,both_hands_up,walking,toward_exit,,F02,F02,A02,A02,1,0.95,2,3,0.8,1.0,1,1,0.0,0.0,2.0,0.0,0.0,2.0
 54,test,kitchen,Patient standing in corridor clutching chest in acute distress raises both hands fearful,fear,both_hands_up,standing,stationary,,F02,F02,A03,A03,1,0.95,1,5,0.0,0.0,1,2,0.0,0.0,2.0,0.0,0.0,2.0
@@ -59,7 +59,7 @@ scenario_id,split,context,description,emotion,gesture,motion,direction,missing_c
 59,test,kitchen,Person gives thumbs up with angry face after being told to redo recipe standing,angry,thumbs_up,standing,stationary,,F07,F07,A08,A08,6,0.95,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
 60,test,kitchen,Person pushes plate away at table disgusted thumbs down seated,disgust,thumbs_down,sitting,stationary,,F08,F08,A07,A07,7,0.95,0,5,0.0,0.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
 61,test,kitchen,Visitor walking toward museum entrance waves goodbye to robot guide smiling,happy,wave,walking,toward_exit,,F01,F01,A10,A10,0,0.95,2,3,0.8,1.0,1,9,0.0,0.0,1.5,0.0,0.0,1.5
-62,test,kitchen,Person slumps forward over counter head down over failed dish sad no gesture,sad,none,stepping_back,stationary,,F10,F10,A12,A12,9,0.95,3,5,0.5,1.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
+62,test,kitchen,Person slumps forward over counter head down over failed dish sad no gesture,sad,none,stepping_back,stationary,,F09,F09,A12,A12,8,0.95,3,5,0.5,1.0,1,11,0.0,0.0,1.0,0.0,0.0,1.0
 63,test,kitchen,Person sits down looking sad slow movement staring at failed dish,sad,thumbs_down,sitting,stationary,,F04,F04,A05,A05,3,0.95,0,5,0.0,0.0,1,4,0.0,0.1,1.0,0.0,0.1,1.0
 64,test,kitchen,Museum curator carrying heavy display box walks quickly toward robot neutral,neutral,none,walking,toward_robot,,F06,F06,A11,A11,5,0.95,2,0,0.8,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
 65,test,kitchen,Visitor gives exaggerated thumbs up with angry scowl after warning standing,angry,thumbs_up,standing,stationary,,F07,F07,A08,A08,6,0.95,1,5,0.0,0.0,1,7,0.0,0.05,1.5,0.0,0.05,1.5
@@ -69,5 +69,5 @@ scenario_id,split,context,description,emotion,gesture,motion,direction,missing_c
 69,test,kitchen,Paramedic pushing gurney points sternly down hallway angry stepping to robot,angry,point,walking,toward_robot,,F06,F06,A11,A11,5,0.95,2,0,0.8,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
 70,test,kitchen,Visitor inspecting disturbing art gives thumbs down disgusted stepping back,disgust,thumbs_down,sitting,stationary,,F08,F08,A07,A07,7,0.95,0,5,0.0,0.0,1,6,0.0,0.0,1.2,0.0,0.0,1.2
 71,test,kitchen,Paramedic pushing gurney walks rapidly down corridor toward robot waving aside,neutral,wave,walking,toward_robot,,F06,F06,A11,A11,5,0.95,2,0,0.8,1.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
-72,test,kitchen,Paramedic pushing gurney walks rapidly down corridor toward robot neutral waving aside,sad,none,sitting,stationary,,F10,F10,A11,A11,9,0.95,0,5,0.0,0.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
-73,test,kitchen,Paramedic pushing gurney walks rapidly down corridor toward robot neutral waving aside,sad,none,sitting,stationary,,F10,F10,A11,A11,9,0.95,0,5,0.0,0.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+72,test,kitchen,Paramedic pushing gurney walks rapidly down corridor toward robot neutral waving aside,sad,none,sitting,stationary,,F09,F09,A11,A11,8,0.95,0,5,0.0,0.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
+73,test,kitchen,Paramedic pushing gurney walks rapidly down corridor toward robot neutral waving aside,sad,none,sitting,stationary,,F09,F09,A11,A11,8,0.95,0,5,0.0,0.0,1,10,0.3,0.5,0.5,0.3,0.5,0.5
